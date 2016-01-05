@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React Compound Input Examples</title>
+    <style>
+    .compound-input {
+      font-family: sans-serif;
+      font-weight: 100;
+      border: 1px solid #999;
+      margin: 2em;
+      padding: 0.4em;
+      line-height: 2;
+      display: flex;
+      outline-style: none;
+      border-radius: 4px;
+    }
+
+    .compound-input.focused {
+      border-color: red;
+      outline-style: auto;
+      outline-color: Highlight;
+      outline-color: -webkit-focus-ring-color;
+    }
+
+    .token-container {
+      position: relative;
+    }
+
+    .token-container:focus {
+      outline: none;
+    }
+
+    .token {
+      margin-right: 0.4em;
+      /*margin-top: -1px;*/
+      /*margin-bottom: -1px;*/
+      background: #EEE;
+      border-radius: 3px;
+      padding: 0 10px;
+      /*border: 1px solid #ccc;*/
+    }
+
+    .token.selected,
+    .token-container.selected .token {
+      color: white;
+      background: #9FA0A4;
+      border-color: #9FA0A4;
+    }
+
+    .facet {
+      padding: 0px;
+      display: flex;
+    }
+
+    .facet .facet-type {
+      padding-left: 4px;
+      padding-right: 4px;
+      border-right: 1px solid white;
+      line-height: inherit;
+      background: rgba(0,0,0,0.1);
+      text-transform: uppercase;
+      font-size: 0.7em;
+      padding-top: 0.5em;
+    }
+
+    .facet .facet-value {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    /* Dropdown */
+
+    .token-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0%;
+      background: white;
+      border: 1px solid silver;
+      border-radius: 5px;
+      padding: 8px 0px;
+    }
+
+    .token-dropdown ul {
+      padding: 0px;
+      margin: 0px;
+      list-style: none;
+    }
+
+    .token-dropdown ul li {
+      font-size: 1em;
+      white-space: nowrap;
+      padding: 6px 8px;
+      padding-left: 24px;
+      line-height: 1;
+      position: relative;
+    }
+
+    .token-dropdown ul li:hover {
+      cursor: pointer;
+      background: dodgerblue;
+      color: white;
+    }
+
+    .token-dropdown .check {
+      position: absolute;
+      left: 0px;
+      width: 24px;
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body>
+    <input>
+    <div id="root"></div>
+    <input>
+    <script src="/static/bundle.js"></script>
+  </body>
+</html>
