@@ -90,13 +90,19 @@
     .token-dropdown ul li {
       font-size: 1em;
       white-space: nowrap;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    .token-dropdown ul li a {
+      display: block;
       padding: 6px 8px;
       padding-left: 24px;
       line-height: 1;
       position: relative;
     }
 
-    .token-dropdown ul li:hover {
+    .token-dropdown ul li.active a {
       cursor: pointer;
       background: dodgerblue;
       color: white;

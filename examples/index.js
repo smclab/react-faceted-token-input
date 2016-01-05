@@ -13,18 +13,11 @@ class App extends Component {
 
   renderTokenDropDown(token, updateToken, index) {
     if (token.type === 'numeric') {
-      return (
-        <ul>
-          {
-            NUMERIC_COMPARATORS.map(comparator => (
-              <li onClick={() => updateToken({ ...token, comparator }) }>
-                { (comparator === token.comparator) && CHECK }
-                { comparator }
-              </li>
-            ))
-          }
-        </ul>
-      );
+      return NUMERIC_COMPARATORS.map(comparator => ({
+        onClick: () => updateToken({ ...token, comparator }),
+        current: (comparator === token.comparator),
+        view: comparator
+      }));
     }
     else {
       return null;

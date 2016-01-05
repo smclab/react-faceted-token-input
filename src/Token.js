@@ -2,7 +2,18 @@
 import React, { Component, Children } from 'react';
 import classNames from 'classnames';
 
-import { DOWN } from './key-codes';
+import { UP, DOWN } from './key-codes';
+
+const CHECK = <span className="check">✓</span>;
+
+export const TokenDropDownItem = ({ selected, current, view, ...props }) => (
+  <li className={ selected ? 'active': ''}>
+    <a { ...props }>
+      { current && CHECK}
+      { view }
+    </a>
+  </li>
+);
 
 export default class Token extends Component {
 
@@ -10,6 +21,7 @@ export default class Token extends Component {
     super(props);
 
     this.state = {
+      selectedIndex: -1,
       showDropDown: false
     };
   }
@@ -41,10 +53,13 @@ export default class Token extends Component {
 
     const contents = renderToken.call(this, token, showDropDown, index);
 
-    const dropdown =
+    const dropdownItems =
       this.state.showDropDown ?
       renderTokenDropDown.call(this, token, updateToken, index) :
       null;
+
+    const selectedIndex = !dropdownItems ? 0 :
+      Math.max(-1, Math.min(dropdownItems.length - 1, this.state.selectedIndex));
 
     // BAAAD HTML
 
@@ -65,9 +80,18 @@ export default class Token extends Component {
         onBlur={ this.onBlur.bind(this) }
       >
         { contents }
-        { dropdown && (
+
+        { dropdownItems && (
           <div className="token-dropdown">
-            { dropdown }
+            <ul>
+              { dropdownItems.map((item, index) => (
+                <TokenDropDownItem
+                  { ...item }
+                  onMouseEnter={ event => this.setState({ selectedIndex: index })}
+                  selected={ index === selectedIndex }
+                />
+              ))}
+            </ul>
           </div>
         )}
       </div>
@@ -83,12 +107,27 @@ export default class Token extends Component {
   }
 
   onKeyDown(event) {
-    if (event.which === DOWN) {
-      this.onDown(event);
+    switch (event.which) {
+      case UP:
+      case DOWN:
+        return this.onUpDown(event);
+      default:
+        return this.props.onKeyDown(event);
     }
-    else {
-      this.props.onKeyDown(event);
+  }
+
+  onUpDown(event) {
+    if (!this.state.showDropDown) {
+      return this.setState({ showDropDown: true });
     }
+
+    const { selectedIndex } = this.state;
+
+    const increment = (event.which === UP) ? -1 : 1;
+
+    this.setState({
+      selectedIndex: Math.max(0, selectedIndex + increment)
+    });
   }
 
   onFocus(event) {
@@ -97,6 +136,7 @@ export default class Token extends Component {
 
   onBlur(event) {
     this.setState({
+      selectedIndex: 0,
       showDropDown: false
     });
   }
