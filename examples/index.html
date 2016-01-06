@@ -5,6 +5,7 @@
     <title>React Compound Input Examples</title>
     <style>
     .compound-input {
+      font-size: 16px;
       font-family: sans-serif;
       font-weight: 100;
       border: 1px solid #999;
@@ -18,13 +19,13 @@
 
     .compound-input.focused {
       border-color: red;
-      outline-style: auto;
-      outline-color: Highlight;
-      outline-color: -webkit-focus-ring-color;
+      border-color: Highlight;
+      outline: none;
     }
 
     .token-container {
       position: relative;
+      display: flex;
     }
 
     .token-container:focus {
@@ -79,6 +80,8 @@
       border: 1px solid silver;
       border-radius: 5px;
       padding: 8px 0px;
+      margin-top: 2px;
+      font-size: 14px;
     }
 
     .token-dropdown ul {

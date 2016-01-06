@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Token from './Token';
 import { BACKSPACE, ENTER, LEFT, RIGHT, DOWN, UP } from './key-codes';
-import { isOnlyCtrlKey } from './key-utils';
+import { isSelectToHome, isSelectToEnd } from './key-utils';
 
 const DIRECTION_NONE = 'none';
 const DIRECTION_BACKWARD = 'backward';
@@ -40,11 +40,9 @@ export default class CompoundInput extends Component {
   }
 
   render() {
-    const onKeyDown = event => this.onKeyDown(event);
-    const onFocus = event => this.onFocus(event);
-    const onBlur = event => this.onBlur(event);
+    const { placeholder } = this.props;
 
-    const tokens = this.state.tokens.map(this.renderToken, this);
+    const { tokens } = this.state;
 
     const compoundInputClass = classNames("compound-input", {
       focused: this.state.focused
@@ -55,24 +53,24 @@ export default class CompoundInput extends Component {
         ref="compoundInput"
         tabIndex="0"
         className={ compoundInputClass }
-        onKeyDown={ onKeyDown }
-        onFocus={ onFocus }
-        onBlur={ onBlur }
+        onKeyDown={ event => this.onKeyDown(event) }
+        onFocus={ event => this.onFocus(event) }
+        onBlur={ event => this.onBlur(event) }
       >
-        { tokens }
+        { tokens.map(this.renderToken, this) }
         <input
           style={ INPUT_STYLE }
           ref="input"
-          onFocus={ event => this.onTokenFocus(event, tokens.length) }
+          placeholder={ tokens.length ? '' : placeholder }
+          onChange={ event => this.onChange(event) }
+          onFocus={ event => this.onInputFocus(event) }
         />
       </div>
     );
   }
 
   renderToken(token, index) {
-    const onKeyDown = event => this.onKeyDown(event);
-    const onFocus = event => this.onTokenFocus(event, index);
-    const onUpdate = event => this.updateToken(event.token, event.index);
+    const { facet, description, dropdownMenu } = this.props.renderToken(token);
 
     return (
       <Token
@@ -80,11 +78,12 @@ export default class CompoundInput extends Component {
         index={ index }
         selected={ this.isInTokenSelection(index) }
         token={ token }
-        onUpdate={ onUpdate }
-        renderToken={ this.props.renderToken }
-        renderTokenDropDown={ this.props.renderTokenDropDown }
-        onKeyDown={ onKeyDown }
-        onFocus={ onFocus }
+        facet={ facet }
+        description={ description }
+        dropdownMenu={ dropdownMenu }
+        onUpdate={ event => this.updateToken(event.token, event.index) }
+        onKeyDown={ event => this.onKeyDown(event) }
+        onFocus={ event => this.onTokenFocus(event, index) }
       />
     )
   }
@@ -117,6 +116,20 @@ export default class CompoundInput extends Component {
       (index >= this.state.tokenSelectionStart) &&
       (index < this.state.tokenSelectionEnd)
     );
+  }
+
+  onInputFocus(event) {
+    const { tokens } = this.state;
+
+    if (!this.isInTokenSelection(tokens.length)) {
+      this.onTokenFocus(event, tokens.length);
+    }
+  }
+
+  onChange(event) {
+    const { tokens } = this.state;
+
+    this.onTokenFocus(event, tokens.length);
   }
 
   onTokenFocus(event, index) {
@@ -198,7 +211,10 @@ export default class CompoundInput extends Component {
       (event.which === LEFT) ? DIRECTION_BACKWARD :
       DIRECTION_NONE;
 
-    if (tokenSelectionStart >= tokens.length) {
+    const selectToHome = isSelectToHome(event);
+    const selectToEnd = isSelectToEnd(event);
+
+    if (!selectToHome && !selectToEnd && tokenSelectionStart >= tokens.length) {
       // The text field is focused
 
       if (selectionStart > 0) {
@@ -222,9 +238,39 @@ export default class CompoundInput extends Component {
       }
     }
 
-    event.preventDefault();
+    if (!selectToHome && !selectToEnd) {
+      if (tokenSelectionEnd <= tokens.length) {
+        event.preventDefault();
+      }
+    }
 
-    if (!event.shiftKey) {
+    if (selectToHome) {
+      tokenSelectionStart = 0;
+
+      if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
+        if (tokenSelectionDirection === DIRECTION_NONE) {
+          tokenSelectionDirection = DIRECTION_BACKWARD;
+        }
+      }
+    }
+    else if (selectToEnd) {
+      tokenSelectionEnd = tokens.length + 1;
+
+      this.refs.input.setSelectionRange(
+        selectionStart, this.refs.input.value.length);
+
+      if (tokenSelectionStart < tokens.length) {
+        this.refs.input.setSelectionRange(
+          0, this.refs.input.value.length);
+      }
+
+      if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
+        if (tokenSelectionDirection === DIRECTION_NONE) {
+          tokenSelectionDirection = DIRECTION_FORWARD;
+        }
+      }
+    }
+    else if (!event.shiftKey) {
       if (tokenSelectionDirection === DIRECTION_NONE) {
         if (keyDirection === DIRECTION_FORWARD) {
           tokenSelectionStart += 1;
@@ -243,8 +289,14 @@ export default class CompoundInput extends Component {
       }
 
       tokenSelectionDirection = DIRECTION_NONE;
+
+      if (tokenSelectionStart <= tokens.length) {
+        this.refs.input.setSelectionRange(0, 0);
+      }
     }
     else {
+      const initialIsInputInSelection = (tokenSelectionEnd > tokens.length);
+
       if (tokenSelectionDirection === DIRECTION_NONE) {
         tokenSelectionDirection = keyDirection;
       }
@@ -260,6 +312,16 @@ export default class CompoundInput extends Component {
 
       if ((tokenSelectionEnd - tokenSelectionStart) <= 1) {
         tokenSelectionDirection = DIRECTION_NONE;
+      }
+
+      if (tokenSelectionEnd > tokens.length) {
+        if (keyDirection !== tokenSelectionDirection) {
+          event.preventDefault();
+        }
+
+        if (!initialIsInputInSelection && (keyDirection === DIRECTION_FORWARD)) {
+          this.refs.input.setSelectionRange(0, 1);
+        }
       }
     }
 
