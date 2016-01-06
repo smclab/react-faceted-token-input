@@ -31,8 +31,10 @@ export default class CompoundInput extends Component {
     super(props);
 
     this.state = {
-      tokens: props.defaultTokens || [],
       focused: false,
+      searchText: '',
+      tokens: props.defaultTokens || [],
+      showDropDown: false,
       tokenSelectionDirection: 'none',
       tokenSelectionStart: -1,
       tokenSelectionEnd: -1
@@ -42,7 +44,7 @@ export default class CompoundInput extends Component {
   render() {
     const { placeholder } = this.props;
 
-    const { tokens } = this.state;
+    const { tokens, searchText, showDropDown } = this.state;
 
     const compoundInputClass = classNames("compound-input", {
       focused: this.state.focused
@@ -58,14 +60,24 @@ export default class CompoundInput extends Component {
         onBlur={ event => this.onBlur(event) }
       >
         { tokens.map(this.renderToken, this) }
+
         <input
           style={ INPUT_STYLE }
           ref="input"
           placeholder={ tokens.length ? '' : placeholder }
+          value={ searchText }
           onChange={ event => this.onChange(event) }
           onFocus={ event => this.onInputFocus(event) }
         />
+
+        { showDropDown && this.renderDropdown() }
       </div>
+    );
+  }
+
+  renderDropdown() {
+    return (
+      <div className="dropdown input-dropdown"><ul><li><a>ciao</a></li></ul></div>
     );
   }
 
@@ -128,6 +140,10 @@ export default class CompoundInput extends Component {
 
   onChange(event) {
     const { tokens } = this.state;
+
+    this.setState({
+      searchText: this.refs.input.value
+    });
 
     this.onTokenFocus(event, tokens.length);
   }
@@ -380,25 +396,22 @@ export default class CompoundInput extends Component {
   }
 
   onEnter(event) {
-    const { tokens } = this.state;
+    const { tokens, searchText } = this.state;
 
-    const { value } = this.refs.input;
-
-    if (!value) {
+    if (!searchText.trim()) {
       return;
     }
 
     this.setState({
+      searchText: '',
       tokens: [
         ...tokens,
-        this.props.getToken(value)
+        this.props.getToken(searchText)
       ],
       tokenSelectionDirection: DIRECTION_NONE,
       tokenSelectionStart: tokens.length + 1,
       tokenSelectionEnd: tokens.length + 2
     });
-
-    this.refs.input.value = '';
   }
 
   updateToken(token, index) {

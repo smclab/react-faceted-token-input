@@ -9,12 +9,12 @@
       font-family: sans-serif;
       font-weight: 100;
       border: 1px solid #999;
-      margin: 2em;
       padding: 0.4em;
       line-height: 2;
       display: flex;
       outline-style: none;
       border-radius: 4px;
+      position: relative;
     }
 
     .compound-input.focused {
@@ -37,6 +37,7 @@
       /*margin-top: -1px;*/
       /*margin-bottom: -1px;*/
       background: #EEE;
+      color: #555;
       border-radius: 3px;
       padding: 0 10px;
       /*border: 1px solid #ccc;*/
@@ -72,7 +73,7 @@
 
     /* Dropdown */
 
-    .token-dropdown {
+    .dropdown {
       position: absolute;
       top: 100%;
       left: 0%;
@@ -84,44 +85,98 @@
       font-size: 14px;
     }
 
-    .token-dropdown ul {
+    .input-dropdown {
+      right: 0%;
+    }
+
+    .dropdown ul {
       padding: 0px;
       margin: 0px;
       list-style: none;
     }
 
-    .token-dropdown ul li {
+    .dropdown ul li {
       font-size: 1em;
       white-space: nowrap;
       padding: 0px;
       margin: 0px;
     }
 
-    .token-dropdown ul li a {
+    .dropdown ul li a {
       display: block;
       padding: 6px 8px;
-      padding-left: 24px;
       line-height: 1;
       position: relative;
     }
 
-    .token-dropdown ul li.active a {
+    .token-dropdown ul li a {
+      padding-left: 24px;
+    }
+
+    .dropdown ul li.active a {
       cursor: pointer;
       background: dodgerblue;
       color: white;
     }
 
-    .token-dropdown .check {
+    .dropdown .check {
       position: absolute;
       left: 0px;
       width: 24px;
       text-align: center;
     }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      margin: 3em;
+    }
+
+    .grow {
+      flex-grow: 1;
+    }
+
+    .opensquare {
+      width: 32px;
+      height: 32px;
+      border: 2px solid black;
+      border-radius: 3px;
+      position: relative;
+      margin-right: 20px;
+    }
+
+    .opensquare::before,
+    .opensquare::after {
+      content: '';
+      position: absolute;
+      background: white;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+    }
+
+    .opensquare::before {
+      top: 14px;
+      bottom: 14px;
+    }
+
+    .opensquare::after {
+      right: 14px;
+      left: 14px;
+    }
     </style>
   </head>
   <body>
     <input>
-    <div id="root"></div>
+
+    <div class="bar">
+      <div class="opensquare"></div>
+      <div class="grow">
+        <div id="root"></div>
+      </div>
+    </div>
+
     <input>
     <script src="/static/bundle.js"></script>
   </body>

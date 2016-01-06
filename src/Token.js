@@ -102,7 +102,7 @@ export default class Token extends Component {
 
   renderDropdown(dropdownMenu) {
     return (
-      <div className="token-dropdown">
+      <div className="dropdown token-dropdown">
         <ul>
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
