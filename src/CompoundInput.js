@@ -35,6 +35,9 @@ export default class CompoundInput extends Component {
       searchText: '',
       tokens: props.defaultTokens || [],
       showDropDown: false,
+      selectedSectionIndex: -1,
+      selectedIndex: -1,
+      selectedId: null,
       tokenSelectionDirection: 'none',
       tokenSelectionStart: -1,
       tokenSelectionEnd: -1
@@ -76,8 +79,58 @@ export default class CompoundInput extends Component {
   }
 
   renderDropdown() {
+    const { dropdownSections } = this.props;
+
+    if (!dropdownSections || !dropdownSections.length) {
+      return null;
+    }
+
     return (
-      <div className="dropdown input-dropdown"><ul><li><a>ciao</a></li></ul></div>
+      <div className="dropdown input-dropdown">
+        { dropdownSections.map(this.renderDropdownSection, this) }
+      </div>
+    );
+  }
+
+  renderDropdownSection(section, sectionIndex) {
+    const { selectedId, selectedSectionIndex, selectedIndex } = this.state;
+
+    const { title, suggestions } = section;
+
+    if (!suggestions || !suggestions.length) {
+      return null;
+    }
+
+    return (
+      <ul key={ 'section' + sectionIndex }>
+        { title && <li className="header">{ title }</li> }
+
+        { suggestions.map((suggestion, index) => {
+          const selected =
+            (selectedId === suggestion.id) ||
+            (
+              (selectedSectionIndex === sectionIndex) &&
+              (selectedIndex === index )
+            );
+
+          return (
+            <li
+              className={ selected ? 'active' : '' }
+              key={ 'item' + index }
+            >
+              <a
+                onMouseMove={ event => this.setState({
+                  selectedSectionIndex: sectionIndex,
+                  selectedIndex: index
+                })}
+                onClick={ event => this.addToken(suggestion.result) }
+              >
+                { suggestion.description }
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     );
   }
 
@@ -96,6 +149,7 @@ export default class CompoundInput extends Component {
         onUpdate={ event => this.updateToken(event.token, event.index) }
         onKeyDown={ event => this.onKeyDown(event) }
         onFocus={ event => this.onTokenFocus(event, index) }
+        onShowDropdown={ event => this.setState({ showDropDown: false }) }
       />
     )
   }
@@ -141,9 +195,16 @@ export default class CompoundInput extends Component {
   onChange(event) {
     const { tokens } = this.state;
 
+    const searchText = this.refs.input.value;
+
     this.setState({
-      searchText: this.refs.input.value
+      searchText: searchText,
+      showDropDown: true,
+      selectedSectionIndex: -1,
+      selectedIndex: -1
     });
+
+    this.props.onChange({ tokens, searchText })
 
     this.onTokenFocus(event, tokens.length);
   }
@@ -191,9 +252,68 @@ export default class CompoundInput extends Component {
   }
 
   onUpDown(event) {
-    const { tokens } = this.state;
+    const {
+      tokens,
+      showDropDown,
+      selectedSectionIndex,
+      selectedIndex
+    } = this.state;
 
-    if (this.isInTokenSelection(tokens.length)) {
+    const { dropdownSections } = this.props;
+
+    if (showDropDown && dropdownSections) {
+      let nextSelectedSectionIndex;
+      let nextSelectedIndex;
+
+      const section = dropdownSections[selectedSectionIndex];
+
+      if (event.which === DOWN) {
+        nextSelectedSectionIndex = selectedSectionIndex;
+        nextSelectedIndex = selectedIndex + 1;
+
+        if (!section || (section.suggestions.length >= nextSelectedIndex)) {
+          if (selectedSectionIndex < (dropdownSections.length - 1)) {
+            nextSelectedSectionIndex += 1;
+            nextSelectedIndex = 0;
+          }
+        }
+      }
+      else if (event.which === UP) {
+        nextSelectedSectionIndex = selectedSectionIndex;
+        nextSelectedIndex = selectedIndex - 1;
+
+        if (nextSelectedIndex < 0) {
+          if (selectedSectionIndex <= 0) {
+            nextSelectedSectionIndex = -1;
+            nextSelectedIndex = -1;
+          }
+          else {
+            nextSelectedSectionIndex = selectedSectionIndex - 1;
+            nextSelectedIndex =
+              dropdownSections[nextSelectedSectionIndex].suggestions.length - 1;
+          }
+        }
+      }
+
+      nextSelectedSectionIndex = Math.max(
+        -1, Math.min(dropdownSections.length - 1, nextSelectedSectionIndex)
+      );
+
+      const nextSection = dropdownSections[nextSelectedSectionIndex];
+
+      nextSelectedIndex = Math.max(
+        -1, Math.min(
+          nextSection ? (nextSection.suggestions.length - 1) : 0,
+          nextSelectedIndex
+        )
+      );
+
+      this.setState({
+        selectedSectionIndex: nextSelectedSectionIndex,
+        selectedIndex: nextSelectedIndex
+      });
+    }
+    else if (this.isInTokenSelection(tokens.length)) {
       this.setState({
         tokenSelectionDirection: DIRECTION_NONE,
         tokenSelectionStart: tokens.length,
@@ -355,13 +475,6 @@ export default class CompoundInput extends Component {
   }
 
   onBackspace(event) {
-    /*const { selectionStart, selectionEnd } = this.refs.input;
-
-    if (selectionStart === 0 && selectionEnd === 0) {
-      event.preventDefault();
-      this.props.onBack();
-    }*/
-
     const { tokens, tokenSelectionStart, tokenSelectionEnd } = this.state;
 
     this.setState({
@@ -396,21 +509,79 @@ export default class CompoundInput extends Component {
   }
 
   onEnter(event) {
-    const { tokens, searchText } = this.state;
+    const {
+      showDropDown,
+      selectedSectionIndex,
+      selectedIndex
+    } = this.state;
+
+    const { dropdownSections } = this.props;
+
+    if (showDropDown) {
+      this.setState({
+        showDropDown: false
+      });
+
+      if (!dropdownSections) {
+        return;
+      }
+
+      const section = dropdownSections[selectedSectionIndex];
+
+      if (!section) {
+        return;
+      }
+
+      const suggestion = section.suggestions[selectedIndex];
+
+      if (!suggestion) {
+        return;
+      }
+
+      this.addToken(suggestion.result);
+    }
+
+    /*const { tokens, searchText } = this.state;
 
     if (!searchText.trim()) {
       return;
     }
 
+    const nextTokens = [
+      ...tokens,
+      { label: searchText } // his.props.getToken(searchText)
+    ];
+
     this.setState({
       searchText: '',
-      tokens: [
-        ...tokens,
-        this.props.getToken(searchText)
-      ],
+      tokens: nextTokens,
       tokenSelectionDirection: DIRECTION_NONE,
       tokenSelectionStart: tokens.length + 1,
       tokenSelectionEnd: tokens.length + 2
+    });
+
+    this.props.onChange({ searchText: '', tokens: nextTokens });*/
+  }
+
+  addToken(token) {
+    const { tokens } = this.state;
+
+    const nextTokens = tokens.concat([ token ]);
+
+    console.log(token);
+
+    this.setState({
+      searchText: '',
+      showDropDown: false,
+      tokens: nextTokens,
+      tokenSelectionDirection: DIRECTION_NONE,
+      tokenSelectionStart: tokens.length + 1,
+      tokenSelectionEnd: tokens.length + 2
+    });
+
+    this.props.onChange({
+      searchText: '',
+      tokens: nextTokens
     });
   }
 

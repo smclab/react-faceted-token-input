@@ -149,8 +149,6 @@ export default class Token extends Component {
   }
 
   onUpDown(event) {
-    console.log('boohm');
-
     if (this.state.showDropDown) {
       const { dropdownMenu  } = this.props;
 
@@ -166,6 +164,8 @@ export default class Token extends Component {
     }
     else {
       this.setState({ showDropDown: true });
+
+      this.props.onShowDropdown({});
     }
   }
 
