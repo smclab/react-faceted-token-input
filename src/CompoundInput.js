@@ -15,7 +15,6 @@ const INPUT_STYLE = {
   lineHeight: 'inherit',
   height: 'auto',
   padding: 0,
-  margin: 0,
   border: 'none',
   flexGrow: 1,
   outline: 'none'
@@ -47,10 +46,10 @@ export default class CompoundInput extends Component {
   render() {
     const { placeholder } = this.props;
 
-    const { tokens, searchText, showDropDown } = this.state;
+    const { tokens, searchText, showDropDown, focused } = this.state;
 
     const compoundInputClass = classNames("compound-input", {
-      focused: this.state.focused
+      "focused": focused
     });
 
     return (
@@ -65,13 +64,16 @@ export default class CompoundInput extends Component {
         { tokens.map(this.renderToken, this) }
 
         <input
-          style={ INPUT_STYLE }
           ref="input"
+          style={ INPUT_STYLE }
+          className="compound-input-field"
           placeholder={ tokens.length ? '' : placeholder }
           value={ searchText }
           onChange={ event => this.onChange(event) }
           onFocus={ event => this.onInputFocus(event) }
         />
+
+        { this.props.children }
 
         { showDropDown && this.renderDropdown() }
       </div>
@@ -116,14 +118,14 @@ export default class CompoundInput extends Component {
           return (
             <li
               className={ selected ? 'active' : '' }
-              key={ 'item' + index }
+              key={ 'item' + suggestion.id }
             >
               <a
+                onClick={ event => this.addToken(suggestion.result) }
                 onMouseMove={ event => this.setState({
                   selectedSectionIndex: sectionIndex,
                   selectedIndex: index
                 })}
-                onClick={ event => this.addToken(suggestion.result) }
               >
                 { suggestion.description }
               </a>
@@ -228,6 +230,7 @@ export default class CompoundInput extends Component {
       // focus out
       if (!this.state.focused) {
         this.setState({
+          showDropDown: false,
           tokenSelectionDirection: DIRECTION_NONE,
           tokenSelectionStart: -1,
           tokenSelectionEnd: -1
@@ -567,8 +570,6 @@ export default class CompoundInput extends Component {
     const { tokens } = this.state;
 
     const nextTokens = tokens.concat([ token ]);
-
-    console.log(token);
 
     this.setState({
       searchText: '',
