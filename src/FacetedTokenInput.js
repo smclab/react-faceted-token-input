@@ -49,15 +49,15 @@ export default class FacetedTokenInput extends Component {
 
     const { tokens, searchText, showDropDown, focused } = this.state;
 
-    const FacetedTokenInputClass = classNames('compound-input', {
+    const facetedTokenInputClass = classNames('compound-input', {
       'focused': focused
     });
 
     return (
       <div
-        ref="FacetedTokenInput"
+        ref="facetedTokenInput"
         tabIndex="0"
-        className={ FacetedTokenInputClass }
+        className={ facetedTokenInputClass }
         onKeyDown={ event => this.onKeyDown(event) }
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
@@ -151,7 +151,7 @@ export default class FacetedTokenInput extends Component {
         this.refs['token' + tokenSelectionStart].focus();
       }
       else {
-        this.refs.FacetedTokenInput.focus();
+        this.refs.facetedTokenInput.focus();
       }
     }
   }
