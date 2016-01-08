@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import * as TokenTypes from './types';
 import { RESULTS } from './types/result-field-token-type';
 
-import CompoundInput from '../src/CompoundInput';
+import FacetedTokenInput from '../src/FacetedTokenInput';
 
 const NUMERIC_COMPARATORS = {
   'eq': 'Equals to…',
@@ -44,7 +44,7 @@ class App extends Component {
 
   render() {
     return (
-      <CompoundInput
+      <FacetedTokenInput
         renderToken={ this.renderToken }
         dropdownSections={ this.state.dropdownSections }
         placeholder="Search…"

@@ -24,7 +24,7 @@ const DEFAULT_PROPS = {
   defaultTokens: []
 };
 
-export default class CompoundInput extends Component {
+export default class FacetedTokenInput extends Component {
 
   constructor(props) {
     super(props);
@@ -48,15 +48,15 @@ export default class CompoundInput extends Component {
 
     const { tokens, searchText, showDropDown, focused } = this.state;
 
-    const compoundInputClass = classNames("compound-input", {
+    const FacetedTokenInputClass = classNames("compound-input", {
       "focused": focused
     });
 
     return (
       <div
-        ref="compoundInput"
+        ref="FacetedTokenInput"
         tabIndex="0"
-        className={ compoundInputClass }
+        className={ FacetedTokenInputClass }
         onKeyDown={ event => this.onKeyDown(event) }
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
@@ -174,7 +174,7 @@ export default class CompoundInput extends Component {
         this.refs['token' + tokenSelectionStart].focus();
       }
       else {
-        this.refs.compoundInput.focus();
+        this.refs.FacetedTokenInput.focus();
       }
     }
   }
@@ -265,6 +265,8 @@ export default class CompoundInput extends Component {
     const { dropdownSections } = this.props;
 
     if (showDropDown && dropdownSections) {
+      event.preventDefault();
+
       let nextSelectedSectionIndex;
       let nextSelectedIndex;
 
@@ -274,7 +276,7 @@ export default class CompoundInput extends Component {
         nextSelectedSectionIndex = selectedSectionIndex;
         nextSelectedIndex = selectedIndex + 1;
 
-        if (!section || (section.suggestions.length >= nextSelectedIndex)) {
+        if (!section || (section.suggestions.length <= nextSelectedIndex)) {
           if (selectedSectionIndex < (dropdownSections.length - 1)) {
             nextSelectedSectionIndex += 1;
             nextSelectedIndex = 0;
@@ -600,4 +602,4 @@ export default class CompoundInput extends Component {
 
 };
 
-CompoundInput.defaultProps = DEFAULT_PROPS;
+FacetedTokenInput.defaultProps = DEFAULT_PROPS;
