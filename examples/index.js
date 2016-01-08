@@ -60,8 +60,8 @@ class Results extends Component {
   render() {
     return (
       <div className="list-group">
-        { RESULTS.map(result =>
-          <a href="#" className="list-group-item">
+        { RESULTS.map((result, index) =>
+          <a key={ 'result' + index } href="#" className="list-group-item">
             <p className="list-group-item-text pull-right">{ result.createDate }</p>
             <h4 className="list-group-item-heading">
               { result.description || '…' }{ ' ' }

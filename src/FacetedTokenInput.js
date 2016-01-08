@@ -3,6 +3,7 @@ import React, { Component, Children } from 'react';
 import classNames from 'classnames';
 
 import Token from './Token';
+import DropdownMenu from './DropdownMenu';
 import { BACKSPACE, ENTER, LEFT, RIGHT, DOWN, UP } from './key-codes';
 import { isSelectToHome, isSelectToEnd } from './key-utils';
 
@@ -64,6 +65,7 @@ export default class FacetedTokenInput extends Component {
         { tokens.map(this.renderToken, this) }
 
         <input
+          key="input"
           ref="input"
           style={ INPUT_STYLE }
           className="compound-input-field"
@@ -83,61 +85,30 @@ export default class FacetedTokenInput extends Component {
   renderDropdown() {
     const { dropdownSections } = this.props;
 
+    const {
+      selectedId,
+      selectedSectionIndex,
+      selectedIndex
+    } = this.state;
+
     if (!dropdownSections || !dropdownSections.length) {
       return null;
     }
 
     return (
-      <div className="dropdown input-dropdown">
-        {
-          dropdownSections
-            .map(this.renderDropdownSection, this)
-            .reduce((memo, o) => [ ...memo, <hr />, o ], [])
-            .slice(1)
+      <DropdownMenu
+        sections={ dropdownSections }
+        selectedId={ selectedId }
+        selectedIndex={ selectedIndex }
+        selectedSectionIndex={ selectedSectionIndex }
+        addToken={ token => this.addToken(token) }
+        setSelected={
+          event => this.setState({
+            selectedSectionIndex: event.sectionIndex,
+            selectedIndex: event.index
+          })
         }
-      </div>
-    );
-  }
-
-  renderDropdownSection(section, sectionIndex) {
-    const { selectedId, selectedSectionIndex, selectedIndex } = this.state;
-
-    const { title, suggestions } = section;
-
-    if (!suggestions || !suggestions.length) {
-      return null;
-    }
-
-    return (
-      <ul key={ 'section' + sectionIndex }>
-        { title && <li className="header">{ title }</li> }
-
-        { suggestions.map((suggestion, index) => {
-          const selected =
-            (selectedId === suggestion.id) ||
-            (
-              (selectedSectionIndex === sectionIndex) &&
-              (selectedIndex === index )
-            );
-
-          return (
-            <li
-              className={ selected ? 'active' : '' }
-              key={ 'item' + suggestion.id }
-            >
-              <a
-                onClick={ event => this.addToken(suggestion.result) }
-                onMouseMove={ event => this.setState({
-                  selectedSectionIndex: sectionIndex,
-                  selectedIndex: index
-                })}
-              >
-                { suggestion.description }
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      />
     );
   }
 
@@ -146,6 +117,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <Token
+        key={ 'token' + (token.id || index) }
         ref={ 'token' + index }
         index={ index }
         selected={ this.isInTokenSelection(index) }
