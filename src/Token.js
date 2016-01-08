@@ -7,7 +7,7 @@ import { ENTER, UP, DOWN } from './key-codes';
 const CHECK = <span className="check">✓</span>;
 
 export const TokenDropDownItem = ({ selected, current, view, ...props }) => (
-  <li className={ selected ? 'active': ''}>
+  <li className={ selected ? 'active' : ''}>
     <a { ...props }>
       { current && CHECK}
       { view }
@@ -48,8 +48,8 @@ export default class Token extends Component {
     } = this.state;
 
     const containerClassName = classNames({
-      "token-container": true,
-      "selected": selected
+      'token-container': true,
+      'selected': selected
     });
 
     return (
@@ -74,8 +74,8 @@ export default class Token extends Component {
     const showFacet = !!(facet || dropdownMenu);
 
     const className = classNames({
-      "token": true,
-      "facet": showFacet
+      'token': true,
+      'facet': showFacet
     });
 
     if (showFacet) {
@@ -89,14 +89,14 @@ export default class Token extends Component {
             { description }
           </span>
         </span>
-      )
+      );
     }
     else {
       return (
         <span className={ className }>
           { description }
         </span>
-      )
+      );
     }
   }
 
@@ -125,7 +125,7 @@ export default class Token extends Component {
           { item.label }
         </a>
       </li>
-    )
+    );
   }
 
   onContextMenu(event) {
@@ -150,7 +150,7 @@ export default class Token extends Component {
 
   onUpDown(event) {
     if (this.state.showDropDown) {
-      const { dropdownMenu  } = this.props;
+      const { dropdownMenu } = this.props;
 
       const { min, max } = Math;
 
@@ -198,7 +198,7 @@ export default class Token extends Component {
     this.setState({
       selectedIndex: -1,
       showDropDown: false
-    })
+    });
   }
 
 }

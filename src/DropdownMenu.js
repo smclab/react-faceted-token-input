@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const DropdownMenuSeparator = () => <hr />;
 
@@ -13,15 +13,15 @@ const DropdownMenuItem = ({
   <li className={ selected ? 'active' : '' }>
     <a
       href="javascript: void 0"
-      onClick={ event => addToken(suggestion.result) }
-      onMouseMove={ event => setSelected({ sectionIndex, index }) }
+      onClick={ () => addToken(suggestion.result) }
+      onMouseMove={ () => setSelected({ sectionIndex, index }) }
     >
       { suggestion.description }
     </a>
   </li>
 );
 
-const DropdownMenuSection = ({ title, section, sectionIndex, ...props }) => (
+const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
   <ul>
     { section.title && <li key="header" className="header">{ section.title }</li> }
     { section.suggestions.map((suggestion, index) => (
@@ -31,7 +31,7 @@ const DropdownMenuSection = ({ title, section, sectionIndex, ...props }) => (
         selected={
           (props.selectedId === suggestion.id) ||
           (props.selectedSectionIndex === sectionIndex) &&
-          (props.selectedIndex === index )
+          (props.selectedIndex === index)
         }
         suggestion={ suggestion }
         sectionIndex={ sectionIndex }

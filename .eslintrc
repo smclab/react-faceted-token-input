@@ -1,0 +1,22 @@
+{
+  "extends": "semistandard",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "valid-jsdoc": 2,
+    "react/jsx-uses-react": 1,
+    "react/jsx-no-undef": 2,
+    "react/wrap-multilines": 2,
+    "space-before-function-paren": [2, {
+      "anonymous": "always",
+      "named": "never"
+    }]
+  },
+  "plugins": [
+    "react", "standard"
+  ]
+}

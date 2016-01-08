@@ -1,5 +1,5 @@
 
-import React, { Component, Children } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import Token from './Token';
@@ -49,8 +49,8 @@ export default class FacetedTokenInput extends Component {
 
     const { tokens, searchText, showDropDown, focused } = this.state;
 
-    const FacetedTokenInputClass = classNames("compound-input", {
-      "focused": focused
+    const FacetedTokenInputClass = classNames('compound-input', {
+      'focused': focused
     });
 
     return (
@@ -130,7 +130,7 @@ export default class FacetedTokenInput extends Component {
         onFocus={ event => this.onTokenFocus(event, index) }
         onShowDropdown={ event => this.setState({ showDropDown: false }) }
       />
-    )
+    );
   }
 
   componentDidUpdate() {
@@ -183,7 +183,7 @@ export default class FacetedTokenInput extends Component {
       selectedIndex: -1
     });
 
-    this.props.onChange({ tokens, searchText })
+    this.props.onChange({ tokens, searchText });
 
     this.onTokenFocus(event, tokens.length);
   }
@@ -211,7 +211,7 @@ export default class FacetedTokenInput extends Component {
           tokenSelectionDirection: DIRECTION_NONE,
           tokenSelectionStart: -1,
           tokenSelectionEnd: -1
-        })
+        });
       }
     }, 0);
   }
@@ -320,7 +320,7 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    const hasTokenCaret = (tokenSelectionStart === tokenSelectionEnd)
+    const hasTokenCaret = (tokenSelectionStart === tokenSelectionEnd);
 
     // TODO: Manage RTL languages
 
@@ -574,9 +574,9 @@ export default class FacetedTokenInput extends Component {
         token,
         ...tokens.slice(index + 1)
       ]
-    })
+    });
   }
 
-};
+}
 
 FacetedTokenInput.defaultProps = DEFAULT_PROPS;
