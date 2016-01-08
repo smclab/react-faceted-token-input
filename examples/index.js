@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
 import * as TokenTypes from './types';
+import { RESULTS } from './types/result-field-token-type';
 
 import CompoundInput from '../src/CompoundInput';
 
@@ -55,4 +56,23 @@ class App extends Component {
 
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class Results extends Component {
+  render() {
+    return (
+      <div className="list-group">
+        { RESULTS.map(result =>
+          <a href="#" className="list-group-item">
+            <p className="list-group-item-text pull-right">{ result.createDate }</p>
+            <h4 className="list-group-item-heading">
+              { result.description || '…' }{ ' ' }
+              <small>({ result.status })</small>
+            </h4>
+            <p className="list-group-item-text">{ result.product }</p>
+          </a>
+        )}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<div><App /><hr /><Results /></div>, document.getElementById('root'));

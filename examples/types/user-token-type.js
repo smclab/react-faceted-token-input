@@ -59,7 +59,7 @@ export default class UserTokenType {
       return [];
     }
 
-    const delay = Math.round(Math.random() * 300);
+    const delay = 300 + Math.round(Math.random() * 500);
 
     return new Promise(resolve => setTimeout(resolve, delay)).then(() => {
       return USERS.filter(this.getMatcher(search)).map(user => ({

@@ -10,8 +10,10 @@
       font-weight: 100;
       border: 1px solid #999;
       padding: 0.4em;
+      padding-bottom: 0.2em;
       line-height: 2;
       display: flex;
+      flex-wrap: wrap;
       outline-style: none;
       border-radius: 4px;
       position: relative;
@@ -23,9 +25,15 @@
       outline: none;
     }
 
+    .compound-input-field {
+      margin-bottom: 0.2em;
+    }
+
     .token-container {
       position: relative;
       display: flex;
+      margin-right: 0.4em;
+      margin-bottom: 0.2em;
     }
 
     .token-container:focus {
@@ -33,7 +41,6 @@
     }
 
     .token {
-      margin-right: 0.4em;
       /*margin-top: -1px;*/
       /*margin-bottom: -1px;*/
       background: #EEE;
@@ -73,7 +80,7 @@
 
     /* Dropdown */
 
-    .dropdown {
+    .compound-input .dropdown {
       position: absolute;
       top: 100%;
       left: 0%;
@@ -83,48 +90,49 @@
       padding: 8px 0px;
       margin-top: 2px;
       font-size: 14px;
+      z-index: 1;
     }
 
-    .input-dropdown {
+    .compound-input .input-dropdown {
       right: 0%;
     }
 
-    .dropdown ul {
+    .compound-input .dropdown ul {
       padding: 0px;
       margin: 0px;
       list-style: none;
     }
 
-    .dropdown ul li {
+    .compound-input .dropdown ul li {
       font-size: 1em;
       white-space: nowrap;
       padding: 0px;
       margin: 0px;
     }
 
-    .dropdown ul li a,
-    .dropdown ul li.header {
+    .compound-input .dropdown ul li a,
+    .compound-input .dropdown ul li.header {
       display: block;
       padding: 6px 8px;
       line-height: 1;
       position: relative;
     }
 
-    .dropdown ul li.header {
+    .compound-input .dropdown ul li.header {
       color: #888;
     }
 
-    .token-dropdown ul li a {
+    .compound-input .token-dropdown ul li a {
       padding-left: 24px;
     }
 
-    .dropdown ul li.active a {
+    .compound-input .dropdown ul li.active a {
       cursor: pointer;
       background: dodgerblue;
       color: white;
     }
 
-    .dropdown .check {
+    .compound-input .dropdown .check {
       position: absolute;
       left: 0px;
       width: 24px;
@@ -148,6 +156,7 @@
       border-radius: 3px;
       position: relative;
       margin-right: 20px;
+      flex-shrink: 0;
     }
 
     .opensquare::before,
@@ -171,8 +180,12 @@
       left: 14px;
     }
     </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   </head>
   <body>
+    <!--
     <input>
 
     <div class="bar">
@@ -183,6 +196,22 @@
     </div>
 
     <input>
+    -->
+
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img style="display:inline;width:32px;margin-top:-5px;" src="http://www.smc.it/documents/945540/945605/opensquare_white.png/149cde45-7c6c-4aa5-b38f-177a72e991df?t=1443137271000">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="max-width:1000px">
+      <div id="root"></div>
+    </div>
+
     <script src="/static/bundle.js"></script>
   </body>
 </html>
