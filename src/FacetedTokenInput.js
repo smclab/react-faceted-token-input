@@ -89,7 +89,12 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div className="dropdown input-dropdown">
-        { dropdownSections.map(this.renderDropdownSection, this) }
+        {
+          dropdownSections
+            .map(this.renderDropdownSection, this)
+            .reduce((memo, o) => [ ...memo, <hr />, o ], [])
+            .slice(1)
+        }
       </div>
     );
   }
