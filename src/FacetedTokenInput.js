@@ -299,7 +299,7 @@ export default class FacetedTokenInput extends Component {
       this.setState({
         tokenSelectionDirection: DIRECTION_NONE,
         tokenSelectionStart: tokens.length,
-        tokenSelectionEnd: tokens.length + 1,
+        tokenSelectionEnd: tokens.length + 1
       });
     }
   }
@@ -307,11 +307,8 @@ export default class FacetedTokenInput extends Component {
   onLeftRight(event) {
     const {
       selectionStart,
-      selectionEnd,
       selectionDirection
     } = this.refs.input;
-
-    const hasCaret = (selectionStart === selectionEnd);
 
     let {
       tokens,
@@ -320,14 +317,12 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    const hasTokenCaret = (tokenSelectionStart === tokenSelectionEnd);
-
     // TODO: Manage RTL languages
 
     const keyDirection =
-      (event.which === RIGHT) ? DIRECTION_FORWARD :
-      (event.which === LEFT) ? DIRECTION_BACKWARD :
-      DIRECTION_NONE;
+      (event.which === RIGHT) ? DIRECTION_FORWARD
+      : (event.which === LEFT) ? DIRECTION_BACKWARD
+      : DIRECTION_NONE;
 
     const selectToHome = isSelectToHome(event);
     const selectToEnd = isSelectToEnd(event);
@@ -522,27 +517,6 @@ export default class FacetedTokenInput extends Component {
 
       this.addToken(suggestion.result);
     }
-
-    /*const { tokens, searchText } = this.state;
-
-    if (!searchText.trim()) {
-      return;
-    }
-
-    const nextTokens = [
-      ...tokens,
-      { label: searchText } // his.props.getToken(searchText)
-    ];
-
-    this.setState({
-      searchText: '',
-      tokens: nextTokens,
-      tokenSelectionDirection: DIRECTION_NONE,
-      tokenSelectionStart: tokens.length + 1,
-      tokenSelectionEnd: tokens.length + 2
-    });
-
-    this.props.onChange({ searchText: '', tokens: nextTokens });*/
   }
 
   addToken(token) {

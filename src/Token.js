@@ -1,5 +1,5 @@
 
-import React, { Component, Children } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { ENTER, UP, DOWN } from './key-codes';
@@ -32,20 +32,13 @@ export default class Token extends Component {
 
   render() {
     const {
-      index,
       selected,
       facet,
       description,
-      dropdownMenu,
-      onKeyDown,
-      onUpdate,
-      token
+      dropdownMenu
     } = this.props;
 
-    const {
-      showDropDown,
-      selectedIndex
-    } = this.state;
+    const { showDropDown } = this.state;
 
     const containerClassName = classNames({
       'token-container': true,
