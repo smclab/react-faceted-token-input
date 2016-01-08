@@ -1,3 +1,5 @@
+import React from 'react';
+
 const FIELDS = {
   "product": "Product",
   "description": "Description"
@@ -47,7 +49,7 @@ export default class ResultFieldTokenType {
   renderToken(token) {
     return {
       facet: FIELDS[token.field],
-      description: token.value
+      description: token.fuzzy ? token.value + '…' : token.value
     };
   }
 
@@ -62,17 +64,29 @@ export default class ResultFieldTokenType {
       return [];
     }
 
-    return this.values
-      .filter(value => value.toLowerCase().indexOf(search) === 0)
-      .map((value, index) => ({
-        id: this.type + '-' + index,
-        description: FIELDS[this.field] + ': ' + value,
+    return [
+      {
+        id: this.type + '-fuzzy-' + search,
+        description: FIELDS[this.field] + ' contains: ' + search,
         result: {
           type: this.type,
           field: this.field,
-          value: value
+          fuzzy: true,
+          value: search
         }
-      }));
+      },
+      ...this.values
+        .filter(value => value.toLowerCase().indexOf(search) === 0)
+        .map((value, index) => ({
+          id: this.type + '-' + index,
+          description: <em>{ value }</em>,
+          result: {
+            type: this.type,
+            field: this.field,
+            value: value
+          }
+        }))
+    ];
   }
 
 }
