@@ -75,4 +75,15 @@ class Results extends Component {
   }
 }
 
-ReactDOM.render(<div><App /><hr /><Results /></div>, document.getElementById('root'));
+ReactDOM.render((
+  <div>
+    <div className="bar">
+      <div className="opensquare" />
+      <div className="grow">
+        <App />
+      </div>
+    </div>
+    <hr />
+    <Results />
+  </div>
+), document.getElementById('root'));
