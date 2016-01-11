@@ -1,5 +1,5 @@
 
-import { LEFT, RIGHT } from './key-codes';
+import { LEFT, RIGHT, HOME, END, A, E  } from './key-codes';
 
 const UA = (typeof navigator !== 'undefined') ? navigator.userAgent.toLowerCase() : '';
 
@@ -11,16 +11,24 @@ export const isOnlyCtrlKey = IS_MAC
   ? event => event.metaKey && !event.ctrlKey
   : event => event.ctrlKey && !event.metaKey;
 
-export const isSelectToHome = IS_MAC
-  ? ({ metaKey, shiftKey, ctrlKey, altKey, which }) =>
-    metaKey && shiftKey && !ctrlKey && !altKey && (which === LEFT)
+export const isHome = IS_MAC
+  ? ({ metaKey, ctrlKey, altKey, which }) =>
+    (metaKey && !ctrlKey && !altKey && (which === LEFT)) ||
+    (!metaKey && !ctrlKey && !altKey && which === HOME) ||
+    (!metaKey && ctrlKey && !altKey && (which === A))
   // TODO: Windows support
   : event => false
-;
 
-export const isSelectToEnd = IS_MAC
-  ? ({ metaKey, shiftKey, ctrlKey, altKey, which }) =>
-    metaKey && shiftKey && !ctrlKey && !altKey && (which === RIGHT)
-    // TODO: Windows support
+export const isEnd = IS_MAC
+  ? ({ metaKey, ctrlKey, altKey, which }) =>
+    (metaKey && !ctrlKey && !altKey && (which === RIGHT)) ||
+    (!metaKey && !ctrlKey && !altKey && which === END) ||
+    (!metaKey && ctrlKey && !altKey && (which === E))
+  // TODO: Windows support
   : event => false
-;
+
+export const isForward = ({ which }) => (which === RIGHT) || isEnd(event);
+export const isBackward = ({ which }) => (which === LEFT) || isHome(event);
+
+export const isSelectToHome = event => event.shiftKey && isHome(event);
+export const isSelectToEnd = event => event.shiftKey && isEnd(event);

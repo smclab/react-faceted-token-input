@@ -4,8 +4,26 @@ import classNames from 'classnames';
 
 import Token from './Token';
 import DropdownMenu from './DropdownMenu';
-import { BACKSPACE, ENTER, LEFT, RIGHT, DOWN, UP } from './key-codes';
-import { isSelectToHome, isSelectToEnd } from './key-utils';
+
+import {
+  BACKSPACE,
+  ENTER,
+  LEFT,
+  RIGHT,
+  DOWN,
+  UP,
+  END,
+  HOME
+} from './key-codes';
+
+import {
+  isHome,
+  isEnd,
+  isSelectToHome,
+  isSelectToEnd,
+  isForward,
+  isBackward
+} from './key-utils';
 
 const DIRECTION_NONE = 'none';
 const DIRECTION_BACKWARD = 'backward';
@@ -21,6 +39,22 @@ const INPUT_STYLE = {
   outline: 'none'
 };
 
+const INPUT_SPY_WRAPPER_STYLE = {
+  position: 'absolute',
+  visibility: 'hidden',
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  height: '0px',
+  overflow: 'hidden'
+};
+
+const INPUT_SPY_STYLE = {
+  display: 'block',
+  whiteSpace: 'pre',
+  float: 'left'
+};
+
 const DEFAULT_PROPS = {
   defaultTokens: []
 };
@@ -33,6 +67,7 @@ export default class FacetedTokenInput extends Component {
     this.state = {
       focused: false,
       searchText: '',
+      searchTextBasis: '0px',
       tokens: props.defaultTokens || [],
       showDropDown: false,
       selectedSectionIndex: -1,
@@ -47,7 +82,13 @@ export default class FacetedTokenInput extends Component {
   render() {
     const { placeholder } = this.props;
 
-    const { tokens, searchText, showDropDown, focused } = this.state;
+    const {
+      tokens,
+      searchText,
+      searchTextBasis,
+      showDropDown,
+      focused
+    } = this.state;
 
     const facetedTokenInputClass = classNames('compound-input', {
       'focused': focused
@@ -71,9 +112,17 @@ export default class FacetedTokenInput extends Component {
           className="compound-input-field"
           placeholder={ tokens.length ? '' : placeholder }
           value={ searchText }
+          selectionStart={ 0 }
+          selectionEnd={ 1 }
           onChange={ event => this.onChange(event) }
           onFocus={ event => this.onInputFocus(event) }
         />
+
+        <span style={ INPUT_SPY_WRAPPER_STYLE }>
+          <span key="input-spy" ref="inputSpy" style={ INPUT_SPY_STYLE }>
+            { searchText }
+          </span>
+        </span>
 
         { this.props.children }
 
@@ -134,6 +183,8 @@ export default class FacetedTokenInput extends Component {
   }
 
   componentDidUpdate() {
+    this.updateInputFlexBasis();
+
     if (this.state.focused) {
       const {
         tokens,
@@ -217,6 +268,7 @@ export default class FacetedTokenInput extends Component {
   }
 
   onKeyDown(event) {
+    console.log(event.nativeEvent);
     switch (event.which) {
       case ENTER:
         return this.onEnter(event);
@@ -227,7 +279,13 @@ export default class FacetedTokenInput extends Component {
         return this.onUpDown(event);
       case LEFT:
       case RIGHT:
+      case HOME:
+      case END:
         return this.onLeftRight(event);
+      default:
+        if (isHome(event) || isEnd(event)) {
+          return this.onLeftRight(event);
+        }
     }
   }
 
@@ -319,10 +377,9 @@ export default class FacetedTokenInput extends Component {
 
     // TODO: Manage RTL languages
 
-    const keyDirection =
-      (event.which === RIGHT) ? DIRECTION_FORWARD
-      : (event.which === LEFT) ? DIRECTION_BACKWARD
-      : DIRECTION_NONE;
+    const keyDirection = isForward(event) ? DIRECTION_FORWARD
+      : isBackward(event) ? DIRECTION_BACKWARD :
+      DIRECTION_NONE;
 
     const selectToHome = isSelectToHome(event);
     const selectToEnd = isSelectToEnd(event);
@@ -549,6 +606,13 @@ export default class FacetedTokenInput extends Component {
         ...tokens.slice(index + 1)
       ]
     });
+  }
+
+  updateInputFlexBasis() {
+    // Very brutal and performant way of handling autogrow
+
+    this.refs.input.style.flexBasis =
+      (this.refs.inputSpy.offsetWidth + 1) + 'px';
   }
 
 }
