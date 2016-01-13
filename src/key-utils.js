@@ -27,6 +27,7 @@ export const isEnd = IS_MAC
   // TODO: Windows support
   : event => false
 
+// TODO: Manage RTL languages
 export const isForward = ({ which }) => (which === RIGHT) || isEnd(event);
 export const isBackward = ({ which }) => (which === LEFT) || isHome(event);
 

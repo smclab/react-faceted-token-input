@@ -268,7 +268,6 @@ export default class FacetedTokenInput extends Component {
   }
 
   onKeyDown(event) {
-    console.log(event.nativeEvent);
     switch (event.which) {
       case ENTER:
         return this.onEnter(event);
@@ -375,16 +374,16 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    // TODO: Manage RTL languages
-
     const keyDirection = isForward(event) ? DIRECTION_FORWARD
       : isBackward(event) ? DIRECTION_BACKWARD :
       DIRECTION_NONE;
 
+    const home = isHome(event);
+    const end = isEnd(event);
     const selectToHome = isSelectToHome(event);
     const selectToEnd = isSelectToEnd(event);
 
-    if (!selectToHome && !selectToEnd && tokenSelectionStart >= tokens.length) {
+    if (!home && !end && !selectToHome && !selectToEnd && tokenSelectionStart >= tokens.length) {
       // The text field is focused
 
       if (selectionStart > 0) {
@@ -405,12 +404,6 @@ export default class FacetedTokenInput extends Component {
       if (keyDirection === DIRECTION_FORWARD) {
         // We are moving on the opposite side
         return;
-      }
-    }
-
-    if (!selectToHome && !selectToEnd) {
-      if (tokenSelectionEnd <= tokens.length) {
-        event.preventDefault();
       }
     }
 
@@ -440,7 +433,24 @@ export default class FacetedTokenInput extends Component {
         }
       }
     }
+    else if (home) {
+      if (tokens.length > 0) {
+        event.preventDefault();
+        this.refs.input.setSelectionRange(0, 0);
+        tokenSelectionStart = 0;
+        tokenSelectionEnd = 1;
+      }
+    }
+    else if (end) {
+      event.preventDefault();
+      this.refs.input.setSelectionRange(
+        this.refs.input.value.length, this.refs.input.value.length)
+    }
     else if (!event.shiftKey) {
+      if (tokenSelectionEnd <= tokens.length) {
+        event.preventDefault();
+      }
+
       if (tokenSelectionDirection === DIRECTION_NONE) {
         if (keyDirection === DIRECTION_FORWARD) {
           tokenSelectionStart += 1;
@@ -460,11 +470,15 @@ export default class FacetedTokenInput extends Component {
 
       tokenSelectionDirection = DIRECTION_NONE;
 
-      if (tokenSelectionStart <= tokens.length) {
+      if (tokenSelectionStart < tokens.length) {
         this.refs.input.setSelectionRange(0, 0);
       }
     }
     else {
+      if (tokenSelectionEnd <= tokens.length) {
+        event.preventDefault();
+      }
+
       const initialIsInputInSelection = (tokenSelectionEnd > tokens.length);
 
       if (tokenSelectionDirection === DIRECTION_NONE) {
