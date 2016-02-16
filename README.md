@@ -13,11 +13,11 @@ Installation
 License
 -------
 
-This library, *React Faceted Token Input*, is free software ("Licensed Software"); you can
-redistribute it and/or modify it under the terms of the [GNU Lesser General
-Public License](http://www.gnu.org/licenses/lgpl-2.1.html) as published by the
-Free Software Foundation; either version 2.1 of the License, or (at your
-option) any later version.
+This library, *React Faceted Token Input*, is free software ("Licensed
+Software"); you can redistribute it and/or modify it under the terms of the [GNU
+Lesser General Public License](http://www.gnu.org/licenses/lgpl-2.1.html) as
+published by the Free Software Foundation; either version 2.1 of the License, or
+(at your option) any later version.
 
 This library is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; including but not limited to, the implied warranty of MERCHANTABILITY,

@@ -15,7 +15,11 @@
     "lib",
     "src"
   ],
-  "author": "",
+  "author": {
+    "name": "Pier Paolo Ramon",
+    "email": "pierpaolo.ramon@smc.it",
+    "url": "https://github.com/yuchi"
+  },
   "license": "LGPL-2.1",
   "dependencies": {
     "classnames": "^2.2.2"
