@@ -1,7 +1,7 @@
 {
   "name": "react-faceted-token-input",
   "version": "0.1.1",
-  "description": "",
+  "description": "React Faceted Token Input",
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
   "scripts": {
@@ -15,11 +15,7 @@
     "lib",
     "src"
   ],
-  "author": {
-    "name": "Pier Paolo Ramon",
-    "email": "pierpaolo.ramon@smc.it",
-    "url": "https://github.com/yuchi"
-  },
+  "author": "Pier Paolo Ramon <pierpaolo.ramon@smc.it> (https://github.com/yuchi)",
   "license": "LGPL-2.1",
   "dependencies": {
     "classnames": "^2.2.2"
@@ -49,5 +45,24 @@
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuchi/react-faceted-token-input.git"
+  },
+  "keywords": [
+    "react",
+    "token",
+    "input",
+    "faceted",
+    "component"
+  ],
+  "bugs": {
+    "url": "https://github.com/yuchi/react-faceted-token-input/issues"
+  },
+  "homepage": "https://github.com/yuchi/react-faceted-token-input#readme"
 }
