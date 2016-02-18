@@ -17,6 +17,7 @@ import {
 } from './key-codes';
 
 import {
+  IS_MAC,
   isHome,
   isEnd,
   isSelectToHome,
@@ -363,6 +364,7 @@ export default class FacetedTokenInput extends Component {
 
   onLeftRight(event) {
     const {
+      selectionEnd,
       selectionStart,
       selectionDirection
     } = this.refs.input;
@@ -391,7 +393,7 @@ export default class FacetedTokenInput extends Component {
         return;
       }
 
-      if (selectionDirection === DIRECTION_FORWARD) {
+      if (selectionDirection === DIRECTION_FORWARD && selectionStart !== selectionEnd) {
         // The 'caret' is on the opposite side
         return;
       }
@@ -408,7 +410,18 @@ export default class FacetedTokenInput extends Component {
     }
 
     if (selectToHome) {
-      tokenSelectionStart = 0;
+      if(IS_MAC) {
+        tokenSelectionStart = 0;
+      }
+      else {
+        if (tokenSelectionStart > 0 &&
+            tokenSelectionDirection === DIRECTION_FORWARD) {
+          tokenSelectionEnd = tokenSelectionStart + 1;
+        }
+
+        tokenSelectionStart = 0;
+        tokenSelectionDirection = DIRECTION_BACKWARD;
+      }
 
       if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
         if (tokenSelectionDirection === DIRECTION_NONE) {
@@ -417,14 +430,38 @@ export default class FacetedTokenInput extends Component {
       }
     }
     else if (selectToEnd) {
-      tokenSelectionEnd = tokens.length + 1;
+      if (IS_MAC) {
+        tokenSelectionEnd = tokens.length + 1;
 
-      this.refs.input.setSelectionRange(
-        selectionStart, this.refs.input.value.length);
-
-      if (tokenSelectionStart < tokens.length) {
         this.refs.input.setSelectionRange(
-          0, this.refs.input.value.length);
+          selectionStart, this.refs.input.value.length);
+
+        if (tokenSelectionStart < tokens.length) {
+          this.refs.input.setSelectionRange(
+            0, this.refs.input.value.length);
+        }
+      }
+      else {
+        if (tokenSelectionEnd !== tokens.length + 1 &&
+            tokenSelectionDirection === DIRECTION_BACKWARD) {
+          tokenSelectionStart = tokenSelectionEnd - 1;
+          tokenSelectionEnd = tokens.length + 1;
+        }
+        else {
+          tokenSelectionEnd = tokens.length + 1;
+        }
+
+        let selStart = this.refs.input.selectionStart;
+        let selEnd = this.refs.input.selectionEnd;
+        let selDir = this.refs.input.selectionDirection;
+
+        if (tokenSelectionStart !== tokenSelectionEnd &&
+            tokenSelectionDirection === DIRECTION_BACKWARD &&
+            selectionStart !== selectionEnd) {
+          tokenSelectionStart = tokens.length;
+        }
+
+        tokenSelectionDirection = DIRECTION_FORWARD;
       }
 
       if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
@@ -445,6 +482,8 @@ export default class FacetedTokenInput extends Component {
       event.preventDefault();
       this.refs.input.setSelectionRange(
         this.refs.input.value.length, this.refs.input.value.length)
+      tokenSelectionStart = tokens.length;
+      tokenSelectionEnd = tokens.length + 1;
     }
     else if (!event.shiftKey) {
       if (tokenSelectionEnd <= tokens.length) {

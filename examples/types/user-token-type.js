@@ -34,11 +34,11 @@ export default class UserTokenType {
       description: (
         <span>
           {'👤 '}
-          { token.firstName }
+          { token.firstName.slice(0, 1) }
           { ' ' }
-          { token.middleName }
+          { token.middleName.slice(0, 1) }
           { ' ' }
-          { token.lastName }
+          { token.lastName.slice(0, 1) }
         </span>
       ),
       dropdownMenu: Object.keys(FIELDS).map(field => ({
@@ -59,7 +59,7 @@ export default class UserTokenType {
       return [];
     }
 
-    const delay = 300 + Math.round(Math.random() * 500);
+    const delay = 0;//300 + Math.round(Math.random() * 500);
 
     return new Promise(resolve => setTimeout(resolve, delay)).then(() => {
       return USERS.filter(this.getMatcher(search)).map(user => ({
