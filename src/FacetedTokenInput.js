@@ -410,12 +410,13 @@ export default class FacetedTokenInput extends Component {
     }
 
     if (selectToHome) {
-      if(IS_MAC) {
+      if (IS_MAC) {
         tokenSelectionStart = 0;
       }
       else {
         if (tokenSelectionStart > 0 &&
             tokenSelectionDirection === DIRECTION_FORWARD) {
+              
           tokenSelectionEnd = tokenSelectionStart + 1;
         }
 
@@ -444,6 +445,7 @@ export default class FacetedTokenInput extends Component {
       else {
         if (tokenSelectionEnd !== tokens.length + 1 &&
             tokenSelectionDirection === DIRECTION_BACKWARD) {
+
           tokenSelectionStart = tokenSelectionEnd - 1;
           tokenSelectionEnd = tokens.length + 1;
         }
@@ -451,13 +453,10 @@ export default class FacetedTokenInput extends Component {
           tokenSelectionEnd = tokens.length + 1;
         }
 
-        let selStart = this.refs.input.selectionStart;
-        let selEnd = this.refs.input.selectionEnd;
-        let selDir = this.refs.input.selectionDirection;
-
         if (tokenSelectionStart !== tokenSelectionEnd &&
             tokenSelectionDirection === DIRECTION_BACKWARD &&
             selectionStart !== selectionEnd) {
+
           tokenSelectionStart = tokens.length;
         }
 
