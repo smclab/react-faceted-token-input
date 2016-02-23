@@ -16,7 +16,6 @@ export const isHome = IS_MAC
     (metaKey && !ctrlKey && !altKey && (which === LEFT)) ||
     (!metaKey && !ctrlKey && !altKey && which === HOME) ||
     (!metaKey && ctrlKey && !altKey && (which === A))
-  // TODO: Windows support
   : ({ ctrlKey, altKey, which }) =>
     (!ctrlKey && !altKey && (which === HOME)) ||
     (ctrlKey && !altKey && (which === HOME));
@@ -26,7 +25,6 @@ export const isEnd = IS_MAC
     (metaKey && !ctrlKey && !altKey && (which === RIGHT)) ||
     (!metaKey && !ctrlKey && !altKey && which === END) ||
     (!metaKey && ctrlKey && !altKey && (which === E))
-  // TODO: Windows support
   : ({ ctrlKey, altKey, which }) =>
     (!ctrlKey && !altKey && (which === END)) ||
     (ctrlKey && !altKey && (which === END));

@@ -406,16 +406,16 @@ export default class FacetedTokenInput extends Component {
       this.refs.input.value
     );
 
-    console.log('output', result);
-
     if (result) {
       if (result.prevent) {
         event.preventDefault();
       }
 
-      this.refs.input.setSelectionRange(result.selectionStart,
-                                        result.selectionEnd,
-                                        result.selectionDirection);
+      this.refs.input.setSelectionRange(
+        result.selectionStart,
+        result.selectionEnd,
+        result.selectionDirection
+      );
 
       tokenSelectionStart = result.tokenSelectionStart;
       tokenSelectionEnd = result.tokenSelectionEnd;
@@ -541,9 +541,3 @@ export default class FacetedTokenInput extends Component {
 }
 
 FacetedTokenInput.defaultProps = DEFAULT_PROPS;
-
-function test(e, tin) {
-  e.preventDefault();
-  tin.setSelectionRange(0,3);
-  return false;
-}
