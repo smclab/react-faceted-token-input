@@ -5,11 +5,11 @@
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
   "scripts": {
-    "build": "NODE_ENV=production babel src --out-dir lib",
+    "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "clean": "rimraf lib",
     "lint": "eslint src test",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development node ./server"
+    "start": "cross-env NODE_ENV=development node ./server"
   },
   "files": [
     "lib",
@@ -33,6 +33,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
     "babel-preset-stage-0": "^6.3.13",
+    "cross-env": "^1.0.7",
     "eslint": "^1.10.3",
     "eslint-config-semistandard": "^5.0.0",
     "eslint-plugin-react": "^3.14.0",
