@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import Token from './Token';
 import DropdownMenu from './DropdownMenu';
 
+import onLeftRight from './onLeftRight';
+
 import {
   BACKSPACE,
   ENTER,
@@ -17,6 +19,7 @@ import {
 } from './key-codes';
 
 import {
+  IS_MAC,
   isHome,
   isEnd,
   isSelectToHome,
@@ -280,10 +283,10 @@ export default class FacetedTokenInput extends Component {
       case RIGHT:
       case HOME:
       case END:
-        return this.onLeftRight(event);
+        return this.onLeftRightPress(event);
       default:
         if (isHome(event) || isEnd(event)) {
-          return this.onLeftRight(event);
+          return this.onLeftRightPress(event);
         }
     }
   }
@@ -361,8 +364,9 @@ export default class FacetedTokenInput extends Component {
     }
   }
 
-  onLeftRight(event) {
-    const {
+  onLeftRightPress(event) {
+    let {
+      selectionEnd,
       selectionStart,
       selectionDirection
     } = this.refs.input;
@@ -382,144 +386,49 @@ export default class FacetedTokenInput extends Component {
     const end = isEnd(event);
     const selectToHome = isSelectToHome(event);
     const selectToEnd = isSelectToEnd(event);
+    const shiftKey = event.shiftKey;
 
-    if (!home && !end && !selectToHome && !selectToEnd && tokenSelectionStart >= tokens.length) {
-      // The text field is focused
+    const result = onLeftRight(
+      selectionStart,
+      selectionEnd,
+      selectionDirection,
+      tokens.length,
+      tokenSelectionStart,
+      tokenSelectionEnd,
+      tokenSelectionDirection,
+      home,
+      end,
+      selectToHome,
+      selectToEnd,
+      shiftKey,
+      IS_MAC,
+      keyDirection,
+      this.refs.input.value
+    );
 
-      if (selectionStart > 0) {
-        // We’re moving inside the text field
-        return;
-      }
+    console.log('output', result);
 
-      if (selectionDirection === DIRECTION_FORWARD) {
-        // The 'caret' is on the opposite side
-        return;
-      }
-
-      if (selectionDirection === DIRECTION_BACKWARD && !event.shiftKey) {
-        // We do have a selection but we’re exiting it on the left
-        return;
-      }
-
-      if (keyDirection === DIRECTION_FORWARD) {
-        // We are moving on the opposite side
-        return;
-      }
-    }
-
-    if (selectToHome) {
-      tokenSelectionStart = 0;
-
-      if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
-        if (tokenSelectionDirection === DIRECTION_NONE) {
-          tokenSelectionDirection = DIRECTION_BACKWARD;
-        }
-      }
-    }
-    else if (selectToEnd) {
-      tokenSelectionEnd = tokens.length + 1;
-
-      this.refs.input.setSelectionRange(
-        selectionStart, this.refs.input.value.length);
-
-      if (tokenSelectionStart < tokens.length) {
-        this.refs.input.setSelectionRange(
-          0, this.refs.input.value.length);
-      }
-
-      if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
-        if (tokenSelectionDirection === DIRECTION_NONE) {
-          tokenSelectionDirection = DIRECTION_FORWARD;
-        }
-      }
-    }
-    else if (home) {
-      if (tokens.length > 0) {
-        event.preventDefault();
-        this.refs.input.setSelectionRange(0, 0);
-        tokenSelectionStart = 0;
-        tokenSelectionEnd = 1;
-      }
-    }
-    else if (end) {
-      event.preventDefault();
-      this.refs.input.setSelectionRange(
-        this.refs.input.value.length, this.refs.input.value.length)
-    }
-    else if (!event.shiftKey) {
-      if (tokenSelectionEnd <= tokens.length) {
+    if (result) {
+      if (result.prevent) {
         event.preventDefault();
       }
 
-      if (tokenSelectionDirection === DIRECTION_NONE) {
-        if (keyDirection === DIRECTION_FORWARD) {
-          tokenSelectionStart += 1;
-          tokenSelectionEnd += 1;
-        }
-        else if (keyDirection === DIRECTION_BACKWARD) {
-          tokenSelectionStart -= 1;
-          tokenSelectionEnd -= 1;
-        }
-      }
-      else if (keyDirection === DIRECTION_FORWARD) {
-        tokenSelectionStart = tokenSelectionEnd - 1;
-      }
-      else if (keyDirection === DIRECTION_BACKWARD) {
-        tokenSelectionEnd = tokenSelectionStart + 1;
-      }
+      this.refs.input.setSelectionRange(result.selectionStart,
+                                        result.selectionEnd,
+                                        result.selectionDirection);
 
-      tokenSelectionDirection = DIRECTION_NONE;
-
-      if (tokenSelectionStart < tokens.length) {
-        this.refs.input.setSelectionRange(0, 0);
-      }
+      tokenSelectionStart = result.tokenSelectionStart;
+      tokenSelectionEnd = result.tokenSelectionEnd;
+      tokenSelectionDirection = result.tokenSelectionDirection;
     }
-    else {
-      if (tokenSelectionEnd <= tokens.length) {
-        event.preventDefault();
-      }
-
-      const initialIsInputInSelection = (tokenSelectionEnd > tokens.length);
-
-      if (tokenSelectionDirection === DIRECTION_NONE) {
-        tokenSelectionDirection = keyDirection;
-      }
-
-      const increment = (tokenSelectionDirection === keyDirection) ? 1 : -1;
-
-      if (tokenSelectionDirection === DIRECTION_FORWARD) {
-        tokenSelectionEnd += increment;
-      }
-      else if (tokenSelectionDirection === DIRECTION_BACKWARD) {
-        tokenSelectionStart -= increment;
-      }
-
-      if ((tokenSelectionEnd - tokenSelectionStart) <= 1) {
-        tokenSelectionDirection = DIRECTION_NONE;
-      }
-
-      if (tokenSelectionEnd > tokens.length) {
-        if (keyDirection !== tokenSelectionDirection) {
-          event.preventDefault();
-        }
-
-        if (!initialIsInputInSelection && (keyDirection === DIRECTION_FORWARD)) {
-          this.refs.input.setSelectionRange(0, 1);
-        }
-      }
-    }
-
-    tokenSelectionStart = Math.max(0, tokenSelectionStart);
-    tokenSelectionEnd = Math.max(tokenSelectionStart + 1, tokenSelectionEnd);
-
-    tokenSelectionEnd = Math.min(tokens.length + 1, tokenSelectionEnd);
-    tokenSelectionStart = Math.min(tokenSelectionEnd - 1, tokenSelectionStart);
 
     this.setState({
       tokenSelectionDirection,
       tokenSelectionEnd,
       tokenSelectionStart
     });
+
+    return false;
   }
 
   onBackspace(event) {
@@ -632,3 +541,9 @@ export default class FacetedTokenInput extends Component {
 }
 
 FacetedTokenInput.defaultProps = DEFAULT_PROPS;
+
+function test(e, tin) {
+  e.preventDefault();
+  tin.setSelectionRange(0,3);
+  return false;
+}
