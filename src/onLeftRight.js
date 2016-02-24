@@ -13,8 +13,14 @@ boolean     selectToEnd,
 boolean     shiftKey,
 boolean     mac,
 string      keyDirection,                       ['none' 'backward' 'forward']
-string      valueInput,
+string      inputValue,
 */
+
+import {
+  DIRECTION_NONE,
+  DIRECTION_BACKWARD,
+  DIRECTION_FORWARD
+} from './FacetedTokenInput';
 
 function onLeftRight(
     selectionStart,
@@ -31,16 +37,9 @@ function onLeftRight(
     shiftKey,
     mac,
     keyDirection,
-    valueInput
+    inputValue
   ) {
 
-  const DIRECTION_NONE = 'none';
-  const DIRECTION_BACKWARD = 'backward';
-  const DIRECTION_FORWARD = 'forward';
-
-  let initialIsInputInSelection;
-  let increment;
-  let result = {};
   let prevent = false;
 
   if (!home && !end && !selectToHome && !selectToEnd && tokenSelectionStart >= tokensLength) {
@@ -106,11 +105,11 @@ function onLeftRight(
       tokenSelectionEnd = tokensLength + 1;
 
       selectionStart = selectionStart;
-      selectionEnd = valueInput.length;
+      selectionEnd = inputValue.length;
 
       if (tokenSelectionStart < tokensLength) {
         selectionStart = 0;
-        selectionEnd = valueInput.length;
+        selectionEnd = inputValue.length;
       }
     }
     else {
@@ -128,7 +127,7 @@ function onLeftRight(
         }
       }
 
-      selectionEnd = valueInput.length;
+      selectionEnd = inputValue.length;
       selectionDirection = DIRECTION_FORWARD;
 
       if (tokenSelectionDirection === DIRECTION_BACKWARD) {
@@ -159,8 +158,8 @@ function onLeftRight(
   else if (end) {
     prevent = true;
 
-    selectionStart = valueInput.length;
-    selectionEnd = valueInput.length;
+    selectionStart = inputValue.length;
+    selectionEnd = inputValue.length;
 
     tokenSelectionStart = tokensLength;
     tokenSelectionEnd = tokensLength + 1;
@@ -199,13 +198,13 @@ function onLeftRight(
       prevent = true;
     }
 
-    initialIsInputInSelection = (tokenSelectionEnd > tokensLength);
+    const initialIsInputInSelection = (tokenSelectionEnd > tokensLength);
 
     if (tokenSelectionDirection === DIRECTION_NONE) {
       tokenSelectionDirection = keyDirection;
     }
 
-    increment = (tokenSelectionDirection === keyDirection) ? 1 : -1;
+    const increment = (tokenSelectionDirection === keyDirection) ? 1 : -1;
 
     if (tokenSelectionDirection === DIRECTION_FORWARD) {
       tokenSelectionEnd += increment;
@@ -228,7 +227,7 @@ function onLeftRight(
         selectionStart = 0;
         selectionEnd = 1;
       }
-      else if (selectionEnd !== valueInput.length &&
+      else if (selectionEnd !== inputValue.length &&
                tokenSelectionDirection === DIRECTION_FORWARD){
 
         prevent = true;
@@ -259,16 +258,16 @@ function onLeftRight(
   tokenSelectionEnd = Math.min(tokensLength + 1, tokenSelectionEnd);
   tokenSelectionStart = Math.min(tokenSelectionEnd - 1, tokenSelectionStart);
 
-  result.selectionStart = selectionStart;
-  result.selectionEnd = selectionEnd;
-  result.selectionDirection = selectionDirection;
-  result.tokenSelectionStart = tokenSelectionStart;
-  result.tokenSelectionEnd = tokenSelectionEnd;
-  result.tokenSelectionDirection = tokenSelectionDirection;
-  result.mac = mac;
-  result.prevent = prevent;
-
-  return result;
+  return {
+    selectionStart,
+    selectionEnd,
+    selectionDirection,
+    tokenSelectionStart,
+    tokenSelectionEnd,
+    tokenSelectionDirection,
+    mac,
+    prevent
+  };
 }
 
 module.exports = onLeftRight;

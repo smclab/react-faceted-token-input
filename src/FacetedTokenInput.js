@@ -28,9 +28,9 @@ import {
   isBackward
 } from './key-utils';
 
-const DIRECTION_NONE = 'none';
-const DIRECTION_BACKWARD = 'backward';
-const DIRECTION_FORWARD = 'forward';
+export const DIRECTION_NONE = 'none';
+export const DIRECTION_BACKWARD = 'backward';
+export const DIRECTION_FORWARD = 'forward';
 
 const INPUT_STYLE = {
   font: 'inherit',
