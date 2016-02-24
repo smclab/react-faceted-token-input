@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
 import Token from './Token';
@@ -60,6 +60,13 @@ const INPUT_SPY_STYLE = {
 
 const DEFAULT_PROPS = {
   defaultTokens: []
+};
+
+const PROP_TYPES = {
+  defaultTokens: PropTypes.array,
+  placeholder: PropTypes.string,
+  children: PropTypes.element,
+  dropdownSections: PropTypes.array
 };
 
 export default class FacetedTokenInput extends Component {
@@ -540,11 +547,5 @@ export default class FacetedTokenInput extends Component {
 
 }
 
-FacetedTokenInput.propTypes = {
-  defaultTokens: React.PropTypes.array.isRequired,
-  placeholder: React.PropTypes.string,
-  children: React.PropTypes.element,
-  dropdownSections: React.PropTypes.array
-};
-
+FacetedTokenInput.propTypes = PROP_TYPES;
 FacetedTokenInput.defaultProps = DEFAULT_PROPS;
