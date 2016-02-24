@@ -540,4 +540,11 @@ export default class FacetedTokenInput extends Component {
 
 }
 
+FacetedTokenInput.propTypes = {
+  defaultTokens: React.PropTypes.array.isRequired,
+  placeholder: React.PropTypes.string,
+  children: React.PropTypes.element,
+  dropdownSections: React.PropTypes.array
+};
+
 FacetedTokenInput.defaultProps = DEFAULT_PROPS;
