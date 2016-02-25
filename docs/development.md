@@ -80,7 +80,7 @@ For more information about existing tests and further testing head
 
 Start the server with the example with:
 
-  npm start
+    npm start
 
 By default the server runs on port 3000,to change the default port go inside
 `server.js` and on line 20 change the port number:

@@ -165,7 +165,7 @@ For example:
     // you can implement any method to get suggestions and
     // display the dropdown
 
-    // from the example in this repository
+    // from the example in this repository example
     const requestId = Date.now();
 
     this.requestId = requestId;
