@@ -77,3 +77,7 @@ By default the server runs on port 3000,to change the default port go inside
 ```
 
 For more information about the example go [here](example.md).
+
+##### Next
+
+We prepared some [formatting guidelines](formatting.md) to standardize the code 
