@@ -3,7 +3,7 @@
 You can use *react-faceted-token-input* to implement a tokenized input with
 faceted behavior.
 
-## Basic usage (ERRATO)
+## Basic usage
 
 ```javascript
   import FacetedTokenInput from '../src/FacetedTokenInput';
