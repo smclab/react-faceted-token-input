@@ -9,8 +9,10 @@ To replicate the tests run
 
 from the *react-faceted-token-input* folder.
 
-    NOTE: you should have your developer enviroment ready before running the
-    test, see the [development](../development.md) documentation.
+**NOTE**:
+
+* you should have your developer enviroment ready before running the
+  test, see the [development](../development.md) documentation.
 
 ## Next
 
