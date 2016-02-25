@@ -7,7 +7,7 @@ issues, test, add features to the source code.
 
 From the *react-faceted-token-input* folder run:
 
-    npm i
+    npm install
 
 
 ### Dev Dependencies
@@ -15,6 +15,8 @@ From the *react-faceted-token-input* folder run:
 You will have the following tools available:
 
 `react`: you need react to develop a react component
+
+`classnames`: let you conditionally combine classNames together
 
 `babel`: you can (and should) use *ECMAScript 6* to write code for this
 component and `babel` let you do exactly that
