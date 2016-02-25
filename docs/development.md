@@ -91,4 +91,5 @@ For more information about the example go [here](example.md).
 
 ### Next
 
-We prepared some [formatting guidelines](formatting.md) to standardize the code
+We prepared some [formatting guidelines](formatting.md) to
+standardize the look of the code

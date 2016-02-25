@@ -78,7 +78,7 @@ It should get:
   {
     'field': 'Author',
     'name': 'Albert',
-    'dropdownOptions': {
+    'dropdownOptions': [
       {
         label: 'Author',
         current: (token.field === field), // true or false
@@ -96,7 +96,7 @@ It should get:
           field
         }
       }
-    }
+    ]
   }
 ```
 It should return an object. For example:
@@ -152,7 +152,7 @@ For example:
 A function that dictate the behaviour of the input when you change the value,
 displaying for example suggestions in the dropdown.
 
-It should get:
+It could get:
 
 `tokens`: the possible tokens that can be displayed
 
@@ -161,9 +161,11 @@ It should get:
 For example:
 
 ```javascript
-
-  // TO DO: simplify this function for documentation
   onChange({ tokens, searchText }) {
+    // you can implement any method to get suggestions and
+    // display the dropdown
+
+    // from the example in this repository
     const requestId = Date.now();
 
     this.requestId = requestId;
@@ -176,8 +178,6 @@ For example:
   }
 ```
 
-`getTokenSuggestion`: is an optional function that search for the appropriate
-suggestions
 
 <a name="onChange"></a>
 ### children
