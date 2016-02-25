@@ -1,6 +1,6 @@
 # Installation
 
-This React component, *FacetedTokenInput*, works with React `>=0.14`.
+This React component, *react-faceted-token-input*, works with React `>=0.14`.
 
 To install run:
 
