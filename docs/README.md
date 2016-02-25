@@ -3,6 +3,6 @@
 * [Installation](installation.md)
 * [Usage](usage.md)
   * [Example](example.md)
-* [Development](develop.md)
+* [Development](development.md)
 * [Test](/docs/test/README.md)
   * [Explanation](/docs/test/explanation.md)

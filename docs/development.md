@@ -3,13 +3,16 @@
 In this section we target the developers that want to help with resolving
 issues, test, add features to the source code.
 
-### Dev Dependencies
+## Set Up
 
-Install the dev dependencies, from the *react-faceted-token-input* folder run:
+From the *react-faceted-token-input* folder run:
 
     npm i
 
-This will install the following tools:
+
+### Dev Dependencies
+
+You will have the following tools available:
 
 `react`: you need react to develop a react component
 
