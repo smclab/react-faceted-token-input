@@ -36,24 +36,34 @@ component and `babel` let you do exactly that
 The *react-faceted-token-input* comes with some useful scripts to facilitate the
 developer experience:
 
+* [Build](#build)
+* [Clean](#clean)
+* [Lint](#lint)
+* [Test](#test)
+* [Start](#start)
+
+<a name="build"></a>
 ##### Build
 
 Build the project with:
 
     npm build
 
+<a name="clean"></a>
 ##### Clean
 
 Clean the lib folder to prepare for a rebuild:
 
     npm clean
 
+<a name="lint"></a>
 ##### Lint
 
 Linting for your Javascript code, by default inside the `src` and `test` folders:
 
     npm lint
 
+<a name="test"></a>
 ##### Test
 
 Run your test suite:
@@ -63,6 +73,7 @@ Run your test suite:
 For more information about existing tests and further testing head
 [here](/test/README.md).
 
+<a name="start"></a>
 ##### Start
 
 Start the server with the example with:
@@ -78,6 +89,6 @@ By default the server runs on port 3000,to change the default port go inside
 
 For more information about the example go [here](example.md).
 
-##### Next
+### Next
 
-We prepared some [formatting guidelines](formatting.md) to standardize the code 
+We prepared some [formatting guidelines](formatting.md) to standardize the code
