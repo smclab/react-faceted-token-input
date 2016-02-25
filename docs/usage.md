@@ -19,7 +19,11 @@ faceted behavior.
     }
 
     renderToken(token) {
-      return TokenTypes.getTokenType(token.type).renderToken(token);
+      return {
+        facet: token.field,
+        description: token.name,
+        dropdownMenu: token.dropdownOptions
+      };
     }
 
     onChange({ tokens, searchText }) {
@@ -164,7 +168,7 @@ For example:
   }
 ```
 
-`getTokenSuggestion`: is an optional function that search for the appropriate 
+`getTokenSuggestion`: is an optional function that search for the appropriate
 suggestions
 
 ## Demo

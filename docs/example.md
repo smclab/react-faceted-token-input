@@ -26,5 +26,3 @@ The example is composed by quite a few files:
 
 * `types/result-field-token-type.js`: manage the suggestions dropdown in the
 input
-
-## Code explanation
