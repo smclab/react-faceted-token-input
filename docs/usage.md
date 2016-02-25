@@ -63,6 +63,7 @@ Head [here](example) to see a working example.
 * [placeholder](#placeholder)
 * [dropdownSections](#dropdownSections)
 * [onChange](#onChange)
+* [children](#children)
 
 <a name="renderToken"></a>
 ### renderToken (Required)
@@ -148,17 +149,20 @@ For example:
 <a name="onChange"></a>
 ### onChange
 
-A function that dictate the behaviour of the input when you change the value, displaying for example suggestions in the dropdown.
+A function that dictate the behaviour of the input when you change the value,
+displaying for example suggestions in the dropdown.
 
 It should get:
 
 `tokens`: the possible tokens that can be displayed
 
-`searchText`: the input value
+`searchText`: the input value to search in the suggestions
 
 For example:
 
 ```javascript
+
+  // TO DO: simplify this function for documentation
   onChange({ tokens, searchText }) {
     const requestId = Date.now();
 
@@ -174,3 +178,9 @@ For example:
 
 `getTokenSuggestion`: is an optional function that search for the appropriate
 suggestions
+
+<a name="onChange"></a>
+### children
+
+Optional childs of the component. This should be a react element that will be
+placed after the input and before the dropdown selection.
