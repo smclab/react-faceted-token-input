@@ -61,41 +61,112 @@ faceted behavior.
 
 A function that given a token extract the data to render a token.
 
+It should get:
+
+`token`: an object containing the data that you need, an example token could be:
+
 ```javascript
-  renderToken(token) {
-    facet: token.field,
-    description: token.name,
-    dropdownMenu: Object.keys(FIELDS).map(field => ({
-      label: FIELDS[field],
-      current: (token.field === field),
-      result: {
-        ...token,
-        field
+  {
+    'field': 'Author',
+    'name': 'Albert',
+    'dropdownOptions': {
+      {
+        label: 'Author',
+        current: (token.field === field), // true or false
+        result: {
+          ...token,
+          field
+        }
+      },
+
+      {
+        label: 'Mentioned',
+        current: (token.field === field), // true or false
+        result: {
+          ...token,
+          field
+        }
       }
-    }))
+    }
   }
 ```
+It should return an object. For example:
 
-
+```javascript
+  renderToken(token) {
+    return {
+      facet: token.field,
+      description: token.name,
+      dropdownMenu: token.dropdownOptions
+    };
+  }
+```
 
 <a name="defaultToken"></a>
 ### defaultTokens
 
+An array that contains the default displayed tokens.
 
+```javascript
+  defaultTokens = [];
+```
 
 <a name="placeholder"></a>
 ### placeholder
 
+A string that will be displayed as a placeholder in the empty input.
+
+```javascript
+  placeholder = 'Search...';
+```
 
 <a name="dropdownSections"></a>
 ### dropdownSections
 
+An array that contains the possible dropdowns. It should start as an empty array inside the state in your constructor.
+
+For example:
+
+```javascript
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dropdownSections: []
+    };
+  }
+```
 
 <a name="onChange"></a>
 ### onChange
 
+A function that dictate the behaviour of the input when you change the value, displaying for example suggestions in the dropdown.
 
+It should get:
 
-## Working Example
+`tokens`: the possible tokens that can be displayed
+
+`searchText`: the input value
+
+For example:
+
+```javascript
+  onChange({ tokens, searchText }) {
+    const requestId = Date.now();
+
+    this.requestId = requestId;
+
+    TokenTypes.getTokenSuggestions(searchText).then(dropdownSections => {
+      if (this.requestId === requestId) {
+        this.setState({ dropdownSections });
+      }
+    });
+  }
+```
+
+`getTokenSuggestion`: is an optional function that search for the appropriate 
+suggestions
+
+## Demo
 
 Head [here](example) to see a working example.
