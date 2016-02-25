@@ -1,7 +1,11 @@
 # Usage
 
 You can use *react-faceted-token-input* to implement a tokenized input with
-faceted behavior.
+faceted behavior inside your React app.
+
+## Demo
+
+Head [here](example) to see a working example.
 
 ## Basic usage
 
@@ -170,7 +174,3 @@ For example:
 
 `getTokenSuggestion`: is an optional function that search for the appropriate
 suggestions
-
-## Demo
-
-Head [here](example) to see a working example.
