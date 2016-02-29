@@ -75,7 +75,8 @@ of this component in your React app.
 <a name="renderToken"></a>
 ### renderToken(token) (Required)
 
-A function that given a token return a rendered token.
+A function that given a `token` returns a rendered token to use in the main
+component.
 
 ```javascript
   renderToken(token) {
@@ -99,26 +100,22 @@ A function that given a token return a rendered token.
   }
 ```
 
-Here is a scheme of the token elements, based on the example included in the
-repository:
+Here is a scheme of the `RenderedToken` properties, based on the example
+included in the repository:
 
 ![Token elements scheme](./images/rendered-token-scheme.png)
 
-`facet`: a string that, in this example, will be displayed on the left side of
-the token.
-
-`description`: a string that, in this example, will be displayed on the right
-part of the token.
-
-`dropdownMenu`: The other possible options (if available) for the facet,
-defined as an array of objects. Each object contains:
-
-* `label`: a string that will be the new facet
-
-* `current`: a boolean that defines if this is the currently selected option, in
-  this example add and remove the check on the currently selected label.
-
-* `result`: the resulting token with the corrected facet
+* `facet`: a string that should represent the *kind* of the token. You can omit
+  it entirely.
+* `description`: a string that should represent the *content* or *value* of the
+  token.
+* `dropdownMenu`: The other possible options (if available) for this token,
+  defined as an array of objects. Each object contains:
+  * `label`: a string that will be the label for this option,
+  * `current`: a boolean that defines if this is the currently selected option
+    so a small tick can be presented on the left side,
+  * `result`: the new token that will overwrite the current one if this specific
+    option is chosen by the user.
 
 <a name="defaultToken"></a>
 ### defaultTokens
