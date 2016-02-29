@@ -27,7 +27,7 @@ component and `babel` let you do exactly that
 
 `jest`: test framework for react
 
-`rimraf`: tool to remove file and folders used in `npm clear`
+`rimraf`: tool to remove file and folders, this is used in `npm clear`
 
 `cross-env`: let you use `NODE_ENV` across all OS
 

@@ -29,6 +29,8 @@ test code for the description in `describe()` and `it()`.
 
 * `functionCall()`: no space after **functionCall**
 
+* `{ attribute }`: add spaces before and after the attribute.
+
 ### New Lines
 
 * `multi-line if`: add a new line after the opening **{**. Example:
@@ -55,7 +57,7 @@ test code for the description in `describe()` and `it()`.
         input3,
         input4
       ) {
-        // correct input
+        // correct input style
       }
     ```
 
@@ -68,6 +70,6 @@ test code for the description in `describe()` and `it()`.
                     input3,
                     input4
                   ) {
-        // wrong input
+        // wrong input style
       }
     ```
