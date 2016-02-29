@@ -72,7 +72,8 @@ A function that given a token extract the data to render a token.
 
 It should get:
 
-`token`: an object containing the data that you need, an example token could be:
+`token`: an object containing the data that you need. The type of token is
+entirely up to you. An example token could be:
 
 ```javascript
   {
@@ -95,11 +96,44 @@ It should get:
           ...token,
           field
         }
+      },
+
+      {
+        label: 'Modified by...',
+        current: (token.field === field), // true or false
+        result: {
+          ...token,
+          field
+        }
       }
     ]
   }
 ```
-It should return an object. For example:
+
+**Note:**
+* The `dropdownOptions` field should be an array of objects that represent the
+other possible `field` for the token. Every object should have:
+
+  `label`: the new name of the `field`
+
+  `current`: defines if this is the currently selected field
+
+  `result`: the resulting token with the corrected field
+
+It should return an object that should have the following fields:
+
+`facet`: The currently selected type of token (for example Author).
+
+`description`: The token description (for example a name).
+
+`dropdownMenu`: The other possible options (if available) for the facet,
+  defined inside the `dropdownOptions` field of the token object.
+
+The renedered token structure is:
+
+![Token structure](./img/tokens-structure.png)
+
+For example:
 
 ```javascript
   renderToken(token) {
@@ -110,6 +144,10 @@ It should return an object. For example:
     };
   }
 ```
+
+And the rendered result from the example:
+
+![Rendered token example](./img/rendered-token-example.png)
 
 <a name="defaultToken"></a>
 ### defaultTokens
@@ -132,7 +170,8 @@ A string that will be displayed as a placeholder in the empty input.
 <a name="dropdownSections"></a>
 ### dropdownSections
 
-An array that contains the possible dropdowns. It should start as an empty array inside the state in your constructor.
+An array that contains the possible dropdown options for auto completion.
+It should start as an empty array inside the state in your constructor.
 
 For example:
 
