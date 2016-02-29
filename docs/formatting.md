@@ -14,10 +14,14 @@ expecially try not to use `var`, define your variables with:
     let name = value;
   ```
 
+**Note**
+  * We highly recommended the use of `const` as the default method to define
+    variables. Use `let` only if it's really necessary.
+
 ### Line width
 
 Try not to exceed 80 character per line. This guideline is amended inside your
-test code for the description in `describe()` and `it()`. 
+test code for the description in `describe()` and `it()`.
 
 ### Spaces
 
