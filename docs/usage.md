@@ -131,7 +131,7 @@ It should return an object that should have the following fields:
 
 The renedered token structure is:
 
-![Token structure](./img/tokens-structure.png)
+![Token structure](./images/tokens-structure.png)
 
 For example:
 
@@ -147,7 +147,7 @@ For example:
 
 And the rendered result from the example:
 
-![Rendered token example](./img/rendered-token-example.png)
+![Rendered token example](./images/rendered-token-example.png)
 
 <a name="defaultToken"></a>
 ### defaultTokens
