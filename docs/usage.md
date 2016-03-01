@@ -132,7 +132,7 @@ An array that contains the default displayed tokens.
 A string that will be displayed as a placeholder in the empty input.
 
 ```javascript
-  placeholder = 'Search...';
+  placeholder = string?;
 ```
 
 <a name="dropdownSections"></a>
@@ -184,7 +184,6 @@ For example:
     });
   }
 ```
-
 
 <a name="onChange"></a>
 ### children

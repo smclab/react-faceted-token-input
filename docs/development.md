@@ -14,24 +14,26 @@ From the *react-faceted-token-input* folder run:
 
 You will have the following tools available:
 
-`react`: you need react to develop a react component
+`react`: you need react to develop a react component. You can find guides and
+documentation on the [react website](https://facebook.github.io/react/)
 
 `classnames`: let you conditionally combine classNames together
 
 `babel`: you can (and should) use *ECMAScript 6* to write code for this
-component and `babel` let you do exactly that
+component and `babel` let you do exactly that. See [babeljs website](https://babeljs.io/)
+for more information.
 
 `eslint`: linting for your Javascript code
 
 `react-dom` and `react-addons-test-utils`: utilities for testing react
 
-`jest`: test framework for react
+`jest`: test framework for react. See the documentation about `Jest` [here](https://facebook.github.io/jest/)
 
 `rimraf`: tool to remove file and folders, this is used in `npm clear`
 
 `cross-env`: let you use `NODE_ENV` across all OS
 
-`webpack`: used to run the server.
+`webpack`: used to run the server
 
 ### Available Commands
 
@@ -86,7 +88,7 @@ By default the server runs on port 3000,to change the default port go inside
 `server.js` and on line 20 change the port number:
 
 ```javascript
-    app.listen(3000, 'localhost', function(err) { ... }
+  app.listen(3000, 'localhost', function(err) { ... }
 ```
 
 For more information about the example go [here](example.md).

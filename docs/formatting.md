@@ -4,12 +4,15 @@ Just some guidelines to standardize the look of the code.
 
 ### Language Specifics
 
-Since it's available throught `babel` use *ECMAScript 6* whenever is possible,
-expecially try not to use `var`, define your variables with:
+Since it's available throught `babel` use *ECMAScript 6* whenever is possible
+(if you don't know *ECMAScript 6* a good starting point to learn is in the
+[babel documentation](https://babeljs.io/docs/learn-es2015/)), expecially try
+not to use `var`, define your variables with:
 
   ```javascript
     const name = value;
   ```
+
   ```javascript
     let name = value;
   ```

@@ -2,7 +2,7 @@
 
 **NOTE**:
 * you should have your developer enviroment ready before running the
-  test, see the [development](development.md) documentation.
+  example, see the [development](development.md) documentation.
 
 The *react-faceted-token-input* component comes with a working example that runs
 by default in port 3000.
@@ -26,4 +26,4 @@ The example is composed by quite a few files:
 * `types/*-token-type.js`: defines the token types for the example
 
 * `types/result-field-token-type.js`: manage the suggestions dropdown in the
-input
+  input
