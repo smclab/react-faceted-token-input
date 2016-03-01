@@ -2,6 +2,13 @@
 
 Just some guidelines to standardize the look of the code.
 
+* [Language Specifics](#language)
+* [Line Width](#lineWidth)
+* [Spaces](#spaces)
+* [New Lines](#newLines)
+* [Indentation](#indentation)
+
+<a name="language"></a>
 ### Language Specifics
 
 Since it's available throught `babel` use *ECMAScript 6* whenever is possible
@@ -21,11 +28,13 @@ not to use `var`, define your variables with:
   * We highly recommended the use of `const` as the default method to define
     variables. Use `let` only if it's really necessary.
 
+<a name="lineWidth"></a>
 ### Line width
 
 Try not to exceed 80 character per line. This guideline is amended inside your
 test code for the description in `describe()` and `it()`.
 
+<a name="spaces"></a>
 ### Spaces
 
 * `if () {}`: add a space after the **if** keyword before **()**
@@ -34,6 +43,7 @@ test code for the description in `describe()` and `it()`.
 
 * `{ attribute }`: add spaces before and after the attribute.
 
+<a name="newLines"></a>
 ### New Lines
 
 * `multi-line if`: add a new line after the opening **{**. Example:
@@ -46,10 +56,11 @@ test code for the description in `describe()` and `it()`.
         }
       ```
 
+<a name="indentation"></a>
 ### Indentation
 
 * `multi-line function input`: if you have multiple input for a function and the
-  line width excedes 80 characters, you can brake them in new lines.
+  line width exceeds 80 characters, you can brake them in new lines.
 
   Use this type of indentation:
 
