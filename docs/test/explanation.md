@@ -102,13 +102,15 @@ Inside each `it()` we call the function:
   test = onLeftRight( ... );
 ```
 
-Finally we use [Expect](https://github.com/mjackson/expect) assertion to compare the output and the expected result.
-
-    NOTE: some assertion are commented, it means that the task of assigning that
-    value is leaved to the OS and it's not simulated in the unit test.
+Finally we use [Expect](https://github.com/mjackson/expect) assertion to compare
+the output and the expected result.
 
 Example assertion:
 
 ```javascript
   expect(test.selectionStart).toEqual(0);
 ```
+
+**NOTE**:
+* some assertion are commented, it means that the task of assigning that
+  value is leaved to the OS and it's not simulated in the unit test.
