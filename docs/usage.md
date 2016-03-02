@@ -5,7 +5,7 @@ faceted behavior inside your React app.
 
 ## Demo
 
-Head [here](example) to see a working example.
+Head [here](example.md) to see a working example.
 
 ## Basic usage
 
