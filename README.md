@@ -3,10 +3,12 @@ React Faceted Token Input
 
 A React component which is a tokenized input with faceted behavior.
 
+
 Installation
 ------------
 
-This React component, *react-faceted-token-input*, works with React `>=0.14`.
+This React component, *react-faceted-token-input*, has been tested with React
+`>=0.14`.
 
 To install run:
 
@@ -14,7 +16,20 @@ To install run:
 
 Now you can start using the component inside your app.
 
-For further help see the [documentation](./docs/README.md)
+
+[Documentation][docs]
+---------------------
+
+For further help see the [documentation][docs]
+
+[docs]: ./docs/README.md
+
+
+Maintainers
+-----------
+
+- Pier Paolo Ramon (author) [@yuchi](https://github.com/yuchi)
+- Gianpietro Benincà [@GianBe](https://github.com/GianBe)
 
 
 License
