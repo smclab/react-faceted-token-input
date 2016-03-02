@@ -57,6 +57,15 @@ test code for the description in `describe()` and `it()`.
         }
       ```
 
+* `varable declaration`: Always add a new line after a variable declaration.
+  Example:
+
+  ```javascript
+    const variable;
+
+    // code here
+  ```
+
 <a name="indentation"></a>
 ### Indentation
 
