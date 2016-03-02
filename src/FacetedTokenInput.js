@@ -79,7 +79,6 @@ export default class FacetedTokenInput extends Component {
     this.state = {
       focused: false,
       searchText: '',
-      searchTextBasis: '0px',
       tokens: props.defaultTokens || [],
       showDropDown: false,
       selectedSectionIndex: -1,
@@ -97,7 +96,6 @@ export default class FacetedTokenInput extends Component {
     const {
       tokens,
       searchText,
-      searchTextBasis,
       showDropDown,
       focused
     } = this.state;
@@ -374,22 +372,23 @@ export default class FacetedTokenInput extends Component {
   }
 
   onLeftRightPress(event) {
-    let {
+    const {
       selectionEnd,
       selectionStart,
       selectionDirection
     } = this.refs.input;
 
+    const { tokens } = this.state;
+
     let {
-      tokens,
       tokenSelectionDirection,
       tokenSelectionEnd,
       tokenSelectionStart
     } = this.state;
 
     const keyDirection = isForward(event) ? DIRECTION_FORWARD
-      : isBackward(event) ? DIRECTION_BACKWARD :
-      DIRECTION_NONE;
+      : isBackward(event) ? DIRECTION_BACKWARD
+      : DIRECTION_NONE;
 
     const home = isHome(event);
     const end = isEnd(event);

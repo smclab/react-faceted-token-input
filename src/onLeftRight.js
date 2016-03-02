@@ -23,26 +23,27 @@ import {
 } from './FacetedTokenInput';
 
 function onLeftRight(
-    selectionStart,
-    selectionEnd,
-    selectionDirection,
-    tokensLength,
-    tokenSelectionStart,
-    tokenSelectionEnd,
-    tokenSelectionDirection,
-    home,
-    end,
-    selectToHome,
-    selectToEnd,
-    shiftKey,
-    mac,
-    keyDirection,
-    inputValue
-  ) {
+  selectionStart,
+  selectionEnd,
+  selectionDirection,
+  tokensLength,
+  tokenSelectionStart,
+  tokenSelectionEnd,
+  tokenSelectionDirection,
+  home,
+  end,
+  selectToHome,
+  selectToEnd,
+  shiftKey,
+  mac,
+  keyDirection,
+  inputValue
+) {
 
   let prevent = false;
 
-  if (!home && !end && !selectToHome && !selectToEnd && tokenSelectionStart >= tokensLength) {
+  if (!home && !end && !selectToHome &&
+    !selectToEnd && tokenSelectionStart >= tokensLength) {
     // The text field is focused
 
     if (selectionStart > 0) {
@@ -50,7 +51,8 @@ function onLeftRight(
       return;
     }
 
-    if (selectionDirection === DIRECTION_FORWARD && selectionStart !== selectionEnd) {
+    if (selectionDirection === DIRECTION_FORWARD &&
+      selectionStart !== selectionEnd) {
       // The 'caret' is on the opposite side
       return;
     }
@@ -118,7 +120,7 @@ function onLeftRight(
       if (selectionDirection === DIRECTION_BACKWARD) {
         // caret inside the text field
         if (tokenSelectionStart < tokensLength &&
-            selectionStart === selectionEnd) {
+          selectionStart === selectionEnd) {
 
           selectionStart = 0;
         }
@@ -228,17 +230,17 @@ function onLeftRight(
         selectionEnd = 1;
       }
       else if (selectionEnd !== inputValue.length &&
-               tokenSelectionDirection === DIRECTION_FORWARD){
+        tokenSelectionDirection === DIRECTION_FORWARD) {
 
         prevent = true;
         selectionEnd += increment;
       }
-   }
+    }
 
     if (selectionStart === 0 && keyDirection === DIRECTION_BACKWARD &&
-        tokenSelectionStart < tokensLength &&
-        tokenSelectionDirection !== DIRECTION_BACKWARD &&
-        selectionEnd !== 0) {
+      tokenSelectionStart < tokensLength &&
+      tokenSelectionDirection !== DIRECTION_BACKWARD &&
+      selectionEnd !== 0) {
 
       // leave this selection to the browser
       return;
@@ -246,7 +248,7 @@ function onLeftRight(
   }
 
   if (tokenSelectionEnd <= tokensLength &&
-      tokenSelectionDirection === DIRECTION_BACKWARD) {
+    tokenSelectionDirection === DIRECTION_BACKWARD) {
 
     selectionStart = 0;
     selectionEnd = 0;

@@ -1,7 +1,7 @@
+import { LEFT, RIGHT, HOME, END, A, E } from './key-codes';
 
-import { LEFT, RIGHT, HOME, END, A, E  } from './key-codes';
-
-const UA = (typeof navigator !== 'undefined') ? navigator.userAgent.toLowerCase() : '';
+const UA = (typeof navigator !== 'undefined')
+  ? navigator.userAgent.toLowerCase() : '';
 
 export const IS_MAC = (UA.indexOf('macintosh') >= 0);
 

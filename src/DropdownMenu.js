@@ -23,7 +23,12 @@ const DropdownMenuItem = ({
 
 const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
   <ul>
-    { section.title && <li key="header" className="header">{ section.title }</li> }
+    {
+      section.title && <li key="header" className="header">
+        { section.title }
+      </li>
+    }
+
     { section.suggestions.map((suggestion, index) => (
       <DropdownMenuItem
         { ...props }
