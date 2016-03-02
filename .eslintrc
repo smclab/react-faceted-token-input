@@ -4,9 +4,17 @@
   "env": {
     "browser": true,
     "mocha": true,
+    "jest": true,
     "node": true
   },
   "rules": {
+    "no-var": 2,
+    "prefer-const": 1,
+    "max-len": [2, 80, 4,
+      "ignorePattern": "^.*(describe\\(|it\\().*$"
+    ],
+    "padded-blocks": 0,
+    "no-unused-vars": 1,
     "valid-jsdoc": 2,
     "react/jsx-uses-react": 1,
     "react/jsx-no-undef": 2,
@@ -17,7 +25,15 @@
     }],
     "brace-style": [2, "stroustrup", {
       "allowSingleLine": false
-    }]
+    }],
+    "no-extra-parens": 1,
+    "default-case": 2,
+    "no-alert": 2,
+    "no-use-before-define": 2,
+    "no-lonely-if": 1,
+    "no-multiple-empty-lines": 1,
+    "no-spaced-func": 2,
+    "object-curly-spacing": [2, "always"]
   },
   "plugins": [
     "react", "standard"
