@@ -51,21 +51,21 @@ developer experience:
 
 Build the project with:
 
-    npm build
+    npm run build
 
 <a name="clean"></a>
 ##### Clean
 
 Clean the lib folder to prepare for a rebuild:
 
-    npm clean
+    npm run clean
 
 <a name="lint"></a>
 ##### Lint
 
 Linting for your Javascript code, by default inside the `src` and `test` folders:
 
-    npm lint
+    npm run lint
 
 <a name="test"></a>
 ##### Test
