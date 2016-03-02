@@ -7,6 +7,7 @@ Just some guidelines to standardize the look of the code.
 * [Spaces](#spaces)
 * [New Lines](#newLines)
 * [Indentation](#indentation)
+* [Brace Style](#braceStyle)
 
 <a name="language"></a>
 ### Language Specifics
@@ -87,3 +88,19 @@ test code for the description in `describe()` and `it()`.
         // wrong input style
       }
     ```
+
+<a name="braceStyle"></a>
+### Brace Style
+
+The preferred brace style is *Stroustrup* in which the `else` statements in an
+`if-else` construct must be on its own line after the preceding closing brace,
+as in this example:
+
+```javascript
+  if (foo) {
+    bar();
+  }
+  else {
+    baz();
+  }
+```
