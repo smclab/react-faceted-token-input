@@ -34,7 +34,11 @@
     "no-multiple-empty-lines": 1,
     "no-spaced-func": 2,
     "space-infix-ops": 1,
-    "object-curly-spacing": [2, "always"]
+    "newline-after-var": [1, "always"],
+    "object-curly-spacing": [2, "always"],
+    "spaced-comment": [1, "always"],
+    "camelcase": [1, {"properties": "always"}],
+    "no-mixed-spaces-and-tabs": [2, "smart-tabs"]
   },
   "plugins": [
     "react", "standard"
