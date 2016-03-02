@@ -66,7 +66,9 @@ const PROP_TYPES = {
   defaultTokens: PropTypes.array,
   placeholder: PropTypes.string,
   children: PropTypes.element,
-  dropdownSections: PropTypes.array
+  dropdownSections: PropTypes.array,
+  renderToken: PropTypes.func.isRequired,
+  onChange: PropTypes.func
 };
 
 export default class FacetedTokenInput extends Component {
