@@ -30,8 +30,8 @@ export const isEnd = IS_MAC
     (ctrlKey && !altKey && (which === END));
 
 // TODO: Manage RTL languages
-export const isForward = (event) => (event.which === RIGHT) || isEnd(event);
-export const isBackward = (event) => (event.which === LEFT) || isHome(event);
+export const isForward = (event, RTL) => ((event.which === RIGHT) && (RTL === 'ltr')) || ((event.which === LEFT) && (RTL === 'rtl')) || isEnd(event);
+export const isBackward = (event, RTL) => ((event.which === LEFT) && (RTL === 'ltr')) || ((event.which === RIGHT) && (RTL === 'rtl')) || isHome(event);
 
 export const isSelectToHome = event => event.shiftKey && isHome(event);
 export const isSelectToEnd = event => event.shiftKey && isEnd(event);

@@ -71,6 +71,14 @@ const PROP_TYPES = {
   onChange: PropTypes.func
 };
 
+const isRTL = (str) => {
+  const ltrChars    = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0300-\u0590\u0800-\u1FFF'+'\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF',
+        rtlChars    = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC',
+        rtlDirCheck = new RegExp('^[^'+ltrChars+']*['+rtlChars+']');
+        console.log(rtlDirCheck);
+  return rtlDirCheck.test(str);
+}
+
 export default class FacetedTokenInput extends Component {
 
   constructor(props) {
@@ -86,7 +94,9 @@ export default class FacetedTokenInput extends Component {
       selectedId: null,
       tokenSelectionDirection: 'none',
       tokenSelectionStart: -1,
-      tokenSelectionEnd: -1
+      tokenSelectionEnd: -1,
+      firstInput: true,
+      textDirection: 'auto'
     };
   }
 
@@ -97,7 +107,9 @@ export default class FacetedTokenInput extends Component {
       tokens,
       searchText,
       showDropDown,
-      focused
+      focused,
+      firstInput,
+      textDirection,
     } = this.state;
 
     const facetedTokenInputClass = classNames('compound-input', {
@@ -106,6 +118,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div
+        dir={ this.state.textDirection }
         ref="facetedTokenInput"
         tabIndex="0"
         className={ facetedTokenInputClass }
@@ -129,7 +142,7 @@ export default class FacetedTokenInput extends Component {
         />
 
         <span style={ INPUT_SPY_WRAPPER_STYLE }>
-          <span key="input-spy" ref="inputSpy" style={ INPUT_SPY_STYLE }>
+          <span key="input-spy" ref="inputSpy" style={ INPUT_SPY_STYLE } dir={ textDirection }>
             { searchText }
           </span>
         </span>
@@ -233,15 +246,26 @@ export default class FacetedTokenInput extends Component {
   }
 
   onChange(event) {
-    const { tokens } = this.state;
+    const { tokens, firstInput, textDirection } = this.state;
 
     const searchText = this.refs.input.value;
+
+    let newTextDirection;
+
+    if (firstInput) {
+      newTextDirection = isRTL(searchText) ? 'rtl' : 'ltr';
+    }
+    else {
+      newTextDirection = textDirection;
+    }
 
     this.setState({
       searchText: searchText,
       showDropDown: true,
       selectedSectionIndex: -1,
-      selectedIndex: -1
+      selectedIndex: -1,
+      firstInput: false,
+      textDirection: newTextDirection
     });
 
     this.props.onChange({ tokens, searchText });
@@ -383,11 +407,12 @@ export default class FacetedTokenInput extends Component {
     let {
       tokenSelectionDirection,
       tokenSelectionEnd,
-      tokenSelectionStart
+      tokenSelectionStart,
+      textDirection
     } = this.state;
 
-    const keyDirection = isForward(event) ? DIRECTION_FORWARD
-      : isBackward(event) ? DIRECTION_BACKWARD
+    const keyDirection = isForward(event, textDirection) ? DIRECTION_FORWARD
+      : isBackward(event, textDirection) ? DIRECTION_BACKWARD
       : DIRECTION_NONE;
 
     const home = isHome(event);
