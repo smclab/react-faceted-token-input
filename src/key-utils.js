@@ -7,6 +7,17 @@ export const IS_MAC = (UA.indexOf('macintosh') >= 0);
 
 export const isCtrlKey = event => event[ IS_MAC ? 'metaKey' : 'ctrlKey' ];
 
+const CHARACTERS_LTR_RANGES = 'A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8' +
+  '\u0300-\u0590\u0800-\u1FFF\u2C00-\uFB1C\uFDFE-\uFE6F\uFEFD-\uFFFF';
+
+const CHARACTERS_RTL_RANGES = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC';
+
+const DIRECTION_CHECK_RE = new RegExp('^[^'+CHARACTERS_LTR_RANGES+']*['+CHARACTERS_RTL_RANGES+']');
+
+export const isRTL = (str) => {
+  return DIRECTION_CHECK_RE.test(str);
+}
+
 export const isOnlyCtrlKey = IS_MAC
   ? event => event.metaKey && !event.ctrlKey
   : event => event.ctrlKey && !event.metaKey;
