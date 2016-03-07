@@ -1,3 +1,17 @@
+/*
+
+cssClassNames: {
+  input: [panel, panel2, etc],
+  token: [name, name, name],
+  facet: [],
+  description: [],
+  token-dropdown: [],
+  token-dropdown-li: [],
+  input-dropdown: [],
+  input-dropdown-li: []
+}
+
+*/
 
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
