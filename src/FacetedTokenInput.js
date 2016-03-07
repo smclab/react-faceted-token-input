@@ -69,7 +69,8 @@ const PROP_TYPES = {
   children: PropTypes.element,
   dropdownSections: PropTypes.array,
   renderToken: PropTypes.func.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  dir: PropTypes.oneOf(['rtl', 'ltr']),
 };
 
 export default class FacetedTokenInput extends Component {
@@ -88,20 +89,20 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionDirection: 'none',
       tokenSelectionStart: -1,
       tokenSelectionEnd: -1,
-      firstInput: true,
+      dirChange: true,
       textDirection: 'auto'
     };
   }
 
   render() {
-    const { placeholder } = this.props;
+    const { placeholder, dir } = this.props;
 
     const {
       tokens,
       searchText,
       showDropDown,
       focused,
-      firstInput,
+      dirChange,
       textDirection,
     } = this.state;
 
@@ -111,7 +112,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div
-        dir={ this.state.textDirection }
+        dir={ dir ? dir : textDirection }
         ref="facetedTokenInput"
         tabIndex="0"
         className={ facetedTokenInputClass }
@@ -135,7 +136,13 @@ export default class FacetedTokenInput extends Component {
         />
 
         <span style={ INPUT_SPY_WRAPPER_STYLE }>
-          <span key="input-spy" ref="inputSpy" style={ INPUT_SPY_STYLE } dir={ textDirection }>
+          <span
+            key="input-spy"
+            ref="inputSpy"
+            style={ INPUT_SPY_STYLE }
+            dir={ dir ? dir : textDirection }
+          >
+
             { searchText }
           </span>
         </span>
@@ -202,11 +209,15 @@ export default class FacetedTokenInput extends Component {
     this.updateInputFlexBasis();
 
     if (this.state.focused) {
+      const { dir } = this.props;
+
       const {
         tokens,
         tokenSelectionDirection,
         tokenSelectionStart,
-        tokenSelectionEnd
+        tokenSelectionEnd,
+        dirChange,
+        searchText
       } = this.state;
 
       const noSelection = (tokenSelectionStart < 0) && (tokenSelectionEnd < 0);
@@ -219,6 +230,14 @@ export default class FacetedTokenInput extends Component {
       }
       else {
         this.refs.facetedTokenInput.focus();
+      }
+
+      // this will detect when the input is empty and allow the text
+      // to change direction if the prop is not defined
+      if (!dir && !dirChange && tokens.length === 0 && searchText === '') {
+        this.setState({
+          dirChange: true
+        });
       }
     }
   }
@@ -239,17 +258,23 @@ export default class FacetedTokenInput extends Component {
   }
 
   onChange(event) {
-    const { tokens, firstInput, textDirection } = this.state;
+    const { dir } = this.props;
+
+    const { tokens, dirChange, textDirection } = this.state;
 
     const searchText = this.refs.input.value;
 
     let newTextDirection;
 
-    if (firstInput) {
-      newTextDirection = isRTL(searchText) ? 'rtl' : 'ltr';
-    }
-    else {
-      newTextDirection = textDirection;
+    if (!dir) {
+      if (dirChange) {
+        newTextDirection = isRTL(searchText) ? 'rtl' : 'ltr';
+
+        this.setState({
+          dirChange: false,
+          textDirection: newTextDirection
+        });
+      }
     }
 
     this.setState({
@@ -257,8 +282,6 @@ export default class FacetedTokenInput extends Component {
       showDropDown: true,
       selectedSectionIndex: -1,
       selectedIndex: -1,
-      firstInput: false,
-      textDirection: newTextDirection
     });
 
     this.props.onChange({ tokens, searchText });
