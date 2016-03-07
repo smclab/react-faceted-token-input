@@ -71,6 +71,7 @@ of this component in your React app.
 * [dropdownSections](#dropdownSections)
 * [onChange](#onChange)
 * [children](#children)
+* [dir](#dir)
 
 <a name="renderToken"></a>
 ### renderToken(token) (Required)
@@ -190,3 +191,46 @@ For example:
 
 Optional childs of the component. This should be a react element that will be
 placed after the input and before the dropdown selection.
+
+<a name="dir"></a>
+### dir
+
+`dir` is an optional prop that can accept only one of 2 strings:
+
+* `rtl`: used to set the text direction to "right-to-left" for the languages
+  that write from the right to the left
+* `ltr`: used to set the text direction to "left-to-right" for the languages
+  that write from the left to the right
+
+This prop will tell where the text needs to be inside the input.
+
+If the prop is not defined, the component will manage it for you, here is a
+little explanation:
+
+**Note**:
+  * Be warned that the automatic behaviour of the component might not be what
+  you need
+
+The first time the component is loaded its `dir` will be set as `auto`, people
+with different languages will see the component differently based on their
+language writing style. As an example an arab (with their language set to
+arabic) will see the placeholder to the right of the input while an italian
+(with their language set to italian) will see it on the left.
+
+After that based on their first input the component will choose if the display
+style needs to change, for example:
+
+* First input:
+      a
+
+  `dir` will be set to `ltr`
+
+* First input:
+      בְ
+
+  `dir` will be set to `rtl`
+
+The direction detection will be repeated every time the input is completely
+empty (so when there is no textual input and no tokens displayed).
+
+Remember that if you set the prop, your choice will not be overwritten.
