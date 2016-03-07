@@ -20,7 +20,7 @@ const DIRECTION_CHECK_RE = new RegExp(`^[^${ RANGE_LTR }]*[${ RANGE_RTL }]`);
 
 export const isRTL = (str) => {
   return DIRECTION_CHECK_RE.test(str);
-}
+};
 
 export const isOnlyCtrlKey = IS_MAC
   ? event => event.metaKey && !event.ctrlKey

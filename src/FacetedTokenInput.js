@@ -70,7 +70,7 @@ const PROP_TYPES = {
   dropdownSections: PropTypes.array,
   renderToken: PropTypes.func.isRequired,
   onChange: PropTypes.func,
-  dir: PropTypes.oneOf(['rtl', 'ltr']),
+  dir: PropTypes.oneOf(['rtl', 'ltr'])
 };
 
 export default class FacetedTokenInput extends Component {
@@ -102,8 +102,7 @@ export default class FacetedTokenInput extends Component {
       searchText,
       showDropDown,
       focused,
-      dirChange,
-      textDirection,
+      textDirection
     } = this.state;
 
     const facetedTokenInputClass = classNames('compound-input', {
@@ -112,7 +111,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div
-        dir={ dir ? dir : textDirection }
+        dir={ dir || textDirection }
         ref="facetedTokenInput"
         tabIndex="0"
         className={ facetedTokenInputClass }
@@ -140,7 +139,7 @@ export default class FacetedTokenInput extends Component {
             key="input-spy"
             ref="inputSpy"
             style={ INPUT_SPY_STYLE }
-            dir={ dir ? dir : textDirection }
+            dir={ dir || textDirection }
           >
 
             { searchText }
@@ -260,7 +259,7 @@ export default class FacetedTokenInput extends Component {
   onChange(event) {
     const { dir } = this.props;
 
-    const { tokens, dirChange, textDirection } = this.state;
+    const { tokens, dirChange } = this.state;
 
     const searchText = this.refs.input.value;
 
@@ -281,7 +280,7 @@ export default class FacetedTokenInput extends Component {
       searchText: searchText,
       showDropDown: true,
       selectedSectionIndex: -1,
-      selectedIndex: -1,
+      selectedIndex: -1
     });
 
     this.props.onChange({ tokens, searchText });
@@ -418,13 +417,12 @@ export default class FacetedTokenInput extends Component {
       selectionDirection
     } = this.refs.input;
 
-    const { tokens } = this.state;
+    const { tokens, textDirection } = this.state;
 
     let {
       tokenSelectionDirection,
       tokenSelectionEnd,
-      tokenSelectionStart,
-      textDirection
+      tokenSelectionStart
     } = this.state;
 
     const keyDirection = isForward(event, textDirection) ? DIRECTION_FORWARD
