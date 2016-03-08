@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
@@ -6,6 +5,7 @@ import { ENTER, UP, DOWN } from './key-codes';
 
 const CHECK = <span className="check">✓</span>;
 
+// Da eliminare??
 export const TokenDropDownItem = ({ selected, current, view, ...props }) => (
   <li className={ selected ? 'active' : ''}>
     <a { ...props }>
@@ -105,7 +105,9 @@ export default class Token extends Component {
     else {
       return (
         <span className={ tokenClass }>
-          { description }
+          <span className={ descriptionClass }>
+            { description }
+          </span>
         </span>
       );
     }
@@ -128,15 +130,23 @@ export default class Token extends Component {
   }
 
   renderDropdownItem(item, index) {
+    const { componentClasses } = this.props;
+
     const { selectedIndex } = this.state;
 
     const selected = (index === selectedIndex);
 
+    const dropdownLiClass = classNames({ 'active': selected },
+      componentClasses.dropdownLi);
+
+    const dropdownAClass = classNames(componentClasses.dropdownA);
+
     return (
-      <li key={ 'menuItem' + index } className={ selected ? 'active' : '' }>
+      <li key={ 'menuItem' + index } className={ dropdownLiClass }>
         <a
           onMouseEnter={ event => this.setState({ selectedIndex: index }) }
           onClick={ event => this.select(index) }
+          className={ dropdownAClass }
         >
           { !item.current ? null : CHECK }
           { item.label }

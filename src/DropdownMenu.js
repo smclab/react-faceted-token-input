@@ -9,13 +9,17 @@ const DropdownMenuItem = ({
   sectionIndex,
   index,
   addToken,
-  setSelected
+  setSelected,
+  componentClasses
 }) => (
-  <li className={ selected ? 'active' : '' }>
+  <li className={ classNames({ 'active': selected },
+    componentClasses.suggestionsLi) }>
+
     <a
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
       onMouseMove={ () => setSelected({ sectionIndex, index }) }
+      className={ classNames(componentClasses.suggestionsA) }
     >
       { suggestion.description }
     </a>
@@ -47,6 +51,7 @@ const DropdownMenuSection = ({
         suggestion={ suggestion }
         sectionIndex={ sectionIndex }
         index={ index }
+        componentClasses={ componentClasses }
       />
     ))}
   </ul>
