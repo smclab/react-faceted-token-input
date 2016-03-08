@@ -16,6 +16,17 @@ const NUMERIC_COMPARATORS = {
 
 const CHECK = <span className="check">✓</span>;
 
+const componentClasses = {
+  'wrapper': 'test1',
+  'input': 'test2',
+  'tokenWrapper': 'test3',
+  'token': 'test4',
+  'facet': 'test5',
+  'description': 'test6',
+  'dropdownWrap': 'test7',
+  'dropdownUl': 'test8'
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -45,6 +56,7 @@ class App extends Component {
   render() {
     return (
       <FacetedTokenInput
+        componentClasses={ componentClasses }
         renderToken={ this.renderToken }
         dropdownSections={ this.state.dropdownSections }
         placeholder="Search…"
