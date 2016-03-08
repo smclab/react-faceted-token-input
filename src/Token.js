@@ -56,8 +56,20 @@ export default class Token extends Component {
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
       >
-        { this.renderContent({ facet, description, dropdownMenu, componentClasses }) }
-        { showDropDown && dropdownMenu && this.renderDropdown(dropdownMenu, componentClasses)}
+        {
+          this.renderContent({
+            facet,
+            description,
+            dropdownMenu,
+            componentClasses
+          })
+        }
+
+        {
+          showDropDown &&
+          dropdownMenu &&
+          this.renderDropdown(dropdownMenu, componentClasses)
+        }
       </div>
     );
   }
@@ -72,9 +84,10 @@ export default class Token extends Component {
       'facet': showFacet
     }, componentClasses.token);
 
-    const facetClass = classNames("facet-type", componentClasses.facet);
+    const facetClass = classNames('facet-type', componentClasses.facet);
 
-    const descriptionClass = classNames("facet-value", componentClasses.description);
+    const descriptionClass = classNames('facet-value',
+      componentClasses.description);
 
     if (showFacet) {
       return (
@@ -99,10 +112,11 @@ export default class Token extends Component {
   }
 
   renderDropdown(dropdownMenu, componentClasses) {
-    console.log(componentClasses);
-    const dropdownClass = classNames("dropdown token-dropdown", componentClasses.dropdownWrap);
+    const dropdownClass = classNames('dropdown token-dropdown',
+      componentClasses.dropdownWrap);
 
-    const dropdownUlClass = classNames("facet-value", componentClasses.dropdownUl);
+    const dropdownUlClass = classNames('facet-value',
+      componentClasses.dropdownUl);
 
     return (
       <div className={ dropdownClass }>

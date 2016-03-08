@@ -105,7 +105,7 @@ export default class FacetedTokenInput extends Component {
       'focused': focused
     }, componentClasses.wrapper);
 
-    const inputClass = classNames("compound-input-field",
+    const inputClass = classNames('compound-input-field',
       componentClasses.input);
 
     return (
