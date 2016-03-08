@@ -35,7 +35,8 @@ export default class Token extends Component {
       selected,
       facet,
       description,
-      dropdownMenu
+      dropdownMenu,
+      componentClasses
     } = this.props;
 
     const { showDropDown } = this.state;
@@ -43,7 +44,7 @@ export default class Token extends Component {
     const containerClassName = classNames({
       'token-container': true,
       'selected': selected
-    });
+    }, componentClasses.tokenWrapper);
 
     return (
       <div
@@ -55,30 +56,34 @@ export default class Token extends Component {
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
       >
-        { this.renderContent({ facet, description, dropdownMenu }) }
-        { showDropDown && dropdownMenu && this.renderDropdown(dropdownMenu)}
+        { this.renderContent({ facet, description, dropdownMenu, componentClasses }) }
+        { showDropDown && dropdownMenu && this.renderDropdown(dropdownMenu, componentClasses)}
       </div>
     );
   }
 
-  renderContent({ facet, description, dropdownMenu }) {
+  renderContent({ facet, description, dropdownMenu, componentClasses }) {
     const onClick = event => this.setState({ showDropDown: true });
 
     const showFacet = !!(facet || dropdownMenu);
 
-    const className = classNames({
+    const tokenClass = classNames({
       'token': true,
       'facet': showFacet
-    });
+    }, componentClasses.token);
+
+    const facetClass = classNames("facet-type", componentClasses.facet);
+
+    const descriptionClass = classNames("facet-value", componentClasses.description);
 
     if (showFacet) {
       return (
-        <span className={ className }>
-          <span className="facet-type" onClick={ onClick }>
+        <span className={ tokenClass }>
+          <span className={ facetClass } onClick={ onClick }>
             { facet }
             { dropdownMenu && ' ▾' }
           </span>
-          <span className="facet-value">
+          <span className={ descriptionClass }>
             { description }
           </span>
         </span>
@@ -86,17 +91,22 @@ export default class Token extends Component {
     }
     else {
       return (
-        <span className={ className }>
+        <span className={ tokenClass }>
           { description }
         </span>
       );
     }
   }
 
-  renderDropdown(dropdownMenu) {
+  renderDropdown(dropdownMenu, componentClasses) {
+    console.log(componentClasses);
+    const dropdownClass = classNames("dropdown token-dropdown", componentClasses.dropdownWrap);
+
+    const dropdownUlClass = classNames("facet-value", componentClasses.dropdownUl);
+
     return (
-      <div className="dropdown token-dropdown">
-        <ul>
+      <div className={ dropdownClass }>
+        <ul className={ dropdownUlClass }>
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
       </div>

@@ -1,18 +1,3 @@
-/*
-
-cssClassNames: {
-  input: [panel, panel2, etc],
-  token: [name, name, name],
-  facet: [],
-  description: [],
-  token-dropdown: [],
-  token-dropdown-li: [],
-  input-dropdown: [],
-  input-dropdown-li: []
-}
-
-*/
-
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
@@ -73,7 +58,8 @@ const INPUT_SPY_STYLE = {
 };
 
 const DEFAULT_PROPS = {
-  defaultTokens: []
+  defaultTokens: [],
+  componentClasses: {}
 };
 
 const PROP_TYPES = {
@@ -82,7 +68,8 @@ const PROP_TYPES = {
   children: PropTypes.element,
   dropdownSections: PropTypes.array,
   renderToken: PropTypes.func.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  componentClasses: PropTypes.object
 };
 
 export default class FacetedTokenInput extends Component {
@@ -105,7 +92,7 @@ export default class FacetedTokenInput extends Component {
   }
 
   render() {
-    const { placeholder } = this.props;
+    const { placeholder, componentClasses } = this.props;
 
     const {
       tokens,
@@ -116,7 +103,10 @@ export default class FacetedTokenInput extends Component {
 
     const facetedTokenInputClass = classNames('compound-input', {
       'focused': focused
-    });
+    }, componentClasses.wrapper);
+
+    const inputClass = classNames("compound-input-field",
+      componentClasses.input);
 
     return (
       <div
@@ -133,7 +123,7 @@ export default class FacetedTokenInput extends Component {
           key="input"
           ref="input"
           style={ INPUT_STYLE }
-          className="compound-input-field"
+          className={ inputClass }
           placeholder={ tokens.length ? '' : placeholder }
           value={ searchText }
           selectionStart={ 0 }
@@ -156,7 +146,7 @@ export default class FacetedTokenInput extends Component {
   }
 
   renderDropdown() {
-    const { dropdownSections } = this.props;
+    const { dropdownSections, componentClasses } = this.props;
 
     const {
       selectedId,
@@ -170,6 +160,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <DropdownMenu
+        componentClasses={ componentClasses }
         sections={ dropdownSections }
         selectedId={ selectedId }
         selectedIndex={ selectedIndex }
@@ -186,6 +177,7 @@ export default class FacetedTokenInput extends Component {
   }
 
   renderToken(token, index) {
+    const { componentClasses } = this.props;
     const { facet, description, dropdownMenu } = this.props.renderToken(token);
 
     return (
@@ -193,6 +185,7 @@ export default class FacetedTokenInput extends Component {
         key={ 'token' + (token.id || index) }
         ref={ 'token' + index }
         index={ index }
+        componentClasses={ componentClasses }
         selected={ this.isInTokenSelection(index) }
         token={ token }
         facet={ facet }
