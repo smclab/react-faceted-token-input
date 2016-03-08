@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 const DropdownMenuSeparator = () => <hr />;
 
@@ -21,8 +22,13 @@ const DropdownMenuItem = ({
   </li>
 );
 
-const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
-  <ul>
+const DropdownMenuSection = ({
+  section,
+  sectionIndex,
+  componentClasses,
+  ...props
+}) => (
+  <ul className={ classNames(componentClasses.suggestionsUl) }>
     {
       section.title && <li key="header" className="header">
         { section.title }
@@ -46,11 +52,15 @@ const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
   </ul>
 );
 
-const DropdownMenu = ({ sections, ...props }) => (
-  <div className="dropdown input-dropdown">
+const DropdownMenu = ({ sections, componentClasses, ...props }) => (
+  <div className={
+    classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
+  }>
+
     { sections.map((section, sectionIndex) => (
           <DropdownMenuSection
             { ...props }
+            componentClasses={ componentClasses }
             key={ 'section' + sectionIndex }
             sectionIndex={ sectionIndex }
             section={ section }
