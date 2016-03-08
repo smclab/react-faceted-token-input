@@ -24,7 +24,9 @@ const componentClasses = {
   'facet': 'test5',
   'description': 'test6',
   'dropdownWrap': 'test7',
-  'dropdownUl': 'test8'
+  'dropdownUl': 'test8',
+  'suggestionsWrap': 'test9',
+  'suggestionsUl': 'test10'
 }
 
 class App extends Component {
