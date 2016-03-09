@@ -5,16 +5,6 @@ import { ENTER, UP, DOWN } from './key-codes';
 
 const CHECK = <span className="check">✓</span>;
 
-// Da eliminare??
-export const TokenDropDownItem = ({ selected, current, view, ...props }) => (
-  <li className={ selected ? 'active' : ''}>
-    <a { ...props }>
-      { current && CHECK}
-      { view }
-    </a>
-  </li>
-);
-
 export default class Token extends Component {
 
   constructor(props) {
