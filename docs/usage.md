@@ -233,4 +233,9 @@ style needs to change, for example:
 The direction detection will be repeated every time the input is completely
 empty (so when there is no textual input and no tokens displayed).
 
-Remember that if you set the prop, your choice will not be overwritten.
+Remember that if you set the prop, your choice will **not** be overwritten.
+
+**NOTE**:
+  * To fully support bidirectional text you need to remember to adapt your css,
+  for more information abot this topic head to the
+  [Bidirectional support in css](./bidi-css-support.md) page in this documentation. 
