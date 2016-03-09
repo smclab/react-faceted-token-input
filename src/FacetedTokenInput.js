@@ -82,6 +82,7 @@ export default class FacetedTokenInput extends Component {
       focused: false,
       searchText: '',
       tokens: props.defaultTokens || [],
+      requiresDirCheck: !props.dir,
       showDropDown: false,
       selectedSectionIndex: -1,
       selectedIndex: -1,
@@ -89,7 +90,6 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionDirection: 'none',
       tokenSelectionStart: -1,
       tokenSelectionEnd: -1,
-      dirChange: true,
       textDirection: 'auto'
     };
   }
@@ -215,7 +215,6 @@ export default class FacetedTokenInput extends Component {
         tokenSelectionDirection,
         tokenSelectionStart,
         tokenSelectionEnd,
-        dirChange,
         searchText
       } = this.state;
 
@@ -230,14 +229,22 @@ export default class FacetedTokenInput extends Component {
       else {
         this.refs.facetedTokenInput.focus();
       }
+    }
+  }
 
-      // this will detect when the input is empty and allow the text
-      // to change direction if the prop is not defined
-      if (!dir && !dirChange && tokens.length === 0 && searchText === '') {
-        this.setState({
-          dirChange: true
-        });
-      }
+  checkDir(tokens, searchText) {
+    const { requiresDirCheck } = this.state;
+
+    if (requiresDirCheck && searchText.length) {
+      this.setState({
+        requiresDirCheck: false,
+        textDirection: isRTL(searchText) ? 'rtl' : 'ltr'
+      });
+    }
+    else if (!searchText.length && !tokens.length) {
+      this.setState({
+        requiresDirCheck: true
+      });
     }
   }
 
@@ -257,24 +264,9 @@ export default class FacetedTokenInput extends Component {
   }
 
   onChange(event) {
-    const { dir } = this.props;
-
-    const { tokens, dirChange } = this.state;
+    const { tokens } = this.state;
 
     const searchText = this.refs.input.value;
-
-    let newTextDirection;
-
-    if (!dir) {
-      if (dirChange) {
-        newTextDirection = isRTL(searchText) ? 'rtl' : 'ltr';
-
-        this.setState({
-          dirChange: false,
-          textDirection: newTextDirection
-        });
-      }
-    }
 
     this.setState({
       searchText: searchText,
@@ -282,6 +274,8 @@ export default class FacetedTokenInput extends Component {
       selectedSectionIndex: -1,
       selectedIndex: -1
     });
+
+    this.checkDir(tokens, searchText);
 
     this.props.onChange({ tokens, searchText });
 
@@ -495,6 +489,8 @@ export default class FacetedTokenInput extends Component {
       tokens: nextTokens
     });
 
+    this.checkDir(nextTokens, searchText);
+
     this.props.onChange({
       searchText,
       tokens: nextTokens
@@ -571,6 +567,8 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart: tokens.length + 1,
       tokenSelectionEnd: tokens.length + 2
     });
+
+    this.checkDir(nextTokens, '');
 
     this.props.onChange({
       searchText: '',
