@@ -25,8 +25,12 @@ const componentClasses = {
   'description': 'test6',
   'dropdownWrap': 'test7',
   'dropdownUl': 'test8',
-  'suggestionsWrap': 'test9',
-  'suggestionsUl': 'test10'
+  'dropdownLi': 'test9',
+  'dropdownA': 'test10',
+  'suggestionsWrap': 'test11',
+  'suggestionsUl': 'test12',
+  'suggestionsLi': 'test13',
+  'suggestionsA': 'test14'
 }
 
 class App extends Component {
