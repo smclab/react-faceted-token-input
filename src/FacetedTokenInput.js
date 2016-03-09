@@ -479,13 +479,25 @@ export default class FacetedTokenInput extends Component {
   }
 
   onBackspace(event) {
-    const { tokens, tokenSelectionStart, tokenSelectionEnd } = this.state;
+    const {
+      searchText,
+      tokens,
+      tokenSelectionStart,
+      tokenSelectionEnd
+    } = this.state;
+
+    const nextTokens = [
+      ...tokens.slice(0, tokenSelectionStart),
+      ...tokens.slice(tokenSelectionEnd)
+    ];
 
     this.setState({
-      tokens: [
-        ...tokens.slice(0, tokenSelectionStart),
-        ...tokens.slice(tokenSelectionEnd)
-      ]
+      tokens: nextTokens
+    });
+
+    this.props.onChange({
+      searchText,
+      tokens: nextTokens
     });
 
     const { selectionStart, selectionEnd } = this.refs.input;
@@ -567,14 +579,21 @@ export default class FacetedTokenInput extends Component {
   }
 
   updateToken(token, index) {
-    const { tokens } = this.state;
+    const { searchText, tokens } = this.state;
+
+    const nextTokens = [
+      ...tokens.slice(0, index),
+      token,
+      ...tokens.slice(index + 1)
+    ];
 
     this.setState({
-      tokens: [
-        ...tokens.slice(0, index),
-        token,
-        ...tokens.slice(index + 1)
-      ]
+      tokens: nextTokens
+    });
+
+    this.props.onChange({
+      searchText,
+      tokens: nextTokens
     });
   }
 
