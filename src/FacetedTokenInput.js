@@ -231,7 +231,9 @@ export default class FacetedTokenInput extends Component {
         this.refs.input.focus();
       }
       else if (tokenSelectionDirection === DIRECTION_NONE) {
-        this.refs['token' + tokenSelectionStart].focus();
+        if (this.refs['token' + tokenSelectionStart]) {
+          this.refs['token' + tokenSelectionStart].focus();
+        }
       }
       else {
         this.refs.facetedTokenInput.focus();
