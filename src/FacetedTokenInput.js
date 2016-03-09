@@ -233,18 +233,22 @@ export default class FacetedTokenInput extends Component {
   }
 
   checkDir(tokens, searchText) {
+    const { dir } = this.props;
+
     const { requiresDirCheck } = this.state;
 
-    if (requiresDirCheck && searchText.length) {
-      this.setState({
-        requiresDirCheck: false,
-        textDirection: isRTL(searchText) ? 'rtl' : 'ltr'
-      });
-    }
-    else if (!searchText.length && !tokens.length) {
-      this.setState({
-        requiresDirCheck: true
-      });
+    if (!dir) {
+      if (requiresDirCheck && searchText.length) {
+        this.setState({
+          requiresDirCheck: false,
+          textDirection: isRTL(searchText) ? 'rtl' : 'ltr'
+        });
+      }
+      else if (!searchText.length && !tokens.length) {
+        this.setState({
+          requiresDirCheck: true
+        });
+      }
     }
   }
 
