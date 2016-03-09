@@ -44,14 +44,14 @@ export const isEnd = IS_MAC
     (!ctrlKey && !altKey && (which === END)) ||
     (ctrlKey && !altKey && (which === END));
 
-export const isForward = (event, rtl) =>
-  ((event.which === RIGHT) && (rtl === 'ltr')) ||
-  ((event.which === LEFT) && (rtl === 'rtl')) ||
+export const isForward = (event, direction) =>
+  ((event.which === RIGHT) && (direction === 'ltr')) ||
+  ((event.which === LEFT) && (direction === 'rtl')) ||
   isEnd(event);
 
-export const isBackward = (event, rtl) =>
-  ((event.which === LEFT) && (rtl === 'ltr')) ||
-  ((event.which === RIGHT) && (rtl === 'rtl')) ||
+export const isBackward = (event, direction) =>
+  ((event.which === LEFT) && (direction === 'ltr')) ||
+  ((event.which === RIGHT) && (direction === 'rtl')) ||
   isHome(event);
 
 export const isSelectToHome = event => event.shiftKey && isHome(event);

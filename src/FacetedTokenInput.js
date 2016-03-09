@@ -415,7 +415,9 @@ export default class FacetedTokenInput extends Component {
       selectionDirection
     } = this.refs.input;
 
-    const { tokens, textDirection } = this.state;
+    const { dir } = this.props;
+
+    const { textDirection, tokens } = this.state;
 
     let {
       tokenSelectionDirection,
@@ -423,8 +425,8 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    const keyDirection = isForward(event, textDirection) ? DIRECTION_FORWARD
-      : isBackward(event, textDirection) ? DIRECTION_BACKWARD
+    const keyDirection = isForward(event, dir || textDirection) ? DIRECTION_FORWARD
+      : isBackward(event, dir || textDirection) ? DIRECTION_BACKWARD
       : DIRECTION_NONE;
 
     const home = isHome(event);
