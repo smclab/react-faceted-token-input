@@ -4,6 +4,21 @@
     <meta charset="utf-8">
     <title>React Compound Input Examples</title>
     <style>
+    [dir='ltr'], [dir='rtl'] {
+    	unicode-bidi: -webkit-isolate;
+    	unicode-bidi: -moz-isolate;
+    	unicode-bidi: -ms-isolate;
+    	unicode-bidi: isolate;
+    }
+
+    bdo[dir='ltr'], bdo[dir='rtl'] {
+    	unicode-bidi: bidi-override;
+    	unicode-bidi: -webkit-isolate-override;
+    	unicode-bidi: -moz-isolate-override;
+    	unicode-bidi: -ms-isolate-override;
+    	unicode-bidi: isolate-override;
+    }
+
     .compound-input {
       font-size: 16px;
       font-family: sans-serif;
@@ -32,10 +47,17 @@
     .token-container {
       position: relative;
       display: flex;
-      margin-right: 0.4em;
       margin-bottom: 0.2em;
     }
 
+    [dir='rtl'] .token-container {
+      margin-left: 0.4em;
+    }
+
+    [dir='ltr'] .token-container {
+      margin-right: 0.4em;
+    }
+    
     .token-container:focus {
       outline: none;
     }
