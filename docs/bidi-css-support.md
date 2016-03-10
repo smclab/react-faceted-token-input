@@ -1,5 +1,9 @@
 # Bidirectional support in css
 
+**NOTE**:
+  * Remember that the following properties are experimental and can be subjected
+  to changes.
+
 Right now there is no magic way to support the changes in the css, for
 example your `margin-right` will remain a `margin-right` while in many cases,
 from the rtl point of view, it should be a `margin-left`.
@@ -75,7 +79,3 @@ Chrome for Android 47+, they only support:
   the `-webkit-` prefix
   * `*-before` and `*-end` for `*-block-start` and `*-block-end`
   *  `start` and `end` values for `text-align`
-
-**NOTE**:
-  * Remember that this properties are experimental and can be subjected to
-  changes.
