@@ -71,7 +71,8 @@ const PROP_TYPES = {
   renderToken: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   dir: PropTypes.oneOf(['rtl', 'ltr']),
-  componentClasses: PropTypes.object
+  componentClasses: PropTypes.object,
+  customElements: PropTypes.object
 };
 
 export default class FacetedTokenInput extends Component {
@@ -189,7 +190,7 @@ export default class FacetedTokenInput extends Component {
   }
 
   renderToken(token, index) {
-    const { componentClasses } = this.props;
+    const { componentClasses, customElements } = this.props;
     const { facet, description, dropdownMenu } = this.props.renderToken(token);
 
     return (
@@ -197,6 +198,7 @@ export default class FacetedTokenInput extends Component {
         key={ 'token' + (token.id || index) }
         ref={ 'token' + index }
         index={ index }
+        customElements={ customElements }
         componentClasses={ componentClasses }
         selected={ this.isInTokenSelection(index) }
         token={ token }
