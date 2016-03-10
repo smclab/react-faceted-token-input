@@ -26,7 +26,8 @@ export default class Token extends Component {
       facet,
       description,
       dropdownMenu,
-      componentClasses
+      componentClasses,
+      customElements
     } = this.props;
 
     const { showDropDown } = this.state;
@@ -51,7 +52,8 @@ export default class Token extends Component {
             facet,
             description,
             dropdownMenu,
-            componentClasses
+            componentClasses,
+            customElements
           })
         }
 
@@ -64,7 +66,13 @@ export default class Token extends Component {
     );
   }
 
-  renderContent({ facet, description, dropdownMenu, componentClasses }) {
+  renderContent({
+    facet,
+    description,
+    dropdownMenu,
+    componentClasses,
+    customElements
+  }) {
     const onClick = event => this.setState({ showDropDown: true });
 
     const showFacet = !!(facet || dropdownMenu);
@@ -84,7 +92,7 @@ export default class Token extends Component {
         <span className={ tokenClass }>
           <span className={ facetClass } onClick={ onClick }>
             { facet }
-            { dropdownMenu && ' ▾' }
+            { dropdownMenu && (customElements.dropdownArrow || ' ▾') }
           </span>
           <span className={ descriptionClass }>
             { description }
@@ -107,8 +115,7 @@ export default class Token extends Component {
     const dropdownClass = classNames('dropdown token-dropdown',
       componentClasses.dropdownWrap);
 
-    const dropdownUlClass = classNames('facet-value',
-      componentClasses.dropdownUl);
+    const dropdownUlClass = classNames(componentClasses.dropdownUl);
 
     return (
       <div className={ dropdownClass }>
@@ -120,7 +127,7 @@ export default class Token extends Component {
   }
 
   renderDropdownItem(item, index) {
-    const { componentClasses } = this.props;
+    const { componentClasses, customElements } = this.props;
 
     const { selectedIndex } = this.state;
 
@@ -138,7 +145,7 @@ export default class Token extends Component {
           onClick={ event => this.select(index) }
           className={ dropdownAClass }
         >
-          { !item.current ? null : CHECK }
+          { !item.current ? null : customElements.check || CHECK }
           { item.label }
         </a>
       </li>
