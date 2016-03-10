@@ -33,6 +33,11 @@ const componentClasses = {
   'suggestionsA': 'test14'
 }
 
+const customElements = {
+  'check': <span className="check">✓</span>,
+  'dropdownArrow': ' ▾'
+}
+
 class App extends Component {
 
   constructor(props) {
@@ -62,6 +67,7 @@ class App extends Component {
   render() {
     return (
       <FacetedTokenInput
+        customElements={ customElements }
         componentClasses={ componentClasses }
         renderToken={ this.renderToken }
         dropdownSections={ this.state.dropdownSections }
