@@ -72,6 +72,7 @@ of this component in your React app.
 * [onChange](#onChange)
 * [children](#children)
 * [componentClasses](#componentclasses)
+* [customElements](#customelements)
 
 <a name="renderToken"></a>
 ### renderToken(token) (Required)
@@ -322,3 +323,47 @@ For ease of use we will write down an example of the rendered structure:
   </suggestionsWrap>
 </wrapper>
 ```
+
+<a name="customelements"></a>
+### customElements
+
+Optional prop that give a little extra customizability to the component. It
+should be an object that can only have this fields:
+
+* `check`: this represent the checkmark that can be present in the dropdown menu
+of the token and indicates the currently selected one. `check` can accept HTML
+or a string as its value. Its default value is:
+
+  ```html
+    <span className="check">✓</span>
+  ```
+
+* `dropdownArrow`: this represent the symbol that is present if the token has a
+dropdown. It can be a string or HTML. Its default value is:
+
+  ```
+    ' ▾'
+  ```
+
+For example:
+
+```javascript
+  {
+    'check': <span className="check">👉</span>,
+    'dropdownArrow': ' 🔻'
+  }
+```
+
+**NOTE**:
+  * If you don't want any indicator the best way to do it is passing the
+  following object as your customElements prop:
+
+    ```javascript
+      {
+        'check': ' ',
+        'dropdownArrow': ' '
+      }
+    ```
+
+  If you don't pass the prop the default values will be displayed. An empty
+  string as the value also will not work and the default will be displayed.
