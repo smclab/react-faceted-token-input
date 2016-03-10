@@ -34,7 +34,11 @@ const DropdownMenuSection = ({
 }) => (
   <ul className={ classNames(componentClasses.suggestionsUl) }>
     {
-      section.title && <li key="header" className="header">
+      section.title &&
+      <li
+        key="header"
+        className={ classNames('header', componentClasses.sectionTitle) }
+      >
         { section.title }
       </li>
     }
