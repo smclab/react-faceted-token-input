@@ -72,6 +72,7 @@ of this component in your React app.
 * [onChange](#onChange)
 * [children](#children)
 * [dir](#dir)
+* [componentClasses](#componentclasses)
 
 <a name="renderToken"></a>
 ### renderToken(token) (Required)
@@ -238,4 +239,121 @@ Remember that if you set the prop, your choice will **not** be overwritten.
 **NOTE**:
   * To fully support bidirectional text you need to remember to adapt your css,
   for more information abot this topic head to the
-  [Bidirectional support in css](./bidi-css-support.md) page in this documentation. 
+  [Bidirectional support in css](./bidi-css-support.md) page in this documentation.
+
+<a name="componentclasses"></a>
+### componentClasses
+
+Optional prop that let you stylize your component by adding classes to the
+rendered HTML.
+
+`componentClasses` should be an object containing as a key one of the available
+selectors and as the value an array of strings or a single string containing the
+classes that you want to add to the selector. Since *[classname](https://www.npmjs.com/package/classnames)*
+is available to use the value can be anything that can be accepted by *classname*.
+For Example:
+
+```javascript
+const componentClasses = {
+  'wrapper': 'class',
+  'input': 'class1 class2',
+  'token': ['class1 class2', 'myClass', {'otherClass': true}],
+  'facet': [{'myClass': true, 'otherClass': false}]
+}
+```
+
+The available selectors are:
+
+* `wrapper`: the `div` that contains the component
+* `input`: the `input` element of the component
+* `tokenWrapper`: the `div` that contains all the tokens
+* `token`: `span` element that represent the whole token
+* `facet`: `span` element inside the `token` that represent the facet of the
+  token
+* `description`: `span` element inside the `token` that represent the desription
+  of the token
+* `dropdownWrap`: the `div` element that contains the dropdown menu in the facet
+* `dropdownUl`: the `ul` list for the dropdown menu in the facet
+* `dropdownLi`: the `li` elements of the dropdown list
+* `dropdownA`: the `a` elements inside the `li` elements for the dropdown
+* `suggestionsWrap`: the `div` containing the dropdown for the suggestions
+* `suggestionsUl`: the `ul` list for a section of the suggestions dropdown
+* `suggestionsLi`: the `li` elements of the suggestions dropdown list
+* `sectionTitle`: the first `li` for the suggestions dropdown is a section title
+* `suggestionsA`: the `a` elements inside the `li` elements for the suggestions
+  dropdown
+
+
+For ease of use we will write down an example of the structure:
+
+```xml
+<wrapper>
+  <tokenWrapper>
+    <token>
+      <facet>
+        facet
+      </facet>
+      <description>
+        description
+      </description>
+    </token>
+
+    <token>
+      <facet>
+        facet
+      </facet>
+      <description>
+        description
+      </description>
+    </token>
+
+    <dropdownWrap>
+      <dropdownUl>
+        <dropdownLi>
+          <dropdownA>
+            anchor
+          </dropdownA>
+        </dropdownLi>
+
+        <dropdownLi>
+          <dropdownA>
+            anchor
+          </dropdownA>
+        </dropdownLi>
+      </dropdownUl>
+    </dropdownWrap>
+  </tokenWrapper>
+
+  <input>
+
+  <suggestionsWrap>
+    <suggestionsUl>
+      <sectionTitle>
+        section title
+      </sectionTitle>
+
+      <suggestionsLi>
+        <suggestionsA>
+          anchor
+        </suggestionsA>
+
+        <suggestionsA>
+          anchor
+        </suggestionsA>
+      </suggestionsLi>
+    </suggestionsUl>
+
+    <suggestionsUl>
+      <sectionTitle>
+        section title
+      </sectionTitle>
+
+      <suggestionsLi>
+        <suggestionsA>
+          anchor
+        </suggestionsA>
+      </suggestionsLi>
+    </suggestionsUl>
+  </suggestionsWrap>
+</wrapper>
+```
