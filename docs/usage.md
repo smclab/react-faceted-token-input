@@ -205,7 +205,7 @@ is available to use the value can be anything that can be accepted by *classname
 For Example:
 
 ```javascript
-const componentClasses = {
+{
   'wrapper': 'class',
   'input': 'class1 class2',
   'token': ['class1 class2', 'myClass', {'otherClass': true}],
@@ -234,8 +234,22 @@ The available selectors are:
 * `suggestionsA`: the `a` elements inside the `li` elements for the suggestions
   dropdown
 
+If you don't want to add this prop, some of the selectors already have classes
+for you to use in your css:
 
-For ease of use we will write down an example of the structure:
+* `wrapper`: `compound-input`
+* `input`: `compound-input-field`
+* `tokenWrapper`: `token-container`, `selected` (if is selected)
+* `token`: `token`, `facet` (if the facet is shown)
+* `facet`: `facet-type`
+* `description`: `facet-value`
+* `dropdownWrap`: `dropdown`, `token-dropdown`
+* `dropdownLi`: `active` (if is selected)
+* `suggestionsWrap`: `dropdown`, `input-dropdown`
+* `suggestionsLi`: `active` (if is selected)
+* `sectionTitle`: `header`
+
+For ease of use we will write down an example of the rendered structure:
 
 ```xml
 <wrapper>
@@ -275,7 +289,7 @@ For ease of use we will write down an example of the structure:
     </dropdownWrap>
   </tokenWrapper>
 
-  <input>
+  <input />
 
   <suggestionsWrap>
     <suggestionsUl>
