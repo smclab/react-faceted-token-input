@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DropdownMenuSeparator = () => <hr />;
+const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
   selected,
@@ -10,7 +10,7 @@ const DropdownMenuItem = ({
   addToken,
   setSelected
 }) => (
-  <li className={ selected ? 'active' : '' }>
+  <li className={ selected ? 'active' : '' } tabIndex={ -1 } role="option">
     <a
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
@@ -22,9 +22,9 @@ const DropdownMenuItem = ({
 );
 
 const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
-  <ul>
+  <ul role="listbox">
     {
-      section.title && <li key="header" className="header">
+      section.title && <li key="header" className="header" tabIndex={ -1 } >
         { section.title }
       </li>
     }
@@ -47,7 +47,7 @@ const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
 );
 
 const DropdownMenu = ({ sections, ...props }) => (
-  <div className="dropdown input-dropdown">
+  <div className="dropdown input-dropdown"  id="suggestions_box selected_option" >
     { sections.map((section, sectionIndex) => (
           <DropdownMenuSection
             { ...props }

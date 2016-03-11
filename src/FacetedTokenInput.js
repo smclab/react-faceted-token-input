@@ -7,6 +7,9 @@ import DropdownMenu from './DropdownMenu';
 
 import onLeftRight from './onLeftRight';
 
+import  a11y from 'react-a11y';
+import ReactDOM from 'react-dom';
+
 import {
   BACKSPACE,
   ENTER,
@@ -28,6 +31,9 @@ import {
   isForward,
   isBackward
 } from './key-utils';
+
+// Abilitate accessibility test only in development mode
+// a11y(React, { ReactDOM: ReactDOM });
 
 export const DIRECTION_NONE = 'none';
 export const DIRECTION_BACKWARD = 'backward';
@@ -124,6 +130,13 @@ export default class FacetedTokenInput extends Component {
         <input
           key="input"
           ref="input"
+          role="combobox"
+          aria-expanded="true"
+          aria-autocomplete="list"
+          aria-owns="suggestions_box"
+          aria-activedescendant="selected_option"
+          aria-label="input"
+          aria-selected={ focused }
           style={ INPUT_STYLE }
           className="compound-input-field"
           placeholder={ tokens.length ? '' : placeholder }

@@ -49,6 +49,7 @@ export default class Token extends Component {
       <div
         ref={ 'container' }
         tabIndex={ 0 }
+        aria-selected={ selected }
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
         onKeyDown={ event => this.onKeyDown(event) }
@@ -74,9 +75,11 @@ export default class Token extends Component {
     if (showFacet) {
       return (
         <span className={ className }>
-          <span className="facet-type" onClick={ onClick }>
+          <span aria-haspopup={ dropdownMenu ? true : false } aria-role="listbox" className="facet-type" onClick={ onClick }>
             { facet }
-            { dropdownMenu && ' ▾' }
+            <span aria-hidden="true">
+              { dropdownMenu && ' ▾' }
+            </span>
           </span>
           <span className="facet-value">
             { description }
@@ -96,7 +99,10 @@ export default class Token extends Component {
   renderDropdown(dropdownMenu) {
     return (
       <div className="dropdown token-dropdown">
-        <ul>
+        <ul
+          aria-expanded="true"
+          aria-hidden="false"
+        >
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
       </div>
@@ -109,7 +115,14 @@ export default class Token extends Component {
     const selected = (index === selectedIndex);
 
     return (
-      <li key={ 'menuItem' + index } className={ selected ? 'active' : '' }>
+      <li
+        key={ 'menuItem' + index }
+        tabIndex={ -1 }
+        className={ selected ? 'active' : '' }
+        aria-role="listitem"
+        aria-selected={ selected }
+        aria-checked={ !item.current ? "false" : "true" }
+      >
         <a
           onMouseEnter={ event => this.setState({ selectedIndex: index }) }
           onClick={ event => this.select(index) }
