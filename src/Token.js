@@ -44,6 +44,7 @@ export default class Token extends Component {
       <div
         ref={ 'container' }
         tabIndex={ 0 }
+        aria-selected={ selected }
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
         onKeyDown={ event => this.onKeyDown(event) }
@@ -99,9 +100,16 @@ export default class Token extends Component {
     if (showFacet) {
       return (
         <span className={ tokenClass }>
-          <span className={ facetClass } onClick={ onClick }>
+          <span
+            aria-haspopup={ dropdownMenu ? true : false }
+            aria-role="listbox"
+            className={ facetClass }
+            onClick={ onClick }
+          >
             { facet }
-            { dropdownMenu && (customElements.dropdownArrow || ' ▾') }
+            <span aria-hidden="true">
+              { dropdownMenu && (customElements.dropdownArrow || ' ▾') }
+            </span>
           </span>
           <span className={ descriptionClass }>
             { description }
@@ -130,7 +138,11 @@ export default class Token extends Component {
 
     return (
       <div className={ dropdownClass }>
-        <ul className={ dropdownUlClass }>
+        <ul
+          className={ dropdownUlClass }
+          aria-expanded="true"
+          aria-hidden="false"
+        >
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
       </div>
@@ -152,7 +164,15 @@ export default class Token extends Component {
     const dropdownAClass = classNames(componentClasses.dropdownA);
 
     return (
-      <li key={ 'menuItem' + index } className={ dropdownLiClass }>
+      <li
+        key={ 'menuItem' + index }
+        className={ dropdownLiClass }
+        tabIndex={ -1 }
+        className={ selected ? 'active' : '' }
+        aria-role="listitem"
+        aria-selected={ selected }
+        aria-checked={ !item.current ? "false" : "true" }
+      >
         <a
           onMouseEnter={ event => this.setState({ selectedIndex: index }) }
           onClick={ event => this.select(index) }

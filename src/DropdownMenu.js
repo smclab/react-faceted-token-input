@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const DropdownMenuSeparator = () => <hr />;
+const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
   selected,
@@ -20,6 +20,8 @@ const DropdownMenuItem = ({
       },
       componentClasses.suggestionsLi
     ) }
+    tabIndex={ -1 }
+    role="option"
   >
     <a
       href="javascript: void 0"
@@ -32,18 +34,20 @@ const DropdownMenuItem = ({
   </li>
 );
 
+<<<<<<< a78a38089f76d455dd3a6720a7a375e43880360f
 const DropdownMenuSection = ({
   section,
   sectionIndex,
   componentClasses,
   ...props
 }) => (
-  <ul className={ classNames(componentClasses.suggestionsUl) }>
+  <ul className={ classNames(componentClasses.suggestionsUl) } role="listbox">
     {
       section.title &&
       <li
         key="header"
         className={ classNames('header', componentClasses.sectionTitle) }
+        tabIndex={ -1 }
       >
         { section.title }
       </li>
@@ -67,10 +71,13 @@ const DropdownMenuSection = ({
   </ul>
 );
 
+<<<<<<< a78a38089f76d455dd3a6720a7a375e43880360f
 const DropdownMenu = ({ sections, componentClasses, ...props }) => (
   <div className={
     classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
-  }>
+  }
+    id="suggestions_box selected_option"
+  >
     { sections.map((section, sectionIndex) => (
           <DropdownMenuSection
             { ...props }
