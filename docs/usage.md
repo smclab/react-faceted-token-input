@@ -380,7 +380,7 @@ Optional prop that give a little extra customizability to the component. It
 should be an object that can only have this fields:
 
 * `check`: this represent the checkmark that can be present in the dropdown menu
-of the token and indicates the currently selected one. `check` can accept HTML
+of the token and indicates the currently selected one. `check` can accept JSX
 or a string as its value. Its default value is:
 
   ```html
@@ -388,7 +388,7 @@ or a string as its value. Its default value is:
   ```
 
 * `dropdownArrow`: this represent the symbol that is present if the token has a
-dropdown. It can be a string or HTML. Its default value is:
+dropdown. It can be a string or JSX. Its default value is:
 
   ```
     ' ▾'
