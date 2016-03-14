@@ -38,6 +38,8 @@ export const DIRECTION_NONE = 'none';
 export const DIRECTION_BACKWARD = 'backward';
 export const DIRECTION_FORWARD = 'forward';
 
+export const UNIQUE_ID = 'fti_';
+
 const INPUT_STYLE = {
   font: 'inherit',
   lineHeight: 'inherit',
@@ -110,7 +112,9 @@ export default class FacetedTokenInput extends Component {
       searchText,
       showDropDown,
       focused,
-      textDirection
+      textDirection,
+      selectedSectionIndex,
+      selectedIndex
     } = this.state;
 
     const facetedTokenInputClass = classNames(
@@ -143,12 +147,11 @@ export default class FacetedTokenInput extends Component {
           key="input"
           ref="input"
           role="combobox"
-          aria-expanded="true"
+          aria-expanded={ showDropDown }
           aria-autocomplete="list"
           aria-owns="suggestions_box"
-          aria-activedescendant="selected_option"
+          aria-activedescendant={ UNIQUE_ID + '0' + selectedSectionIndex + '0' + selectedIndex }
           aria-label="input"
-          aria-selected={ focused }
           style={ INPUT_STYLE }
           className={ inputClass }
           placeholder={ tokens.length ? '' : placeholder }
