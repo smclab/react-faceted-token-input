@@ -27,7 +27,8 @@ export default class Token extends Component {
       selected,
       facet,
       description,
-      dropdownMenu
+      dropdownMenu,
+      index
     } = this.props;
 
     const { showDropDown, selectedIndex } = this.state;
@@ -45,8 +46,9 @@ export default class Token extends Component {
         role={ dropdownMenu ? "menu" : "" }
         aria-haspopup="true"
         aria-owns={ UNIQUE_ID + "facet_menu" }
-        aria-expanded={ showDropDown }
+        aria-expanded={ dropdownMenu ? showDropDown : "false" }
         aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
+        aria-labelledby={ UNIQUE_ID + "token_0" + index }
         // end
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
@@ -54,13 +56,13 @@ export default class Token extends Component {
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
       >
-        { this.renderContent({ facet, description, dropdownMenu, selectedIndex }) }
+        { this.renderContent({ facet, description, dropdownMenu, selectedIndex, index }) }
         { showDropDown && dropdownMenu && this.renderDropdown(dropdownMenu)}
       </div>
     );
   }
 
-  renderContent({ facet, description, dropdownMenu, selectedIndex }) {
+  renderContent({ facet, description, dropdownMenu, selectedIndex, index }) {
     const onClick = event => this.setState({ showDropDown: true });
 
     const { showDropDown } = this.state;
@@ -74,7 +76,7 @@ export default class Token extends Component {
 
     if (showFacet) {
       return (
-        <span className={ className }>
+        <span className={ className } id={ UNIQUE_ID + "token_0" + index } >
           <span
             id={ UNIQUE_ID + "facet" }
             /*
@@ -92,7 +94,7 @@ export default class Token extends Component {
               { dropdownMenu && ' ▾' }
             </span>
           </span>
-          <span className="facet-value" >
+          <span className="facet-value">
             { description }
           </span>
         </span>
