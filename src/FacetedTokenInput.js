@@ -150,7 +150,7 @@ export default class FacetedTokenInput extends Component {
           aria-expanded={ showDropDown }
           aria-autocomplete="list"
           aria-owns="suggestions_box"
-          aria-activedescendant={ UNIQUE_ID + '0' + selectedSectionIndex + '0' + selectedIndex }
+          aria-activedescendant={ UNIQUE_ID + 'section_0' + selectedSectionIndex + '_0' + selectedIndex }
           aria-label="input"
           style={ INPUT_STYLE }
           className={ inputClass }
@@ -306,9 +306,19 @@ export default class FacetedTokenInput extends Component {
 
     const searchText = this.refs.input.value;
 
+    if (searchText) {
+      this.setState({
+        showDropDown: true
+      });
+    }
+    else {
+      this.setState({
+        showDropDown: false
+      });
+    }
+
     this.setState({
       searchText: searchText,
-      showDropDown: true,
       selectedSectionIndex: -1,
       selectedIndex: -1
     });

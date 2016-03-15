@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 import { UNIQUE_ID } from './FacetedTokenInput';
 
+import { SPACE, ENTER } from './key-codes';
+
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
@@ -12,7 +14,8 @@ const DropdownMenuItem = ({
   index,
   addToken,
   setSelected,
-  componentClasses
+  componentClasses,
+  sectionTitle
 }) => (
   <li
     className={ classNames(
@@ -22,11 +25,11 @@ const DropdownMenuItem = ({
       },
       componentClasses.suggestionsLi
     ) }
-    role="listitem"
+    role="option"
     id={ UNIQUE_ID + '0' + sectionIndex + '0' + index }
   >
     <a
-      role="listitem"
+      role="button"
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
       onMouseMove={ () => setSelected({ sectionIndex, index }) }
@@ -46,7 +49,7 @@ const DropdownMenuSection = ({
   <ul
     className={ classNames(componentClasses.suggestionsUl) }
     role="listbox"
-    aria-label={ section.title }
+    id={ UNIQUE_ID + 'section_0' + sectionIndex }
   >
     {
       section.title &&
@@ -54,7 +57,7 @@ const DropdownMenuSection = ({
         key="header"
         className={ classNames('header', componentClasses.sectionTitle) }
         aria-label={ section.title }
-        id={ section.title }
+        id={ UNIQUE_ID + section.title }
       >
         { section.title }
       </li>
@@ -73,6 +76,7 @@ const DropdownMenuSection = ({
         sectionIndex={ sectionIndex }
         index={ index }
         componentClasses={ componentClasses }
+        sectionTitle={ section.title }
       />
     ))}
   </ul>
