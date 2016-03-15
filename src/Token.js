@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { ENTER, UP, DOWN } from './key-codes';
+import { ENTER, UP, DOWN, SPACE } from './key-codes';
+
+import { UNIQUE_ID } from './FacetedTokenInput'
 
 const CHECK = <span className="check">✓</span>;
 
@@ -30,7 +32,7 @@ export default class Token extends Component {
       customElements
     } = this.props;
 
-    const { showDropDown } = this.state;
+    const { showDropDown, selectedIndex } = this.state;
 
     const containerClassName = classNames(
       {
@@ -44,7 +46,13 @@ export default class Token extends Component {
       <div
         ref={ 'container' }
         tabIndex={ 0 }
-        aria-selected={ selected }
+        // this will make desktop screen readers work properly
+        role={ dropdownMenu ? "menu" : "" }
+        aria-haspopup="true"
+        aria-owns={ UNIQUE_ID + "facet_menu" }
+        aria-expanded={ showDropDown }
+        aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
+        // end
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
         onKeyDown={ event => this.onKeyDown(event) }
@@ -57,7 +65,8 @@ export default class Token extends Component {
             description,
             dropdownMenu,
             componentClasses,
-            customElements
+            customElements,
+            selectedIndex
           })
         }
 
@@ -75,9 +84,12 @@ export default class Token extends Component {
     description,
     dropdownMenu,
     componentClasses,
-    customElements
+    customElements,
+    selectedIndex
   }) {
     const onClick = event => this.setState({ showDropDown: true });
+
+    const { showDropDown } = this.state;
 
     const showFacet = !!(facet || dropdownMenu);
 
@@ -104,6 +116,7 @@ export default class Token extends Component {
             aria-haspopup={ dropdownMenu ? true : false }
             aria-role="listbox"
             className={ facetClass }
+            id={ UNIQUE_ID + "facet" }
             onClick={ onClick }
           >
             { facet }
@@ -120,7 +133,7 @@ export default class Token extends Component {
     else {
       return (
         <span className={ tokenClass }>
-          <span className={ descriptionClass }>
+          <span className={ descriptionClass } role="tab">
             { description }
           </span>
         </span>
@@ -140,8 +153,8 @@ export default class Token extends Component {
       <div className={ dropdownClass }>
         <ul
           className={ dropdownUlClass }
-          aria-expanded="true"
-          aria-hidden="false"
+          id={ UNIQUE_ID + "facet_menu" }
+          role="menu"
         >
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
@@ -167,18 +180,21 @@ export default class Token extends Component {
       <li
         key={ 'menuItem' + index }
         className={ dropdownLiClass }
-        tabIndex={ -1 }
-        className={ selected ? 'active' : '' }
-        aria-role="listitem"
-        aria-selected={ selected }
-        aria-checked={ !item.current ? "false" : "true" }
+        id={ UNIQUE_ID + 'facet_0' + index }
+        role="menuitemradio"
+        aria-checked={ item.current }
+        aria-label={ item.label }
+        aria-controls={ UNIQUE_ID + "facet" }
       >
+
         <a
           onMouseEnter={ event => this.setState({ selectedIndex: index }) }
           onClick={ event => this.select(index) }
           className={ dropdownAClass }
         >
-          { !item.current ? null : customElements.check || CHECK }
+          <span aria-hidden="true">
+            { !item.current ? null : customElements.check || CHECK }
+          </span>
           { item.label }
         </a>
       </li>
