@@ -2,6 +2,8 @@ import React from 'react';
 
 import { UNIQUE_ID } from './FacetedTokenInput';
 
+import { SPACE, ENTER } from './key-codes';
+
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
@@ -10,15 +12,16 @@ const DropdownMenuItem = ({
   sectionIndex,
   index,
   addToken,
-  setSelected
+  setSelected,
+  sectionTitle
 }) => (
   <li
-    role="listitem"
+    role="option"
     className={ selected ? 'active' : '' }
     id={ UNIQUE_ID + '0' + sectionIndex + '0' + index }
   >
     <a
-      role="listitem"
+      role="button"
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
       onMouseMove={ () => setSelected({ sectionIndex, index }) }
@@ -29,14 +32,14 @@ const DropdownMenuItem = ({
 );
 
 const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
-  <ul role="listbox" aria-label={ section.title }>
+  <ul role="listbox" id={ UNIQUE_ID + 'section_0' + sectionIndex }>
     {
       section.title &&
       <li
         key="header"
         className="header"
         aria-label={ section.title }
-        id={ section.title }
+        id={ UNIQUE_ID + section.title }
       >
         { section.title }
       </li>
@@ -54,6 +57,7 @@ const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
         suggestion={ suggestion }
         sectionIndex={ sectionIndex }
         index={ index }
+        sectionTitle={ section.title }
       />
     ))}
   </ul>
