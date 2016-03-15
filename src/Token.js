@@ -30,6 +30,7 @@ export default class Token extends Component {
       dropdownMenu,
       componentClasses,
       customElements
+      index
     } = this.props;
 
     const { showDropDown, selectedIndex } = this.state;
@@ -50,8 +51,9 @@ export default class Token extends Component {
         role={ dropdownMenu ? "menu" : "" }
         aria-haspopup="true"
         aria-owns={ UNIQUE_ID + "facet_menu" }
-        aria-expanded={ showDropDown }
+        aria-expanded={ dropdownMenu ? showDropDown : "false" }
         aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
+        aria-labelledby={ UNIQUE_ID + "token_0" + index }
         // end
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
@@ -66,7 +68,8 @@ export default class Token extends Component {
             dropdownMenu,
             componentClasses,
             customElements,
-            selectedIndex
+            selectedIndex,
+            index
           })
         }
 
@@ -85,7 +88,8 @@ export default class Token extends Component {
     dropdownMenu,
     componentClasses,
     customElements,
-    selectedIndex
+    selectedIndex,
+    index
   }) {
     const onClick = event => this.setState({ showDropDown: true });
 
@@ -111,7 +115,7 @@ export default class Token extends Component {
 
     if (showFacet) {
       return (
-        <span className={ tokenClass }>
+        <span className={ tokenClass } id={ UNIQUE_ID + "token_0" + index } >
           <span
             aria-haspopup={ dropdownMenu ? true : false }
             aria-role="listbox"

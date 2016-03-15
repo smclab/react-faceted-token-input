@@ -26,9 +26,11 @@ const DropdownMenuItem = ({
       componentClasses.suggestionsLi
     ) }
     role="option"
-    id={ UNIQUE_ID + '0' + sectionIndex + '0' + index }
+    id={ UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index }
+    aria-labelledby={ UNIQUE_ID + sectionTitle + ' ' + UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index + '_1' }
   >
     <a
+      id={ UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index + '_1' }
       role="button"
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }

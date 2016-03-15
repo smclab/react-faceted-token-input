@@ -141,6 +141,7 @@ export default class FacetedTokenInput extends Component {
         onFocus={ event => this.onFocus(event) }
         onBlur={ event => this.onBlur(event) }
       >
+
         { tokens.map(this.renderToken, this) }
 
         <input
