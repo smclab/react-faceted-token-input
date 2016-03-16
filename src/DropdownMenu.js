@@ -34,7 +34,7 @@ const DropdownMenuItem = ({
 );
 
 const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
-  <ul role="listbox" aria-controls="test" id={ UNIQUE_ID + 'section_0' + sectionIndex }>
+  <ul role="listbox" id={ UNIQUE_ID + 'section_0' + sectionIndex }>
     {
       section.title &&
       <li
