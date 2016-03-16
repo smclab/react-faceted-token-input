@@ -49,7 +49,7 @@ export default class Token extends Component {
         aria-expanded={ dropdownMenu ? showDropDown : "false" }
         aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
         aria-labelledby={ UNIQUE_ID + "token_0" + index }
-        // end
+        // end screen reader compatibility
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
         onKeyDown={ event => this.onKeyDown(event) }
@@ -79,13 +79,6 @@ export default class Token extends Component {
         <span className={ className } id={ UNIQUE_ID + "token_0" + index } >
           <span
             id={ UNIQUE_ID + "facet" }
-            /*
-            role={ dropdownMenu ? "menu" : "" }
-            aria-haspopup="true"
-            aria-owns={ UNIQUE_ID + "facet_menu" }
-            aria-expanded={ showDropDown }
-            aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
-            */
             className="facet-type"
             onClick={ onClick }
           >
