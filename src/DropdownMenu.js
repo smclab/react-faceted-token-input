@@ -106,6 +106,6 @@ const DropdownMenu = ({ sections, componentClasses, ...props }) => (
         ], [])
         .slice(1) }
   </div>
-);
+); 
 
 export default DropdownMenu;
