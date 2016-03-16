@@ -166,9 +166,46 @@ export default class FacetedTokenInput extends Component {
         { this.props.children }
 
         { showDropDown && this.renderDropdown() }
+
+
+
+        { /* start test code */ }
+
+        { /* the following div needs to be hidden if this code is going into the master branch */ }
+        <div id="a11ysupport" aria-live="polite" aria-relevant="additions" aria-atomic="true">
+
+          { /* simply add all the tokens that exist in the input */ }
+          { tokens.map(this.a11ySupport, this) }
+
+        </div>
+
+        { /*end test code*/ }
+
+
+
       </div>
     );
   }
+
+
+  // start experimental method
+
+  // this should add a node that should be detected by aria-live="true"
+  a11ySupport(token, index) {
+    const { facet, description } = this.props.renderToken(token);
+
+    return (
+      <p key={ "test" + index }>
+        { facet }
+        { ' ' }
+        { description }
+        { ' ' }
+      </p>
+    )
+  }
+
+  // end experimental method
+
 
   renderDropdown() {
     const { dropdownSections } = this.props;
