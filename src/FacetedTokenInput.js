@@ -61,6 +61,19 @@ const INPUT_SPY_WRAPPER_STYLE = {
   overflow: 'hidden'
 };
 
+const A11Y_HELPER_STYLE = {
+  position: 'absolute',
+  visibility: 'hidden',
+  height: '0px',
+  width: '0px',
+  margin: '0px',
+  padding: '0px',
+  overflow: 'hidden',
+  top: '0px',
+  bottom: '0px',
+  fontSize: '0px'
+}
+
 const INPUT_SPY_STYLE = {
   display: 'block',
   whiteSpace: 'pre',
@@ -141,6 +154,7 @@ export default class FacetedTokenInput extends Component {
           aria-owns="suggestions_box"
           aria-activedescendant={ UNIQUE_ID + 'section_0' + selectedSectionIndex + '_0' + selectedIndex }
           aria-label="input"
+          aria-describedby="number_tokens"
           style={ INPUT_STYLE }
           className="compound-input-field"
           placeholder={ tokens.length ? '' : placeholder }
@@ -172,11 +186,26 @@ export default class FacetedTokenInput extends Component {
         { /* start test code */ }
 
         { /* the following div needs to be hidden if this code is going into the master branch */ }
-        <div id="a11ysupport" aria-live="polite" aria-relevant="additions" aria-atomic="true">
+        <ul
+          id="a11ysupport"
+          aria-live="assertive"
+          aria-relevant="additions removals"
+          aria-atomic="true"
+          style={ A11Y_HELPER_STYLE }
+        >
+            { /* simply add all the tokens that exist in the input */ }
+            { tokens.map(this.a11ySupport, this) }
+        </ul>
 
-          { /* simply add all the tokens that exist in the input */ }
-          { tokens.map(this.a11ySupport, this) }
 
+        { /*
+          this adds a string that thanks to aria-describedby present in the input
+          reads out the number of tokens present in the input in addition to the
+          specifics of the input
+          */ }
+        <div id="number_tokens" style={ A11Y_HELPER_STYLE }>
+          { tokens.length }
+          { '  tokens in input' }
         </div>
 
         { /*end test code*/ }
@@ -195,12 +224,12 @@ export default class FacetedTokenInput extends Component {
     const { facet, description } = this.props.renderToken(token);
 
     return (
-      <p key={ "test" + index }>
+      <li key={ "test" + index }>
         { facet }
         { ' ' }
         { description }
         { ' ' }
-      </p>
+      </li>
     )
   }
 
