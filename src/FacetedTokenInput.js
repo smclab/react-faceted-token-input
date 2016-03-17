@@ -7,7 +7,8 @@ import DropdownMenu from './DropdownMenu';
 
 import onLeftRight from './onLeftRight';
 
-import  a11y from 'react-a11y';
+// if react-a11y is not used delete line 11 and 12
+import a11y from 'react-a11y';
 import ReactDOM from 'react-dom';
 
 import {
@@ -72,7 +73,7 @@ const A11Y_HELPER_STYLE = {
   top: '0px',
   bottom: '0px',
   fontSize: '0px'
-}
+};
 
 const INPUT_SPY_STYLE = {
   display: 'block',
@@ -185,7 +186,10 @@ export default class FacetedTokenInput extends Component {
 
         { /* start test code */ }
 
-        { /* the following div needs to be hidden if this code is going into the master branch */ }
+        { /*
+          the following div needs to be hidden if this code is going into the
+          master branch (see A11Y_HELPER_STYLE)
+          */ }
         <ul
           id="a11ysupport"
           aria-live="assertive"
@@ -199,16 +203,16 @@ export default class FacetedTokenInput extends Component {
 
 
         { /*
-          this adds a string that thanks to aria-describedby present in the input
-          reads out the number of tokens present in the input in addition to the
-          specifics of the input
+          this adds a string that thanks to aria-describedby present in the
+          input reads out the number of tokens present in the input in addition
+          to the specifics of the input
           */ }
         <div id="number_tokens" style={ A11Y_HELPER_STYLE }>
           { tokens.length }
           { '  tokens in input' }
         </div>
 
-        { /*end test code*/ }
+        { /* end test code */ }
 
 
 
@@ -224,13 +228,13 @@ export default class FacetedTokenInput extends Component {
     const { facet, description } = this.props.renderToken(token);
 
     return (
-      <li key={ "test" + index }>
+      <li key={ 'test' + index }>
         { facet }
         { ' ' }
         { description }
         { ' ' }
       </li>
-    )
+    );
   }
 
   // end experimental method
@@ -518,7 +522,8 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    const keyDirection = isForward(event, dir || textDirection) ? DIRECTION_FORWARD
+    const keyDirection = isForward(event, dir || textDirection)
+      ? DIRECTION_FORWARD
       : isBackward(event, dir || textDirection) ? DIRECTION_BACKWARD
       : DIRECTION_NONE;
 
@@ -614,7 +619,9 @@ export default class FacetedTokenInput extends Component {
       });
     }
 
-    if (event.target !== this.refs.input || (event.target === this.refs.input && !searchText) ) {
+    if (event.target !== this.refs.input ||
+      (event.target === this.refs.input && !searchText)) {
+
       event.preventDefault();
     }
   }

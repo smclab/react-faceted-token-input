@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { ENTER, UP, DOWN, SPACE } from './key-codes';
+import { ENTER, UP, DOWN } from './key-codes';
 
-import { UNIQUE_ID } from './FacetedTokenInput'
+import { UNIQUE_ID } from './FacetedTokenInput';
 
 const CHECK = <span className="check">✓</span>;
 
@@ -43,12 +43,12 @@ export default class Token extends Component {
         ref={ 'container' }
         tabIndex={ 0 }
         // this will make desktop screen readers work properly
-        role={ dropdownMenu ? "menu" : "" }
-        aria-haspopup="true"
-        aria-owns={ UNIQUE_ID + "facet_menu" }
-        aria-expanded={ dropdownMenu ? showDropDown : "false" }
+        role={ dropdownMenu ? 'menu' : '' }
+        aria-haspopup={ dropdownMenu ? showDropDown : 'false' }
+        aria-owns={ UNIQUE_ID + 'facet_menu' }
+        aria-expanded={ dropdownMenu ? showDropDown : 'false' }
         aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
-        aria-labelledby={ UNIQUE_ID + "token_0" + index }
+        aria-labelledby={ UNIQUE_ID + 'token_0' + index }
         // end screen reader compatibility
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
@@ -65,8 +65,6 @@ export default class Token extends Component {
   renderContent({ facet, description, dropdownMenu, selectedIndex, index }) {
     const onClick = event => this.setState({ showDropDown: true });
 
-    const { showDropDown } = this.state;
-
     const showFacet = !!(facet || dropdownMenu);
 
     const className = classNames({
@@ -76,9 +74,9 @@ export default class Token extends Component {
 
     if (showFacet) {
       return (
-        <span className={ className } id={ UNIQUE_ID + "token_0" + index } >
+        <span className={ className } id={ UNIQUE_ID + 'token_0' + index } >
           <span
-            id={ UNIQUE_ID + "facet" }
+            id={ UNIQUE_ID + 'facet' }
             className="facet-type"
             onClick={ onClick }
           >
@@ -105,7 +103,7 @@ export default class Token extends Component {
   renderDropdown(dropdownMenu) {
     return (
       <div className="dropdown token-dropdown">
-        <ul id={ UNIQUE_ID + "facet_menu" } role="menu" >
+        <ul id={ UNIQUE_ID + 'facet_menu' } role="menu" >
           { dropdownMenu.map(this.renderDropdownItem, this) }
         </ul>
       </div>
@@ -125,7 +123,7 @@ export default class Token extends Component {
         role="menuitemradio"
         aria-checked={ item.current }
         aria-label={ item.label }
-        aria-controls={ UNIQUE_ID + "facet" }
+        aria-controls={ UNIQUE_ID + 'facet' }
       >
 
         <a

@@ -2,8 +2,6 @@ import React from 'react';
 
 import { UNIQUE_ID } from './FacetedTokenInput';
 
-import { SPACE, ENTER } from './key-codes';
-
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
@@ -34,7 +32,13 @@ const DropdownMenuItem = ({
 );
 
 const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
-  <ul role="listbox" id={ UNIQUE_ID + 'section_0' + sectionIndex }>
+  <ul
+    role="listbox"
+    id={ UNIQUE_ID + 'section_0' + sectionIndex }
+    // different approach to read the section title
+    // aria-labelledby={ UNIQUE_ID + section.title }
+  >
+
     {
       section.title &&
       <li
@@ -66,7 +70,7 @@ const DropdownMenuSection = ({ section, sectionIndex, ...props }) => (
 );
 
 const DropdownMenu = ({ sections, ...props }) => (
-  <div className="dropdown input-dropdown"  id="suggestions_box" >
+  <div className="dropdown input-dropdown" id="suggestions_box" >
     { sections.map((section, sectionIndex) => (
           <DropdownMenuSection
             { ...props }
