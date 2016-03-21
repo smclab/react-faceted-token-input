@@ -42,6 +42,13 @@ export const DIRECTION_FORWARD = 'forward';
 
 export const UNIQUE_ID = 'fti_';
 
+let tokensLength = 0;
+let tempFacet = '';
+let tempDescription = '';
+let supportText = '';
+let tempToken = [];
+
+
 const INPUT_STYLE = {
   font: 'inherit',
   lineHeight: 'inherit',
@@ -54,7 +61,6 @@ const INPUT_STYLE = {
 
 const INPUT_SPY_WRAPPER_STYLE = {
   position: 'absolute',
-  visibility: 'hidden',
   top: '0px',
   left: '0px',
   width: '100%',
@@ -64,7 +70,6 @@ const INPUT_SPY_WRAPPER_STYLE = {
 
 const A11Y_HELPER_STYLE = {
   position: 'absolute',
-  visibility: 'hidden',
   height: '0px',
   width: '0px',
   margin: '0px',
@@ -146,6 +151,17 @@ export default class FacetedTokenInput extends Component {
 
         { tokens.map(this.renderToken, this) }
 
+
+        { /*
+          I'm an experiment to delete tokens in mobile
+          <a
+            style={ { width: '20px', background: 'pink', textAlign: 'center', display: (tokens.length) ? 'inline-block' : 'none' } }
+            onClick={ event => this.onBackspace() }
+          >
+            { 'X' }
+          </a>
+        */ }
+
         <input
           key="input"
           ref="input"
@@ -189,18 +205,40 @@ export default class FacetedTokenInput extends Component {
         { /*
           the following div needs to be hidden if this code is going into the
           master branch (see A11Y_HELPER_STYLE)
+          style={ A11Y_HELPER_STYLE }
           */ }
-        <ul
+        <div
           id="a11ysupport"
-          aria-live="assertive"
-          aria-relevant="additions removals"
-          aria-atomic="true"
+          role="log"
+          aria-live="polite"
+          aria-relevant="all"
+          aria-atomic={ true }
           style={ A11Y_HELPER_STYLE }
         >
-            { /* simply add all the tokens that exist in the input */ }
-            { tokens.map(this.a11ySupport, this) }
-        </ul>
 
+        { /*
+          <span id="tagsupport">
+              simply add all the tokens that exist in the input
+
+              <p></p>
+
+              this adds only the last token, it doesn't solve the current
+              problem since the additions count from the second one onwards
+
+              (tokens.length) ? this.a11ySupport(tokens[tokens.length - 1], tokens.length - 1) : ''
+
+              GOOGLE
+              <div aria-live="polite" aria-atomic="true">
+                pierpaolo.ramon aggiunto. Premi backspace per rimuovere il destinatario.
+              </div>
+
+
+              { tokens.map(this.a11ySupport, this) }
+          </span>
+        */ }
+
+          { this.a11ySupport() }
+        </div>
 
         { /*
           this adds a string that thanks to aria-describedby present in the
@@ -224,16 +262,34 @@ export default class FacetedTokenInput extends Component {
   // start experimental method
 
   // this should add a node that should be detected by aria-live="true"
-  a11ySupport(token, index) {
-    const { facet, description } = this.props.renderToken(token);
+  a11ySupport() {
+    const { tokens } = this.state;
+    const { facet, description } = this.props.renderToken(tokens[tokens.length - 1] || []);
+
+    if (tokens.length === tokensLength + 1) {
+      supportText = 'added';
+      tempFacet = facet;
+      tempDescription = description;
+      tempToken[tokens.length - 1] = { facet, description };
+    }
+    else if (tokens.length === tokensLength - 1) {
+      supportText = 'deleted';
+      tempFacet = tempToken[tokens.length].facet;
+      tempDescription = tempToken[tokens.length].description;
+    }
+
+    tokensLength = tokens.length;
 
     return (
-      <li key={ 'test' + index }>
-        { facet }
-        { ' ' }
-        { description }
-        { ' ' }
-      </li>
+      <span
+        key={ 'test' + tokensLength }
+      >
+        { tempFacet }
+        { '  ' }
+        { tempDescription }
+        { '  ' }
+        { supportText }
+      </span>
     );
   }
 
@@ -310,7 +366,9 @@ export default class FacetedTokenInput extends Component {
       if (noSelection || this.isInTokenSelection(tokens.length)) {
         this.refs.input.focus();
       }
-      else if (tokenSelectionDirection === DIRECTION_NONE) {
+      else if (tokenSelectionDirection === DIRECTION_NONE &&
+        this.refs['token' + tokenSelectionStart]) {
+
         this.refs['token' + tokenSelectionStart].focus();
       }
       else {
