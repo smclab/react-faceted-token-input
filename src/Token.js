@@ -32,10 +32,13 @@ export default class Token extends Component {
 
     const { showDropDown } = this.state;
 
-    const containerClassName = classNames({
-      'token-container': true,
-      'selected': selected
-    }, componentClasses.tokenWrapper);
+    const containerClassName = classNames(
+      {
+        'token-container': true,
+        'selected': selected
+      },
+      componentClasses.tokenWrapper
+    );
 
     return (
       <div
@@ -77,15 +80,21 @@ export default class Token extends Component {
 
     const showFacet = !!(facet || dropdownMenu);
 
-    const tokenClass = classNames({
-      'token': true,
-      'facet': showFacet
-    }, componentClasses.token);
+    const tokenClass = classNames(
+      'token',
+      {
+        'facet': showFacet,
+        [componentClasses.tokenWithFacet]: showFacet
+      },
+      componentClasses.token
+    );
 
     const facetClass = classNames('facet-type', componentClasses.facet);
 
-    const descriptionClass = classNames('facet-value',
-      componentClasses.description);
+    const descriptionClass = classNames(
+      'facet-value',
+      componentClasses.description
+    );
 
     if (showFacet) {
       return (
@@ -112,8 +121,10 @@ export default class Token extends Component {
   }
 
   renderDropdown(dropdownMenu, componentClasses) {
-    const dropdownClass = classNames('dropdown token-dropdown',
-      componentClasses.dropdownWrap);
+    const dropdownClass = classNames(
+      'dropdown token-dropdown',
+      componentClasses.dropdownWrap
+    );
 
     const dropdownUlClass = classNames(componentClasses.dropdownUl);
 
@@ -133,8 +144,10 @@ export default class Token extends Component {
 
     const selected = (index === selectedIndex);
 
-    const dropdownLiClass = classNames({ 'active': selected },
-      componentClasses.dropdownLi);
+    const dropdownLiClass = classNames(
+      { 'active': selected },
+      componentClasses.dropdownLi
+    );
 
     const dropdownAClass = classNames(componentClasses.dropdownA);
 

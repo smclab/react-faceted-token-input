@@ -12,9 +12,15 @@ const DropdownMenuItem = ({
   setSelected,
   componentClasses
 }) => (
-  <li className={ classNames({ 'active': selected },
-    componentClasses.suggestionsLi) }>
-
+  <li
+    className={ classNames(
+      {
+        'active': selected,
+        [componentClasses.suggestionsLiSelected]: selected
+      },
+      componentClasses.suggestionsLi
+    ) }
+  >
     <a
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
@@ -65,7 +71,6 @@ const DropdownMenu = ({ sections, componentClasses, ...props }) => (
   <div className={
     classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
   }>
-
     { sections.map((section, sectionIndex) => (
           <DropdownMenuSection
             { ...props }
