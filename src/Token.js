@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { ENTER, UP, DOWN, SPACE } from './key-codes';
 
-import { UNIQUE_ID } from './FacetedTokenInput'
+import uniqueId from './unique-id'
 
 const CHECK = <span className="check">✓</span>;
 
@@ -11,6 +11,8 @@ export default class Token extends Component {
 
   constructor(props) {
     super(props);
+
+    this.id = props.id;
 
     this.state = {
       selectedIndex: -1,
@@ -50,10 +52,10 @@ export default class Token extends Component {
         // this will make desktop screen readers work properly
         role={ dropdownMenu ? "menu" : "" }
         aria-haspopup="true"
-        aria-owns={ UNIQUE_ID + "facet_menu" }
+        aria-owns={ uniqueId({ id: this.id, facet_menu: 0 }) }
         aria-expanded={ dropdownMenu ? showDropDown : "false" }
-        aria-activedescendant={ UNIQUE_ID + 'facet_0' + selectedIndex }
-        aria-labelledby={ UNIQUE_ID + "token_0" + index }
+        aria-activedescendant={ uniqueId({ id: this.id, facet: selectedIndex }) }
+        aria-labelledby={ uniqueId({ id: this.id, token: index }) }
         // end screen reader compatibility
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
@@ -115,12 +117,12 @@ export default class Token extends Component {
 
     if (showFacet) {
       return (
-        <span className={ tokenClass } id={ UNIQUE_ID + "token_0" + index } >
+        <span className={ tokenClass } id={ uniqueId({ id: this.id, token: index }) } >
           <span
             aria-haspopup={ dropdownMenu ? true : false }
             aria-role="listbox"
             className={ facetClass }
-            id={ UNIQUE_ID + "facet" }
+            id={ uniqueId({ id: this.id, facet: 'o' }) }
             onClick={ onClick }
           >
             { facet }
@@ -157,7 +159,7 @@ export default class Token extends Component {
       <div className={ dropdownClass }>
         <ul
           className={ dropdownUlClass }
-          id={ UNIQUE_ID + "facet_menu" }
+          id={ uniqueId({ id: this.id, facet_menu: 0 }) }
           role="menu"
         >
           { dropdownMenu.map(this.renderDropdownItem, this) }
@@ -184,11 +186,11 @@ export default class Token extends Component {
       <li
         key={ 'menuItem' + index }
         className={ dropdownLiClass }
-        id={ UNIQUE_ID + 'facet_0' + index }
+        id={ uniqueId({ id: this.id, facet: index }) }
         role="menuitemradio"
         aria-checked={ item.current }
         aria-label={ item.label }
-        aria-controls={ UNIQUE_ID + "facet" }
+        aria-controls={ uniqueId({ id: this.id, facet: 'o' }) }
       >
 
         <a

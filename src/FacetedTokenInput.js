@@ -5,9 +5,7 @@ import Token from './Token';
 import DropdownMenu from './DropdownMenu';
 
 import onLeftRight from './onLeftRight';
-
-import  a11y from 'react-a11y';
-import ReactDOM from 'react-dom';
+import uniqueId from './unique-id';
 
 import {
   BACKSPACE,
@@ -31,14 +29,16 @@ import {
   isBackward
 } from './key-utils';
 
-// Abilitate accessibility test only in development mode
-// a11y(React, { ReactDOM: ReactDOM });
+/*
+ import  a11y from 'react-a11y';
+ import ReactDOM from 'react-dom';
+
+ a11y(React, { ReactDOM: ReactDOM });
+*/
 
 export const DIRECTION_NONE = 'none';
 export const DIRECTION_BACKWARD = 'backward';
 export const DIRECTION_FORWARD = 'forward';
-
-export const UNIQUE_ID = 'fti_';
 
 const INPUT_STYLE = {
   font: 'inherit',
@@ -83,10 +83,14 @@ const PROP_TYPES = {
   customElements: PropTypes.object
 };
 
+let counter = 0;
+
 export default class FacetedTokenInput extends Component {
 
   constructor(props) {
     super(props);
+
+    this.id = counter++;
 
     this.state = {
       focused: false,
@@ -151,7 +155,7 @@ export default class FacetedTokenInput extends Component {
           aria-expanded={ showDropDown }
           aria-autocomplete="list"
           aria-owns="suggestions_box"
-          aria-activedescendant={ UNIQUE_ID + 'section_0' + selectedSectionIndex + '_0' + selectedIndex }
+          aria-activedescendant={ uniqueId({ id: this.id, section: selectedSectionIndex, index: selectedIndex }) }
           aria-label="input"
           style={ INPUT_STYLE }
           className={ inputClass }
@@ -197,6 +201,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <DropdownMenu
+        id = { this.id }
         componentClasses={ componentClasses }
         sections={ dropdownSections }
         selectedId={ selectedId }
@@ -219,6 +224,7 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <Token
+        id = { this.id }
         key={ 'token' + (token.id || index) }
         ref={ 'token' + index }
         index={ index }

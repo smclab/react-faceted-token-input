@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { UNIQUE_ID } from './FacetedTokenInput';
+import uniqueId from './unique-id';
 
 import { SPACE, ENTER } from './key-codes';
 
@@ -15,7 +15,8 @@ const DropdownMenuItem = ({
   addToken,
   setSelected,
   componentClasses,
-  sectionTitle
+  sectionTitle,
+  id
 }) => (
   <li
     className={ classNames(
@@ -26,11 +27,11 @@ const DropdownMenuItem = ({
       componentClasses.suggestionsLi
     ) }
     role="option"
-    id={ UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index }
-    aria-labelledby={ UNIQUE_ID + sectionTitle + ' ' + UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index + '_1' }
+    id={ uniqueId({ id: id, section: sectionIndex, index: index }) }
+    aria-labelledby={ uniqueId({ id: id, sectionTitle: sectionTitle }) + ' ' + uniqueId({ id: id, section: sectionIndex, index: index, a: 1 }) }
   >
     <a
-      id={ UNIQUE_ID + 'section_0' + sectionIndex + '_0' + index + '_1' }
+      id={ uniqueId({ id: id, section: sectionIndex, index: index, a: 1 }) }
       role="button"
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
@@ -46,12 +47,13 @@ const DropdownMenuSection = ({
   section,
   sectionIndex,
   componentClasses,
+  id,
   ...props
 }) => (
   <ul
     className={ classNames(componentClasses.suggestionsUl) }
     role="listbox"
-    id={ UNIQUE_ID + 'section_0' + sectionIndex }
+    id={ uniqueId({ id: id, section: sectionIndex }) }
   >
     {
       section.title &&
@@ -59,7 +61,7 @@ const DropdownMenuSection = ({
         key="header"
         className={ classNames('header', componentClasses.sectionTitle) }
         aria-label={ section.title }
-        id={ UNIQUE_ID + section.title }
+        id={ uniqueId({ id: id, sectionTitle: section.title }) }
       >
         { section.title }
       </li>
@@ -79,12 +81,13 @@ const DropdownMenuSection = ({
         index={ index }
         componentClasses={ componentClasses }
         sectionTitle={ section.title }
+        id = { id }
       />
     ))}
   </ul>
 );
 
-const DropdownMenu = ({ sections, componentClasses, ...props }) => (
+const DropdownMenu = ({ sections, componentClasses, id, ...props }) => (
   <div className={
     classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
   }
@@ -97,6 +100,7 @@ const DropdownMenu = ({ sections, componentClasses, ...props }) => (
             key={ 'section' + sectionIndex }
             sectionIndex={ sectionIndex }
             section={ section }
+            id = { id }
           />
         ))
         .reduce((memo, o, sectionIndex) => [
@@ -106,6 +110,6 @@ const DropdownMenu = ({ sections, componentClasses, ...props }) => (
         ], [])
         .slice(1) }
   </div>
-); 
+);
 
 export default DropdownMenu;
