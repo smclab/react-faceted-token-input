@@ -3,8 +3,6 @@ import classNames from 'classnames';
 
 import uniqueId from './unique-id';
 
-import { SPACE, ENTER } from './key-codes';
-
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenuItem = ({
@@ -28,7 +26,11 @@ const DropdownMenuItem = ({
     ) }
     role="option"
     id={ uniqueId({ id: id, section: sectionIndex, index: index }) }
-    aria-labelledby={ uniqueId({ id: id, sectionTitle: sectionTitle }) + ' ' + uniqueId({ id: id, section: sectionIndex, index: index, a: 1 }) }
+    aria-labelledby={
+      uniqueId({ id: id, sectionTitle: sectionTitle }) +
+      ' ' +
+      uniqueId({ id: id, section: sectionIndex, index: index, a: 1 })
+    }
   >
     <a
       id={ uniqueId({ id: id, section: sectionIndex, index: index, a: 1 }) }

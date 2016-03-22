@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { ENTER, UP, DOWN, SPACE } from './key-codes';
+import { ENTER, UP, DOWN } from './key-codes';
 
-import uniqueId from './unique-id'
+import uniqueId from './unique-id';
 
 const CHECK = <span className="check">✓</span>;
 
@@ -50,11 +50,13 @@ export default class Token extends Component {
         ref={ 'container' }
         tabIndex={ 0 }
         // this will make desktop screen readers work properly
-        role={ dropdownMenu ? "menu" : "" }
+        role={ dropdownMenu ? 'menu' : '' }
         aria-haspopup="true"
-        aria-owns={ uniqueId({ id: this.id, facet_menu: 0 }) }
-        aria-expanded={ dropdownMenu ? showDropDown : "false" }
-        aria-activedescendant={ uniqueId({ id: this.id, facet: selectedIndex }) }
+        aria-owns={ uniqueId({ id: this.id, facetMenu: 0 }) }
+        aria-expanded={ dropdownMenu ? showDropDown : 'false' }
+        aria-activedescendant={
+          uniqueId({ id: this.id, facet: selectedIndex })
+        }
         aria-labelledby={ uniqueId({ id: this.id, token: index }) }
         // end screen reader compatibility
         className={ containerClassName }
@@ -117,9 +119,12 @@ export default class Token extends Component {
 
     if (showFacet) {
       return (
-        <span className={ tokenClass } id={ uniqueId({ id: this.id, token: index }) } >
+        <span
+          className={ tokenClass }
+          id={ uniqueId({ id: this.id, token: index }) }
+        >
           <span
-            aria-haspopup={ dropdownMenu ? true : false }
+            aria-haspopup={ dropdownMenu }
             aria-role="listbox"
             className={ facetClass }
             id={ uniqueId({ id: this.id, facet: 'o' }) }
@@ -159,7 +164,7 @@ export default class Token extends Component {
       <div className={ dropdownClass }>
         <ul
           className={ dropdownUlClass }
-          id={ uniqueId({ id: this.id, facet_menu: 0 }) }
+          id={ uniqueId({ id: this.id, facetMenu: 0 }) }
           role="menu"
         >
           { dropdownMenu.map(this.renderDropdownItem, this) }

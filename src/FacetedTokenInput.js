@@ -155,7 +155,13 @@ export default class FacetedTokenInput extends Component {
           aria-expanded={ showDropDown }
           aria-autocomplete="list"
           aria-owns="suggestions_box"
-          aria-activedescendant={ uniqueId({ id: this.id, section: selectedSectionIndex, index: selectedIndex }) }
+          aria-activedescendant={
+            uniqueId({
+              id: this.id,
+              section: selectedSectionIndex,
+              index: selectedIndex
+            })
+          }
           aria-label="input"
           style={ INPUT_STYLE }
           className={ inputClass }
@@ -247,14 +253,12 @@ export default class FacetedTokenInput extends Component {
     this.updateInputFlexBasis();
 
     if (this.state.focused) {
-      const { dir } = this.props;
 
       const {
         tokens,
         tokenSelectionDirection,
         tokenSelectionStart,
-        tokenSelectionEnd,
-        searchText
+        tokenSelectionEnd
       } = this.state;
 
       const noSelection = (tokenSelectionStart < 0) && (tokenSelectionEnd < 0);
@@ -476,7 +480,8 @@ export default class FacetedTokenInput extends Component {
       tokenSelectionStart
     } = this.state;
 
-    const keyDirection = isForward(event, dir || textDirection) ? DIRECTION_FORWARD
+    const keyDirection = isForward(event, dir || textDirection)
+      ? DIRECTION_FORWARD
       : isBackward(event, dir || textDirection) ? DIRECTION_BACKWARD
       : DIRECTION_NONE;
 
