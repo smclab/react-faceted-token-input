@@ -217,9 +217,11 @@ For Example:
 The available selectors are:
 
 * `wrapper`: the `div` that contains the component
+  * `wrapperFocused`: dynamic class applied to the `wrapper` when focused
 * `input`: the `input` element of the component
-* `tokenWrapper`: the `div` that contains all the tokens
+  * `tokenWrapper`: the `div` that contains all the tokens
 * `token`: `span` element that represent the whole token
+* `tokenWithFacet`: dynamic class applied to a `token` when it has a facet
 * `facet`: `span` element inside the `token` that represent the facet of the
   token
 * `description`: `span` element inside the `token` that represent the desription
@@ -231,12 +233,14 @@ The available selectors are:
 * `suggestionsWrap`: the `div` containing the dropdown for the suggestions
 * `suggestionsUl`: the `ul` list for a section of the suggestions dropdown
 * `suggestionsLi`: the `li` elements of the suggestions dropdown list
+  * `suggestionsLiSelected`: dynamic class applied to the selected
+    `suggestionsLi`
 * `sectionTitle`: the first `li` for the suggestions dropdown is a section title
 * `suggestionsA`: the `a` elements inside the `li` elements for the suggestions
   dropdown
 
 If you don't want to add this prop, some of the selectors already have classes
-for you to use in your css:
+for you to use in your CSS:
 
 * `wrapper`: `compound-input`
 * `input`: `compound-input-field`

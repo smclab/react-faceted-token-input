@@ -102,12 +102,19 @@ export default class FacetedTokenInput extends Component {
       focused
     } = this.state;
 
-    const facetedTokenInputClass = classNames('compound-input', {
-      'focused': focused
-    }, componentClasses.wrapper);
+    const facetedTokenInputClass = classNames(
+      'compound-input',
+      {
+        'focused': focused,
+        [componentClasses.wrapperFocused]: focused
+      },
+      componentClasses.wrapper
+    );
 
-    const inputClass = classNames('compound-input-field',
-      componentClasses.input);
+    const inputClass = classNames(
+      'compound-input-field',
+      componentClasses.input
+    );
 
     return (
       <div
