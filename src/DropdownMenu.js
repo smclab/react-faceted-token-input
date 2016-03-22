@@ -25,15 +25,15 @@ const DropdownMenuItem = ({
       componentClasses.suggestionsLi
     ) }
     role="option"
-    id={ uniqueId({ id: id, section: sectionIndex, index: index }) }
+    id={ uniqueId({ id, sectionIndex, index }) }
     aria-labelledby={
-      uniqueId({ id: id, sectionTitle: sectionTitle }) +
+      uniqueId({ id, sectionTitle }) +
       ' ' +
-      uniqueId({ id: id, section: sectionIndex, index: index, a: 1 })
+      uniqueId({ id, sectionIndex, index, a: 'o' })
     }
   >
     <a
-      id={ uniqueId({ id: id, section: sectionIndex, index: index, a: 1 }) }
+      id={ uniqueId({ id, sectionIndex, index, a: 'o' }) }
       role="button"
       href="javascript: void 0"
       onClick={ () => addToken(suggestion.result) }
@@ -55,7 +55,7 @@ const DropdownMenuSection = ({
   <ul
     className={ classNames(componentClasses.suggestionsUl) }
     role="listbox"
-    id={ uniqueId({ id: id, section: sectionIndex }) }
+    id={ uniqueId({ id, sectionIndex }) }
   >
     {
       section.title &&
@@ -63,7 +63,7 @@ const DropdownMenuSection = ({
         key="header"
         className={ classNames('header', componentClasses.sectionTitle) }
         aria-label={ section.title }
-        id={ uniqueId({ id: id, sectionTitle: section.title }) }
+        id={ uniqueId({ id, sectionTitle: section.title }) }
       >
         { section.title }
       </li>

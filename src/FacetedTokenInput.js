@@ -158,7 +158,7 @@ export default class FacetedTokenInput extends Component {
           aria-activedescendant={
             uniqueId({
               id: this.id,
-              section: selectedSectionIndex,
+              sectionIndex: selectedSectionIndex,
               index: selectedIndex
             })
           }
@@ -577,7 +577,9 @@ export default class FacetedTokenInput extends Component {
       });
     }
 
-    if (event.target !== this.refs.input) {
+    if (event.target !== this.refs.input ||
+      (event.target === this.refs.input && !searchText) ) {
+
       event.preventDefault();
     }
   }

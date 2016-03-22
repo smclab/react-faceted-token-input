@@ -49,7 +49,6 @@ export default class Token extends Component {
       <div
         ref={ 'container' }
         tabIndex={ 0 }
-        // this will make desktop screen readers work properly
         role={ dropdownMenu ? 'menu' : '' }
         aria-haspopup="true"
         aria-owns={ uniqueId({ id: this.id, facetMenu: 0 }) }
@@ -58,7 +57,6 @@ export default class Token extends Component {
           uniqueId({ id: this.id, facet: selectedIndex })
         }
         aria-labelledby={ uniqueId({ id: this.id, token: index }) }
-        // end screen reader compatibility
         className={ containerClassName }
         onContextMenu={ event => this.onContextMenu(event) }
         onKeyDown={ event => this.onKeyDown(event) }
@@ -124,7 +122,7 @@ export default class Token extends Component {
           id={ uniqueId({ id: this.id, token: index }) }
         >
           <span
-            aria-haspopup={ dropdownMenu }
+            aria-haspopup={ !!dropdownMenu }
             aria-role="listbox"
             className={ facetClass }
             id={ uniqueId({ id: this.id, facet: 'o' }) }
