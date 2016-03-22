@@ -29,7 +29,7 @@ export default class Token extends Component {
       description,
       dropdownMenu,
       componentClasses,
-      customElements
+      customElements,
       index
     } = this.props;
 
