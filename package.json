@@ -9,7 +9,8 @@
     "clean": "rimraf lib",
     "lint": "eslint src test",
     "test": "cross-env NODE_ENV=test jest",
-    "start": "cross-env NODE_ENV=development node ./server"
+    "start": "cross-env NODE_ENV=development node ./server",
+    "prepublish": "npm run build && npm run lint"
   },
   "files": [
     "lib",
