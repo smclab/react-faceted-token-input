@@ -1,0 +1,372 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300);
+
+/* ************
+ General
+**************/
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #FAFAFA;
+}
+
+/* ************
+ Header
+**************/
+
+.header {
+  background-color: #1BA39C;
+  max-height: 400px;
+  text-align: center;
+  color: #FFF;
+}
+
+.header .title {
+  padding: 30px 15px;
+  font-size: 26px;
+}
+
+.header .subtitle {
+  font-size: 18px;
+}
+
+.header .repository {
+  margin: 0px auto;
+  padding: 40px 15px;
+}
+
+.mainButton {
+  background-color: #FAFAFA;
+  padding: 10px 15px;
+  font-size: 20px;
+  color: #115539;
+  text-decoration: none;
+  border-bottom: 5px solid  #115539;
+}
+
+.mainButton:hover {
+  border-bottom-color: #bef3dc;
+}
+
+/* ************
+ Content
+**************/
+
+.sectionTitle {
+  font-size: 25px;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+/* ************
+ Features
+**************/
+
+.featureList {
+  text-align: center;
+}
+
+.featureList ul {
+  display:inline-block;
+  width: auto;
+  list-style: none;
+  font-size: 20px;
+}
+
+.featureList li {
+  margin-top: 20px;
+}
+
+.featureList li:first-child {
+  margin-top: 0px;
+}
+
+.featureList li:last-child {
+  margin-bottom: 30px;
+}
+
+/* ************
+ Demo
+**************/
+
+.demo {
+  background-color: #e9Edef;
+}
+
+.runningDemo {
+  min-width: 300px;
+  width: 60%;
+  margin: 0px auto;
+  padding-bottom: 30px;
+}
+
+[dir='ltr'], [dir='rtl'] {
+  unicode-bidi: -webkit-isolate;
+  unicode-bidi: -moz-isolate;
+  unicode-bidi: -ms-isolate;
+  unicode-bidi: isolate;
+}
+
+bdo[dir='ltr'], bdo[dir='rtl'] {
+  unicode-bidi: bidi-override;
+  unicode-bidi: -webkit-isolate-override;
+  unicode-bidi: -moz-isolate-override;
+  unicode-bidi: -ms-isolate-override;
+  unicode-bidi: isolate-override;
+}
+
+.compound-input {
+  font-size: 16px;
+  border: 1px solid #999;
+  padding: 0.4em;
+  padding-bottom: 0.2em;
+  line-height: 2;
+  display: flex;
+  flex-wrap: wrap;
+  outline-style: none;
+  border-radius: 5px;
+  position: relative;
+}
+
+.compound-input.focused {
+  border-color: #115539;
+  outline: none;
+}
+
+.compound-input-field {
+  margin-bottom: 0.2em;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.token-container {
+  position: relative;
+  display: flex;
+  margin-bottom: 0.2em;
+}
+
+[dir='rtl'] .token-container {
+  margin-left: 0.2em;
+}
+
+[dir='ltr'] .token-container {
+  margin-right: 0.2em;
+}
+
+.token-container:focus {
+  outline: none;
+}
+
+.token {
+  background: #1BA39C;
+  color: #FFF;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+
+.token.selected,
+.token-container.selected .token {
+  color: white;
+  background: #115539;
+  border-color: #1BA39C;
+}
+
+.facet {
+  padding: 0px;
+  display: flex;
+}
+
+.facet .facet-type {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-right: 1px solid white;
+  line-height: inherit;
+  background: rgb(17, 85, 57, 0.1);
+  text-transform: uppercase;
+  font-size: 0.7em;
+  padding-top: 0.5em;
+}
+
+.facet .facet-value {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Dropdown */
+
+.compound-input .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  background: white;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 8px 0px;
+  margin-top: 2px;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.compound-input .dropdown .header {
+  background: none;
+  text-align: left;
+}
+
+.compound-input .input-dropdown {
+  right: 0%;
+}
+
+.compound-input .dropdown hr {
+  margin: 4px 0px;
+}
+
+.compound-input .dropdown ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+.compound-input .dropdown ul li {
+  font-size: 1em;
+  white-space: nowrap;
+  padding: 0px;
+  margin: 0px;
+}
+
+.compound-input .dropdown ul li a,
+.compound-input .dropdown ul li.header {
+  display: block;
+  padding: 6px 8px;
+  line-height: 1;
+  position: relative;
+}
+
+.compound-input .dropdown ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.compound-input .dropdown ul li a {
+  text-decoration: none;
+}
+
+.compound-input .dropdown ul li.header {
+  color: #888;
+}
+
+.compound-input .token-dropdown ul li a {
+  padding-left: 24px;
+}
+
+.compound-input .dropdown ul li.active a {
+  cursor: pointer;
+  background: #1BA39C;
+  color: white;
+}
+
+.compound-input .dropdown .check {
+  position: absolute;
+  left: 0px;
+  width: 24px;
+  text-align: center;
+}
+
+/* ****************
+ Demo description
+******************/
+
+.demoDescription {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+/* ************
+ How to
+**************/
+
+.howTo {
+  font-size: 18px;
+  text-align: center;
+}
+
+.howTo h3 {
+  font-size: 22px;
+}
+
+.howTo p {
+  margin: 30px 15px;
+}
+
+.howTo h4 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.howTo ul {
+  padding-bottom: 30px;
+}
+
+.howTo li {
+  margin-top: 20px;
+}
+
+.howTo li:first-child {
+  margin-top: 0px;
+}
+
+/* ************
+ Footer
+**************/
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #2f353b;
+  min-height: 250px;
+  max-height: 400px;
+  text-align: center;
+  color: #FFF;
+  font-size: 18px;
+}
+
+.credits {
+  padding-bottom: 20px;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0px auto;
+}
+
+.contacts a {
+  padding: 0 20px;
+  font-size: 24px;
+  text-decoration: none;
+  color: #FFF;
+}
+
+.contacts a:hover {
+  color: #1BA39C;
+}
+
+.helpWrap {
+  margin-top: 30px;
+}
+
+.helpWrap a {
+  text-decoration: none;
+  color: #FAFAFA;
+}
+
+.helpWrap a:hover {
+  color: #1BA39C;
+}

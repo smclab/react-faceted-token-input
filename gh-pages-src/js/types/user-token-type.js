@@ -7,12 +7,12 @@ const FIELDS = {
 };
 
 const USERS = [
-  [ 'Davide', '', 'Roman' ],
-  [ 'Fabio', '', 'Pezzutto' ],
-  [ 'Marco', '', 'Tessarin' ],
-  [ 'Mauro', '', 'Mariuzzo' ],
-  [ 'Paolo', '', 'Valeri' ],
-  [ 'Pier Paolo', '', 'Ramon' ]
+  [ 'Alan', '', 'Touring' ],
+  [ 'Bill', '', 'Gates' ],
+  [ 'Dennis', '', 'Ritchie' ],
+  [ 'James', '', 'Gosling' ],
+  [ 'Ken', '', 'Thompson' ],
+  [ 'Steve', '', 'Jobs' ]
 ].map(
   ([ firstName, middleName, lastName ], id) =>
     ({ id, firstName, middleName, lastName })
@@ -25,7 +25,7 @@ export default class UserTokenType {
   }
 
   getTitle() {
-    return 'Contacts';
+    return 'Genii';
   }
 
   renderToken(token) {

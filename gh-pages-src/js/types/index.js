@@ -1,19 +1,11 @@
-
-import NatureTokenType from './nature-token-type';
-import StatusTokenType from './status-token-type';
 import TextTokenType from './text-token-type';
 import UserTokenType from './user-token-type';
-import ResultFieldTokenType from './result-field-token-type';
 
 const REGISTRY = [];
 const REGISTRY_BY_TYPE = {};
 
-registerTokenType(new StatusTokenType());
-registerTokenType(new NatureTokenType());
 registerTokenType(new UserTokenType());
 registerTokenType(new TextTokenType());
-registerTokenType(new ResultFieldTokenType('description'));
-registerTokenType(new ResultFieldTokenType('product'));
 
 export function registerTokenType(tokenType) {
   REGISTRY.push(tokenType);
