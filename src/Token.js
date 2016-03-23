@@ -95,8 +95,6 @@ export default class Token extends Component {
   }) {
     const onClick = event => this.setState({ showDropDown: true });
 
-    const { showDropDown } = this.state;
-
     const showFacet = !!(facet || dropdownMenu);
 
     const tokenClass = classNames(

@@ -578,7 +578,7 @@ export default class FacetedTokenInput extends Component {
     }
 
     if (event.target !== this.refs.input ||
-      (event.target === this.refs.input && !searchText) ) {
+      (event.target === this.refs.input && !searchText)) {
 
       event.preventDefault();
     }
