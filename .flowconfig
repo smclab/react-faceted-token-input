@@ -1,0 +1,12 @@
+[ignore]
+.*/node-modules/.*
+.*/docs/.*
+.*/examples/.*
+.*/lib/.*
+
+[include]
+./src
+
+[libs]
+
+[options]
