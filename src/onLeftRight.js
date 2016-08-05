@@ -1,3 +1,5 @@
+/* @flow */
+
 /*
 int         selectionStart,
 int         selectionEnd,
@@ -22,25 +24,36 @@ import {
   DIRECTION_FORWARD
 } from './FacetedTokenInput';
 
-function onLeftRight(
-  selectionStart,
-  selectionEnd,
-  selectionDirection,
-  tokensLength,
-  tokenSelectionStart,
-  tokenSelectionEnd,
-  tokenSelectionDirection,
-  home,
-  end,
-  selectToHome,
-  selectToEnd,
-  shiftKey,
-  mac,
-  keyDirection,
-  inputValue
-) {
+type LeftRightReturn = {
+	selectionStart: number,
+	selectionEnd: number,
+	selectionDirection: string,
+	tokenSelectionStart: number,
+	tokenSelectionEnd: number,
+	tokenSelectionDirection: string,
+	mac: boolean,
+	prevent: boolean
+};
 
-  let prevent = false;
+function onLeftRight(
+  selectionStart: number,
+  selectionEnd: number,
+  selectionDirection: string,
+  tokensLength: number,
+  tokenSelectionStart: number,
+  tokenSelectionEnd: number,
+  tokenSelectionDirection: string,
+  home: boolean,
+  end: boolean,
+  selectToHome: boolean,
+  selectToEnd: boolean,
+  shiftKey: boolean,
+  mac: boolean,
+  keyDirection: string,
+  inputValue: string
+) : ?LeftRightReturn {
+
+  let prevent: boolean = false;
 
   if (!home && !end && !selectToHome &&
     !selectToEnd && tokenSelectionStart >= tokensLength) {
@@ -200,13 +213,16 @@ function onLeftRight(
       prevent = true;
     }
 
-    const initialIsInputInSelection = (tokenSelectionEnd > tokensLength);
+    const initialIsInputInSelection: boolean = (
+			tokenSelectionEnd > tokensLength
+		);
 
     if (tokenSelectionDirection === DIRECTION_NONE) {
       tokenSelectionDirection = keyDirection;
     }
 
-    const increment = (tokenSelectionDirection === keyDirection) ? 1 : -1;
+    const increment: number = (tokenSelectionDirection === keyDirection)
+			? 1 : -1;
 
     if (tokenSelectionDirection === DIRECTION_FORWARD) {
       tokenSelectionEnd += increment;

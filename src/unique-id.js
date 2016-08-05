@@ -1,7 +1,13 @@
 const PREFIX = 'fti';
 const SEP = '_';
 
-export default function uniqueId(cfg) {
+type cfgConfig = {
+	id: number,
+	index: number,
+	sectionIndex: number
+}
+
+export default function uniqueId(cfg: cfgConfig): string {
 
   return Object.keys(cfg)
     .sort()
