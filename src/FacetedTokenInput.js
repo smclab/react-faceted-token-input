@@ -7,6 +7,8 @@ import DropdownMenu from './DropdownMenu';
 import onLeftRight from './onLeftRight';
 import uniqueId from './unique-id';
 
+import type { ComponentClassesType, FacetedTokenInputStateType } from './type';
+
 import {
   BACKSPACE,
   ENTER,
@@ -71,7 +73,24 @@ const DEFAULT_PROPS = {
   componentClasses: {}
 };
 
-const PROP_TYPES = {
+type customElementsType = {
+	check: React$Element,
+	dropdownArrow: string
+}
+
+type PropTypesConfig = {
+	defaultTokens: [any],
+  placeholder: string,
+  children: React$Element,
+  dropdownSections: [any],
+  renderToken: (element: any) => React$Element,
+  onChange: (element: any) => any,
+  dir: string,
+  componentClasses: ComponentClassesType,
+  customElements: customElementsType
+}
+
+const PROP_TYPES: PropTypesConfig = {
   defaultTokens: PropTypes.array,
   placeholder: PropTypes.string,
   children: PropTypes.element,
@@ -83,9 +102,24 @@ const PROP_TYPES = {
   customElements: PropTypes.object
 };
 
-let counter = 0;
+let counter: number = 0;
 
 export default class FacetedTokenInput extends Component {
+
+	state: {
+		focused: boolean,
+		searchText: string,
+		tokens: any,
+		requiresDirCheck: ?string,
+		showDropDown: boolean,
+		selectedSectionIndex: number,
+		selectedIndex: number,
+		selectedId: ?number,
+		tokenSelectionDirection: string,
+		tokenSelectionStart: number,
+		tokenSelectionEnd: number,
+		textDirection: string
+	};
 
   constructor(props) {
     super(props);
