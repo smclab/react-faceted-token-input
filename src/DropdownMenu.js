@@ -1,95 +1,29 @@
+/* @flow */
+
 import React from 'react';
 import classNames from 'classnames';
 
-import uniqueId from './unique-id';
+import { DropdownMenuSection } from './DropdownMenuSection';
+
+import type { ComponentClassesType } from './types';
+import type { DropdownMenuSectionConfig } from './DropdownMenuSection';
 
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
-const DropdownMenuItem = ({
-  selected,
-  suggestion,
-  sectionIndex,
-  index,
-  addToken,
-  setSelected,
-  componentClasses,
-  sectionTitle,
-  id
-}) => (
-  <li
-    className={ classNames(
-      {
-        'active': selected,
-        [componentClasses.suggestionsLiSelected]: selected
-      },
-      componentClasses.suggestionsLi
-    ) }
-    role="option"
-    id={ uniqueId({ id, sectionIndex, index }) }
-    aria-labelledby={
-      uniqueId({ id, sectionTitle }) +
-      ' ' +
-      uniqueId({ id, sectionIndex, index, a: 'o' })
-    }
-  >
-    <a
-      id={ uniqueId({ id, sectionIndex, index, a: 'o' }) }
-      role="button"
-      href="javascript: void 0"
-      onClick={ () => addToken(suggestion.result) }
-      onMouseMove={ () => setSelected({ sectionIndex, index }) }
-      className={ classNames(componentClasses.suggestionsA) }
-    >
-      { suggestion.description }
-    </a>
-  </li>
-);
+export type Suggestion = any;
 
-const DropdownMenuSection = ({
-  section,
-  sectionIndex,
-  componentClasses,
-  id,
-  ...props
-}) => (
-  <ul
-    className={ classNames(componentClasses.suggestionsUl) }
-    role="listbox"
-    id={ uniqueId({ id, sectionIndex }) }
-  >
-    {
-      section.title &&
-      <li
-        key="header"
-        className={ classNames('header', componentClasses.sectionTitle) }
-        aria-label={ section.title }
-        id={ uniqueId({ id, sectionTitle: section.title }) }
-      >
-        { section.title }
-      </li>
-    }
+export type DropdownMenuConfig = DropdownMenuSectionConfig & {
+	sections: [any],
+	componentClasses: ComponentClassesType,
+	id: string
+};
 
-    { section.suggestions.map((suggestion, index) => (
-      <DropdownMenuItem
-        { ...props }
-        key={ 'item' + suggestion.id }
-        selected={
-          (props.selectedId === suggestion.id) ||
-          (props.selectedSectionIndex === sectionIndex) &&
-          (props.selectedIndex === index)
-        }
-        suggestion={ suggestion }
-        sectionIndex={ sectionIndex }
-        index={ index }
-        componentClasses={ componentClasses }
-        sectionTitle={ section.title }
-        id = { id }
-      />
-    ))}
-  </ul>
-);
-
-const DropdownMenu = ({ sections, componentClasses, id, ...props }) => (
+const DropdownMenu = ({
+	sections,
+	componentClasses,
+	id,
+	...props
+} : DropdownMenuConfig) => (
   <div className={
     classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
   }
