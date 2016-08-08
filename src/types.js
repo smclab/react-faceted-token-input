@@ -1,22 +1,22 @@
 export type ComponentClassesType = {
-	wrapper?: string,
-	wrapperFocused?: string,
-	input?: string,
-	tokenWrapper?: string,
-	token?: string,
-	tokenWithFacet?: string,
-	facet?: string,
-	description?: string,
-	dropdownWrap?: string,
-	dropdownUl?: string,
-	dropdownLi?: string,
-	dropdownA?: string,
-	suggestionsWrap?: string,
-	suggestionsUl?: string,
-	suggestionsLi?: string,
-	suggestionsLiSelected?: string,
-	sectionTitle?: string,
-	suggestionsA?: string
+	wrapper: ?string,
+	wrapperFocused: ?string,
+	input: ?string,
+	tokenWrapper: ?string,
+	token: ?string,
+	tokenWithFacet: ?string,
+	facet: ?string,
+	description: ?string,
+	dropdownWrap: ?string,
+	dropdownUl: ?string,
+	dropdownLi: ?string,
+	dropdownA: ?string,
+	suggestionsWrap: ?string,
+	suggestionsUl: ?string,
+	suggestionsLi: ?string,
+	suggestionsLiSelected: ?string,
+	sectionTitle: ?string,
+	suggestionsA: ?string
 };
 
 export type FacetedTokenInputStateType = {
@@ -48,9 +48,9 @@ export type SuggestionType = {
 }
 
 export type SectionType = {
-		title: string,
-		suggestions: array<SuggestionType>
-	}
+	title: string,
+	suggestions: [SuggestionType]
+}
 
 export type LeftRightReturn = {
 	selectionStart: number,

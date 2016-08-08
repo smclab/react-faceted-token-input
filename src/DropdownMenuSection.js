@@ -7,7 +7,6 @@ import { DropdownMenuItem } from './DropdownMenuItem';
 
 import type {
 	ComponentClassesType,
-	ResultType,
 	SuggestionType,
 	SectionType
 } from './types';

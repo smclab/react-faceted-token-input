@@ -10,7 +10,6 @@ import uniqueId from './unique-id';
 import type {
 	ComponentClassesType,
 	FacetedTokenInputStateType,
-	ResultType,
 	SuggestionType,
 	LeftRightReturn,
 	SectionType
@@ -252,7 +251,7 @@ export default class FacetedTokenInput extends Component {
 
   renderToken(token, index) {
 
-		type renderTokenTypes = {
+    type renderTokenTypes = {
 			facet: string,
 			description: string,
 			dropdownMenu: React$Element
@@ -477,7 +476,8 @@ export default class FacetedTokenInput extends Component {
         -1, Math.min(dropdownSections.length - 1, nextSelectedSectionIndex)
       );
 
-      const nextSection = dropdownSections[nextSelectedSectionIndex];
+      const nextSection: SectionType =
+				dropdownSections[nextSelectedSectionIndex];
 
       nextSelectedIndex = Math.max(
         -1, Math.min(
@@ -501,13 +501,13 @@ export default class FacetedTokenInput extends Component {
   }
 
   onLeftRightPress(event) {
-		type InputRefsType = {
+    type InputRefsType = {
 			selectionEnd: number,
       selectionStart: number,
-      selectionDirection: stirng
+      selectionDirection: string
 		}
 
-		const {
+    const {
       selectionEnd,
       selectionStart,
       selectionDirection

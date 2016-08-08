@@ -3,9 +3,7 @@ import classNames from 'classnames';
 
 import type {
 	ComponentClassesType,
-	ResultType,
-	SuggestionType,
-	SectionType
+	SuggestionType
 } from './types';
 import uniqueId from './unique-id';
 

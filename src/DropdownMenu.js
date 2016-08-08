@@ -7,8 +7,6 @@ import { DropdownMenuSection } from './DropdownMenuSection';
 
 import type {
 	ComponentClassesType,
-	ResultType,
-	SuggestionType,
 	SectionType
 } from './types';
 import type { DropdownMenuSectionConfig } from './DropdownMenuSection';
