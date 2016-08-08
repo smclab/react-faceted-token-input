@@ -3,9 +3,19 @@ import classNames from 'classnames';
 
 import { ENTER, UP, DOWN } from './key-codes';
 
+import type {
+	TokenPropType,
+	ResultType
+} from './types';
+
 import uniqueId from './unique-id';
 
 const CHECK = <span className="check">✓</span>;
+
+type TokenStatetype = {
+	showDropDown: boolean,
+	selectedIndex: number
+}
 
 export default class Token extends Component {
 
@@ -33,9 +43,9 @@ export default class Token extends Component {
       componentClasses,
       customElements,
       index
-    } = this.props;
+    }: TokenPropType = this.props;
 
-    const { showDropDown, selectedIndex } = this.state;
+    const { showDropDown, selectedIndex }: TokenStatetype = this.state;
 
     const containerClassName = classNames(
       {
@@ -170,9 +180,9 @@ export default class Token extends Component {
   }
 
   renderDropdownItem(item, index) {
-    const { componentClasses, customElements } = this.props;
+    const { componentClasses, customElements }: TokenPropType = this.props;
 
-    const { selectedIndex } = this.state;
+    const { selectedIndex }: TokenStatetype = this.state;
 
     const selected = (index === selectedIndex);
 
@@ -250,7 +260,7 @@ export default class Token extends Component {
   }
 
   onEnter(event) {
-    const { selectedIndex } = this.state;
+    const { selectedIndex }: TokenStatetype = this.state;
 
     if (selectedIndex >= 0) {
       this.select(selectedIndex);
@@ -269,9 +279,9 @@ export default class Token extends Component {
   }
 
   select(selectedIndex) {
-    const { dropdownMenu, onUpdate, index } = this.props;
+    const { dropdownMenu, onUpdate, index }: TokenPropType = this.props;
 
-    const token = dropdownMenu[ selectedIndex ].result;
+    const token: ResultType = dropdownMenu[ selectedIndex ].result;
 
     onUpdate({ token, index });
 

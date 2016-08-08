@@ -5,7 +5,12 @@ import classNames from 'classnames';
 
 import { DropdownMenuSection } from './DropdownMenuSection';
 
-import type { ComponentClassesType } from './types';
+import type {
+	ComponentClassesType,
+	ResultType,
+	SuggestionType,
+	SectionType
+} from './types';
 import type { DropdownMenuSectionConfig } from './DropdownMenuSection';
 
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
@@ -13,7 +18,7 @@ const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 export type Suggestion = any;
 
 export type DropdownMenuConfig = DropdownMenuSectionConfig & {
-	sections: [any],
+	sections: [SectionType],
 	componentClasses: ComponentClassesType,
 	id: string
 };

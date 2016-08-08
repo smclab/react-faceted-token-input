@@ -33,3 +33,48 @@ export type FacetedTokenInputStateType = {
 	tokenSelectionEnd: number,
 	textDirection: string
 }
+
+export type ResultType = {
+	field: string,
+	fuzzy: boolean,
+	type: string,
+	value: string
+}
+
+export type SuggestionType = {
+	description: string,
+	id: string,
+	result: ResultType
+}
+
+export type SectionType = {
+		title: string,
+		suggestions: array<SuggestionType>
+	}
+
+export type LeftRightReturn = {
+	selectionStart: number,
+	selectionEnd: number,
+	selectionDirection: string,
+	tokenSelectionStart: number,
+	tokenSelectionEnd: number,
+	tokenSelectionDirection: string,
+	mac: boolean,
+	prevent: boolean
+};
+
+export type TokenPropType = {
+	componentClasses: ComponentClassesType,
+	customElements: [any],
+	description: string,
+	dropdownMenu: ?[any],
+	facet: string,
+	id: number,
+	index: number,
+	selected: boolean,
+	token: any,
+	field: string,
+	fuzzy: boolean,
+	type: string,
+	value: string
+}

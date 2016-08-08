@@ -5,16 +5,23 @@ import classNames from 'classnames';
 
 import { DropdownMenuItem } from './DropdownMenuItem';
 
-import type { ComponentClassesType } from './types';
+import type {
+	ComponentClassesType,
+	ResultType,
+	SuggestionType,
+	SectionType
+} from './types';
+
 import type { DropdownMenuItemConfig } from './DropdownMenuItem';
 
 import uniqueId from './unique-id';
 
 export type DropdownMenuSectionConfig = DropdownMenuItemConfig & {
-  section: any,
+  section: SectionType,
   sectionIndex: number,
   componentClasses: ComponentClassesType,
-  id: string
+  id: string,
+	suggestions: SuggestionType
 };
 
 export const DropdownMenuSection = ({

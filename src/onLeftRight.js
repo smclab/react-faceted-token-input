@@ -24,16 +24,7 @@ import {
   DIRECTION_FORWARD
 } from './FacetedTokenInput';
 
-type LeftRightReturn = {
-	selectionStart: number,
-	selectionEnd: number,
-	selectionDirection: string,
-	tokenSelectionStart: number,
-	tokenSelectionEnd: number,
-	tokenSelectionDirection: string,
-	mac: boolean,
-	prevent: boolean
-};
+import type { LeftRightReturn } from './types';
 
 function onLeftRight(
   selectionStart: number,

@@ -1,12 +1,17 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import type { ComponentClassesType } from './types';
+import type {
+	ComponentClassesType,
+	ResultType,
+	SuggestionType,
+	SectionType
+} from './types';
 import uniqueId from './unique-id';
 
 export type DropdownMenuItemConfig = {
   selected: boolean,
-  suggestion: Suggestion,
+  suggestion: SuggestionType,
   sectionIndex: number,
   index: number,
   addToken: (result: any) => void,
