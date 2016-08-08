@@ -35,6 +35,10 @@ for more information.
 
 `webpack`: used to run the server
 
+`flow`: used to typecheck the source code, during development you can add types
+to the variables. For more information about syntax and usage see the `flow`
+documentation [here](https://flowtype.org/docs/getting-started.html)
+
 ### Available Commands
 
 The *react-faceted-token-input* comes with some useful scripts to facilitate the
@@ -42,6 +46,7 @@ developer experience:
 
 * [Build](#build)
 * [Clean](#clean)
+* [Flow](#flow)
 * [Lint](#lint)
 * [Test](#test)
 * [Start](#start)
@@ -59,6 +64,13 @@ Build the project with:
 Clean the lib folder to prepare for a rebuild:
 
     npm run clean
+
+<a name="flow"></a>
+##### Flow
+
+Typecheck the Javascript code using the types declared during development:
+
+    npm run flow
 
 <a name="lint"></a>
 ##### Lint
