@@ -1,3 +1,5 @@
+/* @flow */
+
 import { LEFT, RIGHT, HOME, END, A, E } from './key-codes';
 
 const UA = (typeof navigator !== 'undefined')
