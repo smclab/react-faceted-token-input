@@ -205,15 +205,15 @@ function onLeftRight(
     }
 
     const initialIsInputInSelection: boolean = (
-			tokenSelectionEnd > tokensLength
-		);
+      tokenSelectionEnd > tokensLength
+    );
 
     if (tokenSelectionDirection === DIRECTION_NONE) {
       tokenSelectionDirection = keyDirection;
     }
 
     const increment: number = (tokenSelectionDirection === keyDirection)
-			? 1 : -1;
+      ? 1 : -1;
 
     if (tokenSelectionDirection === DIRECTION_FORWARD) {
       tokenSelectionEnd += increment;

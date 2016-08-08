@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 import type {
-	ComponentClassesType,
-	SuggestionType
+  ComponentClassesType,
+  SuggestionType
 } from './types';
 import uniqueId from './unique-id';
 

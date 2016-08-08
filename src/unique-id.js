@@ -2,9 +2,9 @@ const PREFIX = 'fti';
 const SEP = '_';
 
 type cfgConfig = {
-	id: number,
-	index: number,
-	sectionIndex: number
+  id: number,
+  index: number,
+  sectionIndex: number
 }
 
 export default function uniqueId(cfg: cfgConfig): string {

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "clean": "rimraf lib",
-		"flow": "flow",
+    "flow": "flow",
     "lint": "eslint src test",
     "test": "cross-env NODE_ENV=test jest",
     "start": "cross-env NODE_ENV=development node ./server",

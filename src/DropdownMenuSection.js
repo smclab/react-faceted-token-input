@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import { DropdownMenuItem } from './DropdownMenuItem';
 
 import type {
-	ComponentClassesType,
-	SuggestionType,
-	SectionType
+  ComponentClassesType,
+  SuggestionType,
+  SectionType
 } from './types';
 
 import type { DropdownMenuItemConfig } from './DropdownMenuItem';
@@ -20,7 +20,7 @@ export type DropdownMenuSectionConfig = DropdownMenuItemConfig & {
   sectionIndex: number,
   componentClasses: ComponentClassesType,
   id: string,
-	suggestions: SuggestionType
+  suggestions: SuggestionType
 };
 
 export const DropdownMenuSection = ({

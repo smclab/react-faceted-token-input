@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { ENTER, UP, DOWN } from './key-codes';
 
 import type {
-	TokenPropType,
-	ResultType
+  TokenPropType,
+  ResultType
 } from './types';
 
 import uniqueId from './unique-id';
@@ -13,8 +13,8 @@ import uniqueId from './unique-id';
 const CHECK = <span className="check">✓</span>;
 
 type TokenStatetype = {
-	showDropDown: boolean,
-	selectedIndex: number
+  showDropDown: boolean,
+  selectedIndex: number
 }
 
 export default class Token extends Component {

@@ -8,11 +8,11 @@ import onLeftRight from './onLeftRight';
 import uniqueId from './unique-id';
 
 import type {
-	ComponentClassesType,
-	FacetedTokenInputStateType,
-	SuggestionType,
-	LeftRightReturn,
-	SectionType
+  ComponentClassesType,
+  FacetedTokenInputStateType,
+  SuggestionType,
+  LeftRightReturn,
+  SectionType
 } from './type';
 
 import {
@@ -80,12 +80,12 @@ const DEFAULT_PROPS = {
 };
 
 type customElementsType = {
-	check: React$Element,
-	dropdownArrow: string
+  check: React$Element,
+  dropdownArrow: string
 }
 
 type PropTypesConfig = {
-	defaultTokens: [any],
+  defaultTokens: [any],
   placeholder: string,
   children: React$Element,
   dropdownSections: [SectionType],
@@ -252,17 +252,17 @@ export default class FacetedTokenInput extends Component {
   renderToken(token, index) {
 
     type renderTokenTypes = {
-			facet: string,
-			description: string,
-			dropdownMenu: React$Element
-		}
+      facet: string,
+      description: string,
+      dropdownMenu: React$Element
+    }
 
     const { componentClasses, customElements }: PropTypesConfig = this.props;
     const {
-			facet,
-			description,
-			dropdownMenu
-		}: renderTokenTypes = this.props.renderToken(token);
+      facet,
+      description,
+      dropdownMenu
+    }: renderTokenTypes = this.props.renderToken(token);
 
     return (
       <Token
@@ -477,7 +477,7 @@ export default class FacetedTokenInput extends Component {
       );
 
       const nextSection: SectionType =
-				dropdownSections[nextSelectedSectionIndex];
+        dropdownSections[nextSelectedSectionIndex];
 
       nextSelectedIndex = Math.max(
         -1, Math.min(
@@ -502,10 +502,10 @@ export default class FacetedTokenInput extends Component {
 
   onLeftRightPress(event) {
     type InputRefsType = {
-			selectionEnd: number,
+      selectionEnd: number,
       selectionStart: number,
       selectionDirection: string
-		}
+    }
 
     const {
       selectionEnd,
