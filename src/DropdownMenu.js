@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { DropdownMenuSection } from './DropdownMenuSection';
 
 import type {
-	DropdownMenuConfig
+  DropdownMenuConfig
 } from './types';
 
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import type {
-	DropdownMenuConfig
+  DropdownMenuConfig
 } from './types';
 import uniqueId from './unique-id';
 

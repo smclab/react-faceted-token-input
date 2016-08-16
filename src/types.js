@@ -85,10 +85,10 @@ export type DropdownMenuConfig = {
   componentClasses: ComponentClassesType,
   id: string,
   suggestions: SuggestionType,
-	sections: [SectionType],
-	addToken: (token: any) => any,
-	setSelected: (event: any) => void,
-	selectedId: number,
-	selectedIndex: number,
-	selectedSectionIndex: number
+  sections: [SectionType],
+  addToken: (token: any) => any,
+  setSelected: (event: any) => void,
+  selectedId: number,
+  selectedIndex: number,
+  selectedSectionIndex: number
 };

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { DropdownMenuItem } from './DropdownMenuItem';
 
 import type {
-	DropdownMenuConfig
+  DropdownMenuConfig
 } from './types';
 
 import uniqueId from './unique-id';
