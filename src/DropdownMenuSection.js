@@ -6,22 +6,12 @@ import classNames from 'classnames';
 import { DropdownMenuItem } from './DropdownMenuItem';
 
 import type {
-  ComponentClassesType,
-  SuggestionType,
-  SectionType
+	DropdownMenuConfig
 } from './types';
-
-import type { DropdownMenuItemConfig } from './DropdownMenuItem';
 
 import uniqueId from './unique-id';
 
-export type DropdownMenuSectionConfig = DropdownMenuItemConfig & {
-  section: SectionType,
-  sectionIndex: number,
-  componentClasses: ComponentClassesType,
-  id: string,
-  suggestions: SuggestionType
-};
+export type DropdownMenuSectionConfig = DropdownMenuConfig;
 
 export const DropdownMenuSection = ({
   section,

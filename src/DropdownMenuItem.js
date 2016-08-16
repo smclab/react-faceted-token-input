@@ -4,22 +4,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 import type {
-  ComponentClassesType,
-  SuggestionType
+	DropdownMenuConfig
 } from './types';
 import uniqueId from './unique-id';
 
-export type DropdownMenuItemConfig = {
-  selected: boolean,
-  suggestion: SuggestionType,
-  sectionIndex: number,
-  index: number,
-  addToken: (result: any) => void,
-  setSelected: any,
-  componentClasses: ComponentClassesType,
-  sectionTitle: string,
-  id: string
-};
+export type DropdownMenuItemConfig = DropdownMenuConfig;
 
 export const DropdownMenuItem = ({
   selected,

@@ -69,7 +69,7 @@ export type TokenPropType = {
   description: string,
   dropdownMenu: ?[any],
   facet: string,
-  id: number,
+  id: string,
   index: number,
   selected: boolean,
   token: any,
@@ -78,3 +78,17 @@ export type TokenPropType = {
   type: string,
   value: string
 }
+
+export type DropdownMenuConfig = {
+  section: SectionType,
+  sectionIndex: number,
+  componentClasses: ComponentClassesType,
+  id: string,
+  suggestions: SuggestionType,
+	sections: [SectionType],
+	addToken: (token: any) => any,
+	setSelected: (event: any) => void,
+	selectedId: number,
+	selectedIndex: number,
+	selectedSectionIndex: number
+};
