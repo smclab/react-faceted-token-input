@@ -1,5 +1,4 @@
 [ignore]
-.*/node-modules/.*
 .*/docs/.*
 .*/examples/.*
 .*/lib/.*
@@ -10,3 +9,12 @@
 [libs]
 
 [options]
+
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+
+munge_underscores=true
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FixMe
