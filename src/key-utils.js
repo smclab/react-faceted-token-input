@@ -3,11 +3,11 @@
 import { LEFT, RIGHT, HOME, END, A, E } from './key-codes';
 
 type KeyboardEvent = {
-	altKey: boolean,
-	ctrlKey: boolean,
-	metaKey: boolean,
-	shiftKey: boolean,
-	which: number
+  altKey: boolean,
+  ctrlKey: boolean,
+  metaKey: boolean,
+  shiftKey: boolean,
+  which: number
 };
 
 const UA = (typeof navigator !== 'undefined')
@@ -16,7 +16,7 @@ const UA = (typeof navigator !== 'undefined')
 export const IS_MAC = (UA.indexOf('macintosh') >= 0);
 
 export const isCtrlKey: (event: any) => boolean
-	= event => event[ IS_MAC ? 'metaKey' : 'ctrlKey' ];
+  = event => event[ IS_MAC ? 'metaKey' : 'ctrlKey' ];
 
 // Placeholder untill fbjs support
 // Ranges taken from the Unicode DerivedBidiClass.txt version 8.0.0
@@ -30,15 +30,15 @@ const RANGE_RTL = '\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC\u0590-\u05FF' +
 const DIRECTION_CHECK_RE = new RegExp(`^[^${ RANGE_LTR }]*[${ RANGE_RTL }]`);
 
 export const isRTL: (str: string) => boolean
-	= (str) => DIRECTION_CHECK_RE.test(str);
+  = (str) => DIRECTION_CHECK_RE.test(str);
 
 export const isOnlyCtrlKey : (event : KeyboardEvent) => boolean
-	= IS_MAC
+  = IS_MAC
   ? event => event.metaKey && !event.ctrlKey
   : event => event.ctrlKey && !event.metaKey;
 
 export const isHome : (event : KeyboardEvent) => boolean
-	= IS_MAC
+  = IS_MAC
   ? ({ metaKey, ctrlKey, altKey, which }) =>
     (metaKey && !ctrlKey && !altKey && (which === LEFT)) ||
     (!metaKey && !ctrlKey && !altKey && which === HOME) ||
@@ -48,7 +48,7 @@ export const isHome : (event : KeyboardEvent) => boolean
     (ctrlKey && !altKey && (which === HOME));
 
 export const isEnd : (event : KeyboardEvent) => boolean
-	= IS_MAC
+  = IS_MAC
   ? ({ metaKey, ctrlKey, altKey, which }) =>
     (metaKey && !ctrlKey && !altKey && (which === RIGHT)) ||
     (!metaKey && !ctrlKey && !altKey && which === END) ||
@@ -58,19 +58,19 @@ export const isEnd : (event : KeyboardEvent) => boolean
     (ctrlKey && !altKey && (which === END));
 
 export const isForward : (event : KeyboardEvent, direction: string) => boolean
-	= (event, direction) =>
-	  ((event.which === RIGHT) && (direction === 'ltr')) ||
-	  ((event.which === LEFT) && (direction === 'rtl')) ||
-	  isEnd(event);
+  = (event, direction) =>
+    ((event.which === RIGHT) && (direction === 'ltr')) ||
+    ((event.which === LEFT) && (direction === 'rtl')) ||
+    isEnd(event);
 
 export const isBackward : (event : KeyboardEvent, direction: string) => boolean
-	= (event, direction) =>
-	  ((event.which === LEFT) && (direction === 'ltr')) ||
-	  ((event.which === RIGHT) && (direction === 'rtl')) ||
-	  isHome(event);
+  = (event, direction) =>
+    ((event.which === LEFT) && (direction === 'ltr')) ||
+    ((event.which === RIGHT) && (direction === 'rtl')) ||
+    isHome(event);
 
 export const isSelectToHome : (event : KeyboardEvent) => boolean
-	= event => event.shiftKey && isHome(event);
+  = event => event.shiftKey && isHome(event);
 
 export const isSelectToEnd : (event : KeyboardEvent) => boolean
-	= event => event.shiftKey && isEnd(event);
+  = event => event.shiftKey && isEnd(event);
