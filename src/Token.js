@@ -263,6 +263,10 @@ export default class Token extends Component {
   }
 
   onUpDown(event: any): void {
+		event.preventDefault();
+
+		if (this.state.showDropDown) {
+
       const { dropdownMenu } = this.props;
 
       const { min, max } = Math;
