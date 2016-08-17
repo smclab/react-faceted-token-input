@@ -8,7 +8,7 @@ import { ENTER, UP, DOWN } from './key-codes';
 import type {
   TokenPropType,
   ResultType,
-	ComponentClassesType
+  ComponentClassesType
 } from './types';
 
 import uniqueId from './unique-id';
@@ -16,29 +16,29 @@ import uniqueId from './unique-id';
 const CHECK = <span className="check">✓</span>;
 
 type TokenStatetype = {
-  showDropDown: boolean,
-  selectedIndex: number
+  selectedIndex: number,
+  showDropDown: boolean
 }
 
 type renderContentInput = {
-	facet: any,
-	description: string,
-	dropdownMenu: any,
-	componentClasses: ComponentClassesType,
-	customElements: any,
-	selectedIndex: number,
-	index: number
+  componentClasses: ComponentClassesType,
+  customElements: any,
+  description: string,
+  dropdownMenu: any,
+  facet: any,
+  index: number,
+  selectedIndex: number
 }
 
 type itemType = {
-	current: number,
-	label: string
+  current: number,
+  label: string
 }
 
 export default class Token extends Component {
   props: TokenPropType;
   state: TokenStatetype;
-	id: string;
+  id: string;
 
   constructor(props: TokenPropType) {
     super(props);
@@ -57,13 +57,13 @@ export default class Token extends Component {
 
   render() {
     const {
-      selected,
-      facet,
-      description,
-      dropdownMenu,
       componentClasses,
       customElements,
-      index
+      description,
+      dropdownMenu,
+      facet,
+      index,
+      selected
     }: TokenPropType = this.props;
 
     const { showDropDown, selectedIndex }: TokenStatetype = this.state;
@@ -96,13 +96,13 @@ export default class Token extends Component {
       >
         {
           this.renderContent({
-            facet,
-            description,
-            dropdownMenu,
             componentClasses,
             customElements,
-            selectedIndex,
-            index
+            description,
+            dropdownMenu,
+            facet,
+            index,
+            selectedIndex
           })
         }
 
@@ -116,13 +116,13 @@ export default class Token extends Component {
   }
 
   renderContent({
-    facet,
-    description,
-    dropdownMenu,
     componentClasses,
     customElements,
-    selectedIndex,
-    index
+    description,
+    dropdownMenu,
+    facet,
+    index,
+    selectedIndex
   }: renderContentInput): React$Element<any> {
     const onClick = event => this.setState({ showDropDown: true });
 
@@ -180,9 +180,9 @@ export default class Token extends Component {
   }
 
   renderDropdown(
-		dropdownMenu: any,
-		componentClasses: ComponentClassesType
-	): React$Element<any> {
+    dropdownMenu: any,
+    componentClasses: ComponentClassesType
+  ): React$Element<any> {
     const dropdownClass = classNames(
       'dropdown token-dropdown',
       componentClasses.dropdownWrap
@@ -263,9 +263,9 @@ export default class Token extends Component {
   }
 
   onUpDown(event: any): void {
-		event.preventDefault();
+    event.preventDefault();
 
-		if (this.state.showDropDown) {
+    if (this.state.showDropDown) {
 
       const { dropdownMenu } = this.props;
 
