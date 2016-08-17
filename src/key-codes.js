@@ -1,3 +1,4 @@
+/* @flow */
 
 export const BACKSPACE = 8;
 export const TAB = 9;
