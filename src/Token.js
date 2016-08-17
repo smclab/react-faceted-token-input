@@ -7,7 +7,8 @@ import { ENTER, UP, DOWN } from './key-codes';
 
 import type {
   TokenPropType,
-  ResultType
+  ResultType,
+	ComponentClassesType
 } from './types';
 
 import uniqueId from './unique-id';
@@ -19,9 +20,27 @@ type TokenStatetype = {
   selectedIndex: number
 }
 
-export default class Token extends Component {
+type renderContentInput = {
+	facet: any,
+	description: string,
+	dropdownMenu: any,
+	componentClasses: ComponentClassesType,
+	customElements: any,
+	selectedIndex: number,
+	index: number
+}
 
-  constructor(props) {
+type itemType = {
+	current: number,
+	label: string
+}
+
+export default class Token extends Component {
+  props: TokenPropType;
+  state: TokenStatetype;
+	id: string;
+
+  constructor(props: TokenPropType) {
     super(props);
 
     this.id = props.id;
@@ -104,7 +123,7 @@ export default class Token extends Component {
     customElements,
     selectedIndex,
     index
-  }) {
+  }: renderContentInput): React$Element<any> {
     const onClick = event => this.setState({ showDropDown: true });
 
     const showFacet = !!(facet || dropdownMenu);
@@ -160,7 +179,10 @@ export default class Token extends Component {
     }
   }
 
-  renderDropdown(dropdownMenu, componentClasses) {
+  renderDropdown(
+		dropdownMenu: any,
+		componentClasses: ComponentClassesType
+	): React$Element<any> {
     const dropdownClass = classNames(
       'dropdown token-dropdown',
       componentClasses.dropdownWrap
@@ -181,7 +203,7 @@ export default class Token extends Component {
     );
   }
 
-  renderDropdownItem(item, index) {
+  renderDropdownItem(item: itemType, index: number) {
     const { componentClasses, customElements }: TokenPropType = this.props;
 
     const { selectedIndex }: TokenStatetype = this.state;
@@ -220,7 +242,7 @@ export default class Token extends Component {
     );
   }
 
-  onContextMenu(event) {
+  onContextMenu(event: any): void {
     event.preventDefault();
 
     this.setState({
@@ -228,7 +250,7 @@ export default class Token extends Component {
     });
   }
 
-  onKeyDown(event) {
+  onKeyDown(event: any): void {
     switch (event.which) {
       case ENTER:
         return this.onEnter(event);
@@ -240,8 +262,7 @@ export default class Token extends Component {
     }
   }
 
-  onUpDown(event) {
-    if (this.state.showDropDown) {
+  onUpDown(event: any): void {
       const { dropdownMenu } = this.props;
 
       const { min, max } = Math;
@@ -261,7 +282,7 @@ export default class Token extends Component {
     }
   }
 
-  onEnter(event) {
+  onEnter(event: any): void {
     const { selectedIndex }: TokenStatetype = this.state;
 
     if (selectedIndex >= 0) {
@@ -269,18 +290,18 @@ export default class Token extends Component {
     }
   }
 
-  onFocus(event) {
+  onFocus(event: any): void {
     this.props.onFocus(event);
   }
 
-  onBlur(event) {
+  onBlur(event: any): void {
     this.setState({
       selectedIndex: -1,
       showDropDown: false
     });
   }
 
-  select(selectedIndex) {
+  select(selectedIndex: number): void {
     const { dropdownMenu, onUpdate, index }: TokenPropType = this.props;
 
     const token: ResultType = dropdownMenu[ selectedIndex ].result;
