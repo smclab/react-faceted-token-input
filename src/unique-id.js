@@ -4,7 +4,7 @@ const PREFIX = 'fti';
 const SEP = '_';
 
 type cfgConfig = {
-  id: ?string
+  id: string
 }
 
 export default function uniqueId(cfg: cfgConfig): string {
