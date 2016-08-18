@@ -53,8 +53,8 @@ type renderTokenTypes = {
 }
 
 type defaultPropTypesConfig = {
-	componentClasses: ComponentClassesType,
-	defaultTokens: [any]
+  componentClasses: ComponentClassesType,
+  defaultTokens: [any]
 }
 
 type customElementsType = {
@@ -63,8 +63,8 @@ type customElementsType = {
 }
 
 type PropTypesConfig = {
-	onChange: (input: any) => void,
-	renderToken: (token: any) => renderTokenTypes,
+  onChange: (input: any) => void,
+  renderToken: (token: any) => renderTokenTypes,
   children: React$Element<any>,
   componentClasses: ComponentClassesType,
   customElements: customElementsType,
@@ -124,11 +124,11 @@ const PROP_TYPES = {
 let counter: number = 0;
 
 export default class FacetedTokenInput extends Component {
-	props: PropTypesConfig;
-	state: FacetedTokenInputStateType;
-	id: number;
+  props: PropTypesConfig;
+  state: FacetedTokenInputStateType;
+  id: number;
 
-	static defaultProps: defaultPropTypesConfig;
+  static defaultProps: defaultPropTypesConfig;
 
   constructor(props: PropTypesConfig) {
     super(props);
