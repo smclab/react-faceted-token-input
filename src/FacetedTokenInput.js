@@ -26,7 +26,7 @@ import {
   UP,
   END,
   HOME,
-	DELETE
+  DELETE
 } from './key-codes';
 
 import {
@@ -61,7 +61,7 @@ type defaultPropTypesConfig = {
 type customElementsType = {
   check: React$Element<any>,
   dropdownArrow: string,
-	delToken: React$Element<any>
+  delToken: React$Element<any>
 }
 
 type PropTypesConfig = {
@@ -295,7 +295,7 @@ export default class FacetedTokenInput extends Component {
     }: renderTokenTypes = this.props.renderToken(token);
 
     return (
-			<div
+      <div
         key={ 'phoneWrapper' + (token.id || index) }
         style={ { 'position': 'relative', 'display': 'inline-block' } }
       >
@@ -324,10 +324,10 @@ export default class FacetedTokenInput extends Component {
   }
 
   tokenDelButton(
-		index: number,
-		componentClasses: ComponentClassesType,
-		customElements: customElementsType
-	): ?React$Element<any> {
+    index: number,
+    componentClasses: ComponentClassesType,
+    customElements: customElementsType
+  ): ?React$Element<any> {
     if (this.isInTokenSelection(index)) {
       return (
         <span
