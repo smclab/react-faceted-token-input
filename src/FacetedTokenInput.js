@@ -25,7 +25,8 @@ import {
   DOWN,
   UP,
   END,
-  HOME
+  HOME,
+	DELETE
 } from './key-codes';
 
 import {
@@ -59,7 +60,8 @@ type defaultPropTypesConfig = {
 
 type customElementsType = {
   check: React$Element<any>,
-  dropdownArrow: string
+  dropdownArrow: string,
+	delToken: React$Element<any>
 }
 
 type PropTypesConfig = {
@@ -102,6 +104,22 @@ const INPUT_SPY_STYLE = {
   display: 'block',
   whiteSpace: 'pre',
   float: 'left'
+};
+
+const TOKEN_DEL_BTN_STYLE = {
+  'background': 'black',
+  'borderRadius': '50%',
+  'color': 'white',
+  'position': 'absolute',
+  'width': '16px',
+  'height': '16px',
+  'fontSize': '12px',
+  'fontWeight': 'bold',
+  'textAlign': 'center',
+  'lineHeight': '16px',
+  'top': '-4px',
+  'right': '4px',
+  'cursor': 'pointer'
 };
 
 const DEFAULT_PROPS = {
@@ -277,24 +295,51 @@ export default class FacetedTokenInput extends Component {
     }: renderTokenTypes = this.props.renderToken(token);
 
     return (
-      <Token
-        id = { this.id }
-        key={ 'token' + (token.id || index) }
-        ref={ 'token' + index }
-        index={ index }
-        customElements={ customElements }
-        componentClasses={ componentClasses }
-        selected={ this.isInTokenSelection(index) }
-        token={ token }
-        facet={ facet }
-        description={ description }
-        dropdownMenu={ dropdownMenu }
-        onUpdate={ event => this.updateToken(event.token, event.index) }
-        onKeyDown={ event => this.onKeyDown(event) }
-        onFocus={ event => this.onTokenFocus(event, index) }
-        onShowDropdown={ event => this.setState({ showDropDown: false }) }
-      />
+			<div
+        key={ 'phoneWrapper' + (token.id || index) }
+        style={ { 'position': 'relative', 'display': 'inline-block' } }
+      >
+        <Token
+          id = { this.id }
+          key={ 'token' + (token.id || index) }
+          ref={ 'token' + index }
+          index={ index }
+          customElements={ customElements }
+          componentClasses={ componentClasses }
+          selected={ this.isInTokenSelection(index) }
+          token={ token }
+          facet={ facet }
+          description={ description }
+          dropdownMenu={ dropdownMenu }
+          onUpdate={ event => this.updateToken(event.token, event.index) }
+          onKeyDown={ event => this.onKeyDown(event) }
+          onFocus={ event => this.onTokenFocus(event, index) }
+          onShowDropdown={ event => this.setState({ showDropDown: false }) }
+        />
+
+        { this.tokenDelButton(index, componentClasses, customElements) }
+
+      </div>
     );
+  }
+
+  tokenDelButton(
+		index: number,
+		componentClasses: ComponentClassesType,
+		customElements: customElementsType
+	): ?React$Element<any> {
+    if (this.isInTokenSelection(index)) {
+      return (
+        <span
+          key={ 'tokenClose' + index }
+          onClick={ event => this.onBackspace(event) }
+          className={ componentClasses.delToken }
+          style={ componentClasses.delToken ? {} : TOKEN_DEL_BTN_STYLE }
+        >
+          { customElements.delToken || 'x' }
+        </span>
+      );
+    }
   }
 
   componentDidUpdate() {
@@ -418,6 +463,12 @@ export default class FacetedTokenInput extends Component {
   }
 
   onKeyDown(event: any): ?boolean {
+    const {
+      tokens,
+      tokenSelectionEnd,
+      tokenSelectionStart
+    }: FacetedTokenInputStateType = this.state;
+
     switch (event.which) {
       case ENTER:
         return this.onEnter(event);
@@ -431,6 +482,14 @@ export default class FacetedTokenInput extends Component {
       case HOME:
       case END:
         return this.onLeftRightPress(event);
+      case DELETE:
+        if (tokenSelectionEnd > tokenSelectionStart &&
+          !((tokenSelectionEnd - tokenSelectionStart === 1)
+          && tokenSelectionEnd === tokens.length + 1)) {
+
+          return this.onBackspace(event);
+        }
+        break;
       default:
         if (isHome(event) || isEnd(event)) {
           return this.onLeftRightPress(event);

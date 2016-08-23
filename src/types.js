@@ -16,7 +16,8 @@ export type ComponentClassesType = {
   suggestionsLi: ?string,
   suggestionsLiSelected: ?string,
   sectionTitle: ?string,
-  suggestionsA: ?string
+  suggestionsA: ?string,
+	delToken: ?string
 };
 
 export type FacetedTokenInputStateType = {
