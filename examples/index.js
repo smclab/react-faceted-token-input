@@ -30,7 +30,8 @@ const componentClasses = {
   'suggestionsWrap': 'test11',
   'suggestionsUl': 'test12',
   'suggestionsLi': 'test13',
-  'suggestionsA': 'test14'
+  'suggestionsA': 'test14',
+  'delToken': 'del-btn-style'
 }
 
 const customElements = {
