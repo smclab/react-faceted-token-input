@@ -312,7 +312,10 @@ export default class FacetedTokenInput extends Component {
           description={ description }
           dropdownMenu={ dropdownMenu }
           onUpdate={ event => this.updateToken(event.token, event.index) }
-          onKeyDown={ event => this.onKeyDown(event) }
+          onKeyDown={ event => {
+            this.onKeyDown(event);
+            event.stopPropagation();
+          }}
           onFocus={ event => this.onTokenFocus(event, index) }
           onShowDropdown={ event => this.setState({ showDropDown: false }) }
         />
