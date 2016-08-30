@@ -8,6 +8,7 @@ Just some guidelines to standardize the look of the code.
 * [New Lines](#newLines)
 * [Indentation](#indentation)
 * [Brace Style](#braceStyle)
+* [Linting & Flow](#lintflow)
 
 <a name="language"></a>
 ### Language Specifics
@@ -69,6 +70,8 @@ test code for the description in `describe()` and `it()`.
 <a name="indentation"></a>
 ### Indentation
 
+* `default indentation`: we use two spaces as the default indentation.
+
 * `multi-line function input`: if you have multiple input for a function and the
   line width exceeds 80 characters, you can brake them in new lines.
 
@@ -113,3 +116,22 @@ as in this example:
     baz();
   }
 ```
+
+<a name="lintflow"></a>
+### Lint & Flow
+
+Due to the addition of *Flowtype* support to the code some formatting guidelines
+changed and some of the default linting of the code has been soften:
+
+* `operator-linebreak`: is not an error since you are encouraged to respect the
+  80 characters limit, to do so in some cases you will need to break the
+  operator in a new line (this is similar to OCaml code fromatting):
+
+  ```javascript
+  export const isRTL: (str: string) => boolean
+    = (str) => DIRECTION_CHECK_RE.test(str);
+  ```
+
+* `no-multi-spaces`: similar to the other rule this will not return an error
+  since at some point you will need to add additional spaces for alignment
+  purposes.
