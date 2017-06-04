@@ -165,7 +165,7 @@ export default class Token extends Component {
         >
           <span
             aria-haspopup={!!dropdownMenu}
-            aria-role="listbox"
+            role="listbox"
             className={facetClass}
             id={uniqueId({ id: this.id, facet: 'o' })}
             onClick={onClick}

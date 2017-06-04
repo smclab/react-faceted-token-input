@@ -249,8 +249,6 @@ export default class FacetedTokenInput extends Component {
           className={inputClass}
           placeholder={tokens.length ? '' : placeholder}
           value={searchText}
-          selectionStart={0}
-          selectionEnd={1}
           onChange={event => this.onChange(event)}
           onFocus={event => this.onInputFocus(event)}
         />
