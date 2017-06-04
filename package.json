@@ -11,7 +11,7 @@
     "format": "prettier --tab-width 2 --single-quote --write \"*.js\" \"{src,stories}/**/*.js\"",
     "lint": "eslint src test",
     "test": "cross-env NODE_ENV=test jest",
-    "start": "cross-env NODE_ENV=development node ./server",
+    "storybook": "start-storybook --port 9001 --dont-track --config-dir stories/config --static-dir stories/static",
     "prepublish": "yarn build && yarn lint"
   },
   "files": [
@@ -21,6 +21,7 @@
   "author": "Pier Paolo Ramon <pierpaolo.ramon@smc.it> (https://github.com/yuchi)",
   "license": "LGPL-2.1",
   "dependencies": {
+    "@kadira/storybook": "^2.35.3",
     "classnames": "^2.2.2"
   },
   "peerDependencies": {

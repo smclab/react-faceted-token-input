@@ -1,0 +1,229 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<style>
+[dir='ltr'], [dir='rtl'] {
+  unicode-bidi: -webkit-isolate;
+  unicode-bidi: -moz-isolate;
+  unicode-bidi: -ms-isolate;
+  unicode-bidi: isolate;
+}
+
+bdo[dir='ltr'], bdo[dir='rtl'] {
+  unicode-bidi: bidi-override;
+  unicode-bidi: -webkit-isolate-override;
+  unicode-bidi: -moz-isolate-override;
+  unicode-bidi: -ms-isolate-override;
+  unicode-bidi: isolate-override;
+}
+
+.compound-input {
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 100;
+  border: 1px solid #999;
+  padding: 0.4em;
+  padding-bottom: 0.2em;
+  line-height: 2;
+  display: flex;
+  flex-wrap: wrap;
+  outline-style: none;
+  border-radius: 4px;
+  position: relative;
+}
+
+.compound-input.focused {
+  border-color: red;
+  border-color: Highlight;
+  outline: none;
+}
+
+.compound-input-field {
+  margin-bottom: 0.2em;
+}
+
+.token-container {
+  position: relative;
+  display: flex;
+  margin-bottom: 0.2em;
+}
+
+[dir='rtl'] .token-container {
+  margin-left: 0.4em;
+}
+
+[dir='ltr'] .token-container {
+  margin-right: 0.4em;
+}
+
+.token-container:focus {
+  outline: none;
+}
+
+.token {
+  /*margin-top: -1px;*/
+  /*margin-bottom: -1px;*/
+  background: #EEE;
+  color: #555;
+  border-radius: 3px;
+  padding: 0 10px;
+  /*border: 1px solid #ccc;*/
+}
+
+.token.selected,
+.token-container.selected .token {
+  color: white;
+  background: #9FA0A4;
+  border-color: #9FA0A4;
+}
+
+.facet {
+  padding: 0px;
+  display: flex;
+}
+
+.facet .facet-type {
+  padding-left: 4px;
+  padding-right: 4px;
+  border-right: 1px solid white;
+  line-height: inherit;
+  background: rgba(0,0,0,0.1);
+  text-transform: uppercase;
+  font-size: 0.7em;
+  padding-top: 0.5em;
+}
+
+.facet .facet-value {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Dropdown */
+
+.compound-input .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  background: white;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: 8px 0px;
+  margin-top: 2px;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.compound-input .input-dropdown {
+  right: 0%;
+}
+
+.compound-input .dropdown hr {
+  margin: 4px 0px;
+}
+
+.compound-input .dropdown ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+.compound-input .dropdown ul li {
+  font-size: 1em;
+  white-space: nowrap;
+  padding: 0px;
+  margin: 0px;
+}
+
+.compound-input .dropdown ul li a,
+.compound-input .dropdown ul li.header {
+  display: block;
+  padding: 6px 8px;
+  line-height: 1;
+  position: relative;
+}
+
+.compound-input .dropdown ul li.header {
+  color: #888;
+}
+
+.compound-input .token-dropdown ul li a {
+  padding-left: 24px;
+}
+
+.compound-input .dropdown ul li.active a {
+  cursor: pointer;
+  background: dodgerblue;
+  color: white;
+}
+
+.compound-input .dropdown .check {
+  position: absolute;
+  left: 0px;
+  width: 24px;
+  text-align: center;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  margin: 3em 0;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.opensquare {
+  width: 32px;
+  height: 32px;
+  border: 2px solid black;
+  border-radius: 3px;
+  position: relative;
+  margin-right: 20px;
+  flex-shrink: 0;
+  box-sizing: content-box;
+}
+
+.opensquare::before,
+.opensquare::after {
+  content: '';
+  position: absolute;
+  background: white;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+}
+
+.opensquare::before {
+  top: 14px;
+  bottom: 14px;
+}
+
+.opensquare::after {
+  right: 14px;
+  left: 14px;
+}
+
+.del-btn-style {
+  display: none;
+  background: black;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 16px;
+  top: -4px;
+  right: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 990px) {
+  .del-btn-style {
+    display: block;
+  }
+}
+</style>
