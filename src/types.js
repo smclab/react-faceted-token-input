@@ -1,30 +1,37 @@
+/* @flow */
+
+export type CustomElementsType = {
+  dropdownArrow?: mixed,
+  check?: mixed
+};
+
 export type ComponentClassesType = {
-  wrapper: ?string,
-  wrapperFocused: ?string,
-  input: ?string,
-  tokenWrapper: ?string,
-  token: ?string,
-  tokenWithFacet: ?string,
-  facet: ?string,
-  description: ?string,
-  dropdownWrap: ?string,
-  dropdownUl: ?string,
-  dropdownLi: ?string,
-  dropdownA: ?string,
-  suggestionsWrap: ?string,
-  suggestionsUl: ?string,
-  suggestionsLi: ?string,
-  suggestionsLiSelected: ?string,
-  sectionTitle: ?string,
-  suggestionsA: ?string,
-  delToken: ?string
+  wrapper: string,
+  wrapperFocused: string,
+  input: string,
+  tokenWrapper: string,
+  token: string,
+  tokenWithFacet: string,
+  facet: string,
+  description: string,
+  dropdownWrap: string,
+  dropdownUl: string,
+  dropdownLi: string,
+  dropdownA: string,
+  suggestionsWrap: string,
+  suggestionsUl: string,
+  suggestionsLi: string,
+  suggestionsLiSelected: string,
+  sectionTitle: string,
+  suggestionsA: string,
+  delToken: string
 };
 
 export type FacetedTokenInputStateType = {
   focused: boolean,
   searchText: string,
   tokens: [any],
-  requiresDirCheck: ?string,
+  requiresDirCheck: ?boolean,
   showDropDown: boolean,
   selectedSectionIndex: number,
   selectedIndex: number,
@@ -33,25 +40,25 @@ export type FacetedTokenInputStateType = {
   tokenSelectionStart: number,
   tokenSelectionEnd: number,
   textDirection: string
-}
+};
 
 export type ResultType = {
   field: string,
   fuzzy: boolean,
   type: string,
   value: string
-}
+};
 
 export type SuggestionType = {
   description: string,
   id: string,
   result: ResultType
-}
+};
 
 export type SectionType = {
   title: string,
   suggestions: [SuggestionType]
-}
+};
 
 export type LeftRightReturn = {
   selectionStart: number,
@@ -66,30 +73,43 @@ export type LeftRightReturn = {
 
 export type TokenPropType = {
   componentClasses: ComponentClassesType,
-  customElements: [any],
+  customElements: CustomElementsType,
   description: string,
-  dropdownMenu: ?[any],
+  dropdownMenu: Array<any>,
   facet: string,
   id: string,
   index: number,
   selected: boolean,
   token: any,
-  field: string,
-  fuzzy: boolean,
-  type: string,
-  value: string
-}
+  onKeyDown: (event: any) => void,
+  onShowDropdown: (event: any) => void,
+  onFocus: (event: any) => void,
+  onUpdate: (event: any) => void
+};
 
-export type DropdownMenuConfig = {
-  section: SectionType,
-  sectionIndex: number,
+type DropdownMenuBaseConfig = {
   componentClasses: ComponentClassesType,
-  id: string,
-  suggestions: SuggestionType,
-  sections: [SectionType],
   addToken: (token: any) => any,
-  setSelected: (event: any) => void,
-  selectedId: number,
+  id: string,
+  selectedId: ?number,
   selectedIndex: number,
-  selectedSectionIndex: number
+  selectedSectionIndex: number,
+  setSelected: (event: any) => void
+};
+
+export type DropdownMenuConfig = DropdownMenuBaseConfig & {
+  sections: [SectionType]
+};
+
+export type DropdownMenuSectionConfig = DropdownMenuBaseConfig & {
+  sectionIndex: number,
+  section: SectionType
+};
+
+export type DropdownMenuItemConfig = DropdownMenuBaseConfig & {
+  index: number,
+  sectionIndex: number,
+  sectionTitle: string,
+  selected: boolean,
+  suggestion: SuggestionType
 };

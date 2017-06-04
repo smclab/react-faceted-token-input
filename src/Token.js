@@ -2,10 +2,12 @@
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import { ENTER, UP, DOWN } from './key-codes';
 
 import type {
+  CustomElementsType,
   TokenPropType,
   ResultType,
   ComponentClassesType
@@ -15,30 +17,47 @@ import uniqueId from './unique-id';
 
 const CHECK = <span className="check">✓</span>;
 
-type TokenStatetype = {
+type TokenStateType = {
   selectedIndex: number,
   showDropDown: boolean
-}
+};
 
 type renderContentInput = {
   componentClasses: ComponentClassesType,
-  customElements: any,
+  customElements: CustomElementsType,
   description: string,
   dropdownMenu: any,
   facet: any,
   index: number,
   selectedIndex: number
-}
+};
 
 type itemType = {
   current: number,
   label: string
-}
+};
+
+const PROP_TYPES = {
+  componentClasses: PropTypes.any,
+  customElements: PropTypes.any,
+  description: PropTypes.string,
+  dropdownMenu: PropTypes.array,
+  facet: PropTypes.string,
+  id: PropTypes.string,
+  index: PropTypes.number,
+  selected: PropTypes.boolean,
+  token: PropTypes.any,
+  onKeyDown: PropTypes.func,
+  onShowDropdown: PropTypes.func,
+  onFocus: PropTypes.func,
+  onUpdate: PropTypes.func
+};
 
 export default class Token extends Component {
   props: TokenPropType;
-  state: TokenStatetype;
+  state: TokenStateType;
   id: string;
+  containerEl: HTMLDivElement;
 
   constructor(props: TokenPropType) {
     super(props);
@@ -52,7 +71,7 @@ export default class Token extends Component {
   }
 
   focus() {
-    this.refs.container.focus();
+    this.containerEl.focus();
   }
 
   render() {
@@ -66,51 +85,45 @@ export default class Token extends Component {
       selected
     }: TokenPropType = this.props;
 
-    const { showDropDown, selectedIndex }: TokenStatetype = this.state;
+    const { showDropDown, selectedIndex }: TokenStateType = this.state;
 
     const containerClassName = classNames(
       {
         'token-container': true,
-        'selected': selected
+        selected: selected
       },
       componentClasses.tokenWrapper
     );
 
     return (
       <div
-        ref={ 'container' }
-        tabIndex={ 0 }
-        role={ dropdownMenu ? 'menu' : '' }
+        ref={containerEl => (this.containerEl = containerEl)}
+        tabIndex={0}
+        role={dropdownMenu ? 'menu' : ''}
         aria-haspopup="true"
-        aria-owns={ uniqueId({ id: this.id, facetMenu: 0 }) }
-        aria-expanded={ dropdownMenu ? showDropDown : 'false' }
-        aria-activedescendant={
-          uniqueId({ id: this.id, facet: selectedIndex })
-        }
-        aria-labelledby={ uniqueId({ id: this.id, token: index }) }
-        className={ containerClassName }
-        onContextMenu={ event => this.onContextMenu(event) }
-        onKeyDown={ event => this.onKeyDown(event) }
-        onFocus={ event => this.onFocus(event) }
-        onBlur={ event => this.onBlur(event) }
+        aria-owns={uniqueId({ id: this.id, facetMenu: 0 })}
+        aria-expanded={dropdownMenu ? showDropDown : 'false'}
+        aria-activedescendant={uniqueId({ id: this.id, facet: selectedIndex })}
+        aria-labelledby={uniqueId({ id: this.id, token: index })}
+        className={containerClassName}
+        onContextMenu={event => this.onContextMenu(event)}
+        onKeyDown={event => this.onKeyDown(event)}
+        onFocus={event => this.onFocus(event)}
+        onBlur={event => this.onBlur(event)}
       >
-        {
-          this.renderContent({
-            componentClasses,
-            customElements,
-            description,
-            dropdownMenu,
-            facet,
-            index,
-            selectedIndex
-          })
-        }
+        {this.renderContent({
+          componentClasses,
+          customElements,
+          description,
+          dropdownMenu,
+          facet,
+          index,
+          selectedIndex
+        })}
 
-        {
-          showDropDown &&
+        {showDropDown &&
           dropdownMenu &&
-          this.renderDropdown(dropdownMenu, componentClasses)
-        }
+          this.renderDropdown(dropdownMenu, componentClasses)}
       </div>
     );
   }
@@ -131,7 +144,7 @@ export default class Token extends Component {
     const tokenClass = classNames(
       'token',
       {
-        'facet': showFacet,
+        facet: showFacet,
         [componentClasses.tokenWithFacet]: showFacet
       },
       componentClasses.token
@@ -147,32 +160,31 @@ export default class Token extends Component {
     if (showFacet) {
       return (
         <span
-          className={ tokenClass }
-          id={ uniqueId({ id: this.id, token: index }) }
+          className={tokenClass}
+          id={uniqueId({ id: this.id, token: index })}
         >
           <span
-            aria-haspopup={ !!dropdownMenu }
+            aria-haspopup={!!dropdownMenu}
             aria-role="listbox"
-            className={ facetClass }
-            id={ uniqueId({ id: this.id, facet: 'o' }) }
-            onClick={ onClick }
+            className={facetClass}
+            id={uniqueId({ id: this.id, facet: 'o' })}
+            onClick={onClick}
           >
-            { facet }
+            {facet}
             <span aria-hidden="true">
-              { dropdownMenu && (customElements.dropdownArrow || ' ▾') }
+              {dropdownMenu && (customElements.dropdownArrow || ' ▾')}
             </span>
           </span>
-          <span className={ descriptionClass }>
-            { description }
+          <span className={descriptionClass}>
+            {description}
           </span>
         </span>
       );
-    }
-    else {
+    } else {
       return (
-        <span className={ tokenClass }>
-          <span className={ descriptionClass } role="tab">
-            { description }
+        <span className={tokenClass}>
+          <span className={descriptionClass} role="tab">
+            {description}
           </span>
         </span>
       );
@@ -191,13 +203,13 @@ export default class Token extends Component {
     const dropdownUlClass = classNames(componentClasses.dropdownUl);
 
     return (
-      <div className={ dropdownClass }>
+      <div className={dropdownClass}>
         <ul
-          className={ dropdownUlClass }
-          id={ uniqueId({ id: this.id, facetMenu: 0 }) }
+          className={dropdownUlClass}
+          id={uniqueId({ id: this.id, facetMenu: 0 })}
           role="menu"
         >
-          { dropdownMenu.map(this.renderDropdownItem, this) }
+          {dropdownMenu.map(this.renderDropdownItem, this)}
         </ul>
       </div>
     );
@@ -206,12 +218,12 @@ export default class Token extends Component {
   renderDropdownItem(item: itemType, index: number) {
     const { componentClasses, customElements }: TokenPropType = this.props;
 
-    const { selectedIndex }: TokenStatetype = this.state;
+    const { selectedIndex }: TokenStateType = this.state;
 
-    const selected = (index === selectedIndex);
+    const selected = index === selectedIndex;
 
     const dropdownLiClass = classNames(
-      { 'active': selected },
+      { active: selected },
       componentClasses.dropdownLi
     );
 
@@ -219,24 +231,24 @@ export default class Token extends Component {
 
     return (
       <li
-        key={ 'menuItem' + index }
-        className={ dropdownLiClass }
-        id={ uniqueId({ id: this.id, facet: index }) }
+        key={'menuItem' + index}
+        className={dropdownLiClass}
+        id={uniqueId({ id: this.id, facet: index })}
         role="menuitemradio"
-        aria-checked={ item.current }
-        aria-label={ item.label }
-        aria-controls={ uniqueId({ id: this.id, facet: 'o' }) }
+        aria-checked={item.current}
+        aria-label={item.label}
+        aria-controls={uniqueId({ id: this.id, facet: 'o' })}
       >
 
         <a
-          onMouseEnter={ event => this.setState({ selectedIndex: index }) }
-          onClick={ event => this.select(index) }
-          className={ dropdownAClass }
+          onMouseEnter={event => this.setState({ selectedIndex: index })}
+          onClick={event => this.select(index)}
+          className={dropdownAClass}
         >
           <span aria-hidden="true">
-            { !item.current ? null : customElements.check || CHECK }
+            {!item.current ? null : customElements.check || CHECK}
           </span>
-          { item.label }
+          {item.label}
         </a>
       </li>
     );
@@ -266,20 +278,18 @@ export default class Token extends Component {
     event.preventDefault();
 
     if (this.state.showDropDown) {
-
       const { dropdownMenu } = this.props;
 
       const { min, max } = Math;
 
-      const increment = (event.which === UP) ? -1 : 1;
+      const increment = event.which === UP ? -1 : 1;
 
       const selectedIndex = this.state.selectedIndex + increment;
 
       this.setState({
         selectedIndex: max(0, min(dropdownMenu.length - 1, selectedIndex))
       });
-    }
-    else {
+    } else {
       this.setState({ showDropDown: true });
 
       this.props.onShowDropdown({});
@@ -287,7 +297,7 @@ export default class Token extends Component {
   }
 
   onEnter(event: any): void {
-    const { selectedIndex }: TokenStatetype = this.state;
+    const { selectedIndex }: TokenStateType = this.state;
 
     if (selectedIndex >= 0) {
       this.select(selectedIndex);
@@ -308,7 +318,7 @@ export default class Token extends Component {
   select(selectedIndex: number): void {
     const { dropdownMenu, onUpdate, index }: TokenPropType = this.props;
 
-    const token: ResultType = dropdownMenu[ selectedIndex ].result;
+    const token: ResultType = dropdownMenu[selectedIndex].result;
 
     onUpdate({ token, index });
 
@@ -317,5 +327,6 @@ export default class Token extends Component {
       showDropDown: false
     });
   }
-
 }
+
+Token.propTypes = PROP_TYPES;

@@ -3,34 +3,30 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import type {
-  DropdownMenuConfig
-} from './types';
+import type { DropdownMenuItemConfig } from './types';
 import uniqueId from './unique-id';
 
-export type DropdownMenuItemConfig = DropdownMenuConfig;
-
 export const DropdownMenuItem = ({
-  selected,
-  suggestion,
-  sectionIndex,
-  index,
   addToken,
-  setSelected,
   componentClasses,
+  id,
+  index,
+  sectionIndex,
   sectionTitle,
-  id
-} : DropdownMenuItemConfig) => (
+  selected,
+  setSelected,
+  suggestion
+}: DropdownMenuItemConfig) =>
   <li
-    className={ classNames(
+    className={classNames(
       {
-        'active': selected,
+        active: selected,
         [componentClasses.suggestionsLiSelected]: selected
       },
       componentClasses.suggestionsLi
-    ) }
+    )}
     role="option"
-    id={ uniqueId({ id, sectionIndex, index }) }
+    id={uniqueId({ id, sectionIndex, index })}
     aria-labelledby={
       uniqueId({ id, sectionTitle }) +
       ' ' +
@@ -38,14 +34,13 @@ export const DropdownMenuItem = ({
     }
   >
     <a
-      id={ uniqueId({ id, sectionIndex, index, a: 'o' }) }
+      id={uniqueId({ id, sectionIndex, index, a: 'o' })}
       role="button"
       href="javascript: void 0"
-      onClick={ () => addToken(suggestion.result) }
-      onMouseMove={ () => setSelected({ sectionIndex, index }) }
-      className={ classNames(componentClasses.suggestionsA) }
+      onClick={() => addToken(suggestion.result)}
+      onMouseMove={() => setSelected({ sectionIndex, index })}
+      className={classNames(componentClasses.suggestionsA)}
     >
-      { suggestion.description }
+      {suggestion.description}
     </a>
-  </li>
-);
+  </li>;

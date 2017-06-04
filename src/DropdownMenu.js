@@ -5,40 +5,43 @@ import classNames from 'classnames';
 
 import { DropdownMenuSection } from './DropdownMenuSection';
 
-import type {
-  DropdownMenuConfig
-} from './types';
+import type { DropdownMenuConfig } from './types';
 
 const DropdownMenuSeparator = () => <hr aria-hidden="true" />;
 
 const DropdownMenu = ({
-  sections,
   componentClasses,
   id,
+  sections,
   ...props
-} : DropdownMenuConfig) => (
-  <div className={
-    classNames('dropdown input-dropdown', componentClasses.suggestionsWrap)
-  }
+}: DropdownMenuConfig) =>
+  <div
+    className={classNames(
+      'dropdown input-dropdown',
+      componentClasses.suggestionsWrap
+    )}
     id="suggestions_box"
   >
-    { sections.map((section, sectionIndex) => (
-          <DropdownMenuSection
-            { ...props }
-            componentClasses={ componentClasses }
-            key={ 'section' + sectionIndex }
-            sectionIndex={ sectionIndex }
-            section={ section }
-            id = { id }
-          />
-        ))
-        .reduce((memo, o, sectionIndex) => [
+    {sections
+      .map((section, sectionIndex) =>
+        <DropdownMenuSection
+          {...props}
+          componentClasses={componentClasses}
+          key={'section' + sectionIndex}
+          sectionIndex={sectionIndex}
+          section={section}
+          id={id}
+        />
+      )
+      .reduce(
+        (memo, o, sectionIndex) => [
           ...memo,
-          <DropdownMenuSeparator key={ 'separator' + sectionIndex } />,
+          <DropdownMenuSeparator key={'separator' + sectionIndex} />,
           o
-        ], [])
-        .slice(1) }
-  </div>
-);
+        ],
+        []
+      )
+      .slice(1)}
+  </div>;
 
 export default DropdownMenu;

@@ -1,5 +1,16 @@
 {
-  "extends": "semistandard",
+  "extends": [
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
+  ],
+  "plugins": [
+    "flowtype",
+    "react",
+    "prettier"
+  ],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -7,48 +18,13 @@
     "jest": true,
     "node": true
   },
-  "globals": {
-    "React$Element": true
-  },
   "rules": {
-    "brace-style": [2, "stroustrup", {
-      "allowSingleLine": false
-    }],
-    "camelcase": [1, {
-      "properties": "always"
-    }],
+    "no-var": 2,
+    "prefer-const": 1,
+    "no-unused-vars": 1,
     "default-case": 2,
-    "max-len": [2, 80, 4,
-      "ignorePattern": "^.*(describe\\(|it\\().*$"
-    ],
-    "newline-after-var": [1, "always"],
     "no-alert": 2,
     "no-console": 2,
-    "no-extra-parens": 1,
-    "no-lonely-if": 1,
-    "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
-    "no-multiple-empty-lines": 1,
-    "no-multi-spaces": 0,
-    "no-spaced-func": 2,
-    "no-unused-vars": 1,
-    "no-use-before-define": 2,
-    "no-var": 2,
-    "object-curly-spacing": [2, "always"],
-    "operator-linebreak": 0,
-    "padded-blocks": 0,
-    "prefer-const": 1,
-    "react/jsx-no-duplicate-props": 2,
-    "react/jsx-no-undef": 2,
-    "react/jsx-uses-react": 1,
-    "react/wrap-multilines": 2,
-    "space-before-function-paren": [2, {
-      "anonymous": "always", "named": "never"
-    }],
-    "space-infix-ops": 1,
-    "spaced-comment": [1, "always"],
-    "valid-jsdoc": 2
-  },
-  "plugins": [
-    "react", "standard"
-  ]
+    "no-use-before-define": 2
+  }
 }

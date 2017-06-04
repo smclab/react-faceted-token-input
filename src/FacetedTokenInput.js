@@ -1,7 +1,8 @@
-/* @flow */
+Ref/* @flow */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import Token from './Token';
 import DropdownMenu from './DropdownMenu';
@@ -51,18 +52,18 @@ type renderTokenTypes = {
   description: string,
   dropdownMenu: React$Element<any>,
   facet: string
-}
+};
 
 type defaultPropTypesConfig = {
   componentClasses: ComponentClassesType,
   defaultTokens: [any]
-}
+};
 
 type customElementsType = {
   check: React$Element<any>,
   dropdownArrow: string,
   delToken: React$Element<any>
-}
+};
 
 type PropTypesConfig = {
   onChange: (input: any) => void,
@@ -74,7 +75,7 @@ type PropTypesConfig = {
   dir: string,
   dropdownSections: [SectionType],
   placeholder: string
-}
+};
 
 export const DIRECTION_NONE = 'none';
 export const DIRECTION_BACKWARD = 'backward';
@@ -107,24 +108,44 @@ const INPUT_SPY_STYLE = {
 };
 
 const TOKEN_DEL_BTN_STYLE = {
-  'background': 'black',
-  'borderRadius': '50%',
-  'color': 'white',
-  'position': 'absolute',
-  'width': '16px',
-  'height': '16px',
-  'fontSize': '12px',
-  'fontWeight': 'bold',
-  'textAlign': 'center',
-  'lineHeight': '16px',
-  'top': '-4px',
-  'right': '4px',
-  'cursor': 'pointer'
+  background: 'black',
+  borderRadius: '50%',
+  color: 'white',
+  position: 'absolute',
+  width: '16px',
+  height: '16px',
+  fontSize: '12px',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  lineHeight: '16px',
+  top: '-4px',
+  right: '4px',
+  cursor: 'pointer'
 };
 
 const DEFAULT_PROPS = {
   defaultTokens: [],
-  componentClasses: {}
+  componentClasses: {
+    wrapper: '',
+    wrapperFocused: '',
+    input: '',
+    tokenWrapper: '',
+    token: '',
+    tokenWithFacet: '',
+    facet: '',
+    description: '',
+    dropdownWrap: '',
+    dropdownUl: '',
+    dropdownLi: '',
+    dropdownA: '',
+    suggestionsWrap: '',
+    suggestionsUl: '',
+    suggestionsLi: '',
+    suggestionsLiSelected: '',
+    sectionTitle: '',
+    suggestionsA: '',
+    delToken: ''
+  }
 };
 
 const PROP_TYPES = {
@@ -145,6 +166,9 @@ export default class FacetedTokenInput extends Component {
   props: PropTypesConfig;
   state: FacetedTokenInputStateType;
   id: number;
+
+  inputRef: HTMLElement;
+  facetedTokenInputRef: HTMLDivElement;
 
   static defaultProps: defaultPropTypesConfig;
 
@@ -185,7 +209,7 @@ export default class FacetedTokenInput extends Component {
     const facetedTokenInputClass = classNames(
       'compound-input',
       {
-        'focused': focused,
+        focused: focused,
         [componentClasses.wrapperFocused]: focused
       },
       componentClasses.wrapper
@@ -198,57 +222,55 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div
-        dir={ dir || textDirection }
-        ref="facetedTokenInput"
+        dir={dir || textDirection}
+        ref={el => this.storeReference(el, 'facetedTokenInputRef')}
         tabIndex="0"
-        className={ facetedTokenInputClass }
-        onKeyDown={ event => this.onKeyDown(event) }
-        onFocus={ event => this.onFocus(event) }
-        onBlur={ event => this.onBlur(event) }
+        className={facetedTokenInputClass}
+        onKeyDown={event => this.onKeyDown(event)}
+        onFocus={event => this.onFocus(event)}
+        onBlur={event => this.onBlur(event)}
       >
 
-        { tokens.map(this.renderToken, this) }
+        {tokens.map(this.renderToken, this)}
 
         <input
           key="input"
-          ref="input"
+          ref={el => this.storeReference(el, 'inputRef')}
           role="combobox"
-          aria-expanded={ showDropDown }
+          aria-expanded={showDropDown}
           aria-autocomplete="list"
           aria-owns="suggestions_box"
-          aria-activedescendant={
-            uniqueId({
-              id: this.id.toString(),
-              sectionIndex: selectedSectionIndex,
-              index: selectedIndex
-            })
-          }
+          aria-activedescendant={uniqueId({
+            id: this.id.toString(),
+            sectionIndex: selectedSectionIndex,
+            index: selectedIndex
+          })}
           aria-label="input"
-          style={ INPUT_STYLE }
-          className={ inputClass }
-          placeholder={ tokens.length ? '' : placeholder }
-          value={ searchText }
-          selectionStart={ 0 }
-          selectionEnd={ 1 }
-          onChange={ event => this.onChange(event) }
-          onFocus={ event => this.onInputFocus(event) }
+          style={INPUT_STYLE}
+          className={inputClass}
+          placeholder={tokens.length ? '' : placeholder}
+          value={searchText}
+          selectionStart={0}
+          selectionEnd={1}
+          onChange={event => this.onChange(event)}
+          onFocus={event => this.onInputFocus(event)}
         />
 
-        <span style={ INPUT_SPY_WRAPPER_STYLE }>
+        <span style={INPUT_SPY_WRAPPER_STYLE}>
           <span
             key="input-spy"
-            ref="inputSpy"
-            style={ INPUT_SPY_STYLE }
-            dir={ dir || textDirection }
+            ref={el => this.storeReference(el, 'inputSpyRef')}
+            style={INPUT_SPY_STYLE}
+            dir={dir || textDirection}
           >
 
-            { searchText }
+            {searchText}
           </span>
         </span>
 
-        { this.props.children }
+        {this.props.children}
 
-        { showDropDown && this.renderDropdown() }
+        {showDropDown && this.renderDropdown()}
       </div>
     );
   }
@@ -268,25 +290,23 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <DropdownMenu
-        id = { this.id.toString() }
-        componentClasses={ componentClasses }
-        sections={ dropdownSections }
-        selectedId={ selectedId }
-        selectedIndex={ selectedIndex }
-        selectedSectionIndex={ selectedSectionIndex }
-        addToken={ token => this.addToken(token) }
-        setSelected={
-          event => this.setState({
+        id={this.id.toString()}
+        componentClasses={componentClasses}
+        sections={dropdownSections}
+        selectedId={selectedId}
+        selectedIndex={selectedIndex}
+        selectedSectionIndex={selectedSectionIndex}
+        addToken={token => this.addToken(token)}
+        setSelected={event =>
+          this.setState({
             selectedSectionIndex: event.sectionIndex,
             selectedIndex: event.index
-          })
-        }
+          })}
       />
     );
   }
 
   renderToken(token: any, index: number): React$Element<any> {
-
     const { componentClasses, customElements }: PropTypesConfig = this.props;
     const {
       facet,
@@ -296,31 +316,31 @@ export default class FacetedTokenInput extends Component {
 
     return (
       <div
-        key={ 'phoneWrapper' + (token.id || index) }
-        style={ { 'position': 'relative', 'display': 'inline-block' } }
+        key={'phoneWrapper' + (token.id || index)}
+        style={{ position: 'relative', display: 'inline-block' }}
       >
         <Token
-          id = { this.id }
-          key={ 'token' + (token.id || index) }
-          ref={ 'token' + index }
-          index={ index }
-          customElements={ customElements }
-          componentClasses={ componentClasses }
-          selected={ this.isInTokenSelection(index) }
-          token={ token }
-          facet={ facet }
-          description={ description }
-          dropdownMenu={ dropdownMenu }
-          onUpdate={ event => this.updateToken(event.token, event.index) }
-          onKeyDown={ event => {
+          id={this.id.toString()}
+          key={'token' + (token.id || index)}
+          ref={el => this.storeReference(el, 'token' + index)}
+          index={index}
+          customElements={customElements}
+          componentClasses={componentClasses}
+          selected={this.isInTokenSelection(index)}
+          token={token}
+          facet={facet}
+          description={description}
+          dropdownMenu={dropdownMenu}
+          onUpdate={event => this.updateToken(event.token, event.index)}
+          onKeyDown={event => {
             this.onKeyDown(event);
             event.stopPropagation();
           }}
-          onFocus={ event => this.onTokenFocus(event, index) }
-          onShowDropdown={ event => this.setState({ showDropDown: false }) }
+          onFocus={event => this.onTokenFocus(event, index)}
+          onShowDropdown={event => this.setState({ showDropDown: false })}
         />
 
-        { this.tokenDelButton(index, componentClasses, customElements) }
+        {this.tokenDelButton(index, componentClasses, customElements)}
 
       </div>
     );
@@ -334,12 +354,12 @@ export default class FacetedTokenInput extends Component {
     if (this.isInTokenSelection(index)) {
       return (
         <span
-          key={ 'tokenClose' + index }
-          onClick={ event => this.onBackspace(event) }
-          className={ componentClasses.delToken }
-          style={ componentClasses.delToken ? {} : TOKEN_DEL_BTN_STYLE }
+          key={'tokenClose' + index}
+          onClick={event => this.onBackspace(event)}
+          className={componentClasses.delToken}
+          style={componentClasses.delToken ? {} : TOKEN_DEL_BTN_STYLE}
         >
-          { customElements.delToken || 'x' }
+          {customElements.delToken || 'x'}
         </span>
       );
     }
@@ -349,7 +369,6 @@ export default class FacetedTokenInput extends Component {
     this.updateInputFlexBasis();
 
     if (this.state.focused) {
-
       const {
         tokens,
         tokenSelectionDirection,
@@ -357,18 +376,16 @@ export default class FacetedTokenInput extends Component {
         tokenSelectionEnd
       }: FacetedTokenInputStateType = this.state;
 
-      const noSelection = (tokenSelectionStart < 0) && (tokenSelectionEnd < 0);
+      const noSelection = tokenSelectionStart < 0 && tokenSelectionEnd < 0;
 
       if (noSelection || this.isInTokenSelection(tokens.length)) {
-        this.refs.input.focus();
-      }
-      else if (tokenSelectionDirection === DIRECTION_NONE) {
-        if (this.refs['token' + tokenSelectionStart]) {
-          this.refs['token' + tokenSelectionStart].focus();
+        this.inputRef.focus();
+      } else if (tokenSelectionDirection === DIRECTION_NONE) {
+        if (this['token' + tokenSelectionStart + 'Ref']) {
+          this['token' + tokenSelectionStart + 'Ref'].focus();
         }
-      }
-      else {
-        this.refs.facetedTokenInput.focus();
+      } else {
+        this.facetedTokenInputRef.focus();
       }
     }
   }
@@ -384,8 +401,7 @@ export default class FacetedTokenInput extends Component {
           requiresDirCheck: false,
           textDirection: isRTL(searchText) ? 'rtl' : 'ltr'
         });
-      }
-      else if (!searchText.length && !tokens.length) {
+      } else if (!searchText.length && !tokens.length) {
         this.setState({
           requiresDirCheck: true
         });
@@ -395,8 +411,8 @@ export default class FacetedTokenInput extends Component {
 
   isInTokenSelection(index: number): boolean {
     return (
-      (index >= this.state.tokenSelectionStart) &&
-      (index < this.state.tokenSelectionEnd)
+      index >= this.state.tokenSelectionStart &&
+      index < this.state.tokenSelectionEnd
     );
   }
 
@@ -411,14 +427,13 @@ export default class FacetedTokenInput extends Component {
   onChange(event: any): void {
     const { tokens }: FacetedTokenInputStateType = this.state;
 
-    const searchText: string = this.refs.input.value;
+    const searchText: string = this.inputRef.value;
 
     if (searchText) {
       this.setState({
         showDropDown: true
       });
-    }
-    else {
+    } else {
       this.setState({
         showDropDown: false
       });
@@ -486,10 +501,13 @@ export default class FacetedTokenInput extends Component {
       case END:
         return this.onLeftRightPress(event);
       case DELETE:
-        if (tokenSelectionEnd > tokenSelectionStart &&
-          !((tokenSelectionEnd - tokenSelectionStart === 1)
-          && tokenSelectionEnd === tokens.length + 1)) {
-
+        if (
+          tokenSelectionEnd > tokenSelectionStart &&
+          !(
+            tokenSelectionEnd - tokenSelectionStart === 1 &&
+            tokenSelectionEnd === tokens.length + 1
+          )
+        ) {
           return this.onBackspace(event);
         }
         break;
@@ -522,14 +540,13 @@ export default class FacetedTokenInput extends Component {
         nextSelectedSectionIndex = selectedSectionIndex;
         nextSelectedIndex = selectedIndex + 1;
 
-        if (!section || (section.suggestions.length <= nextSelectedIndex)) {
-          if (selectedSectionIndex < (dropdownSections.length - 1)) {
+        if (!section || section.suggestions.length <= nextSelectedIndex) {
+          if (selectedSectionIndex < dropdownSections.length - 1) {
             nextSelectedSectionIndex += 1;
             nextSelectedIndex = 0;
           }
         }
-      }
-      else if (event.which === UP) {
+      } else if (event.which === UP) {
         nextSelectedSectionIndex = selectedSectionIndex;
         nextSelectedIndex = selectedIndex - 1;
 
@@ -537,8 +554,7 @@ export default class FacetedTokenInput extends Component {
           if (selectedSectionIndex <= 0) {
             nextSelectedSectionIndex = -1;
             nextSelectedIndex = -1;
-          }
-          else {
+          } else {
             nextSelectedSectionIndex = selectedSectionIndex - 1;
             nextSelectedIndex =
               dropdownSections[nextSelectedSectionIndex].suggestions.length - 1;
@@ -547,15 +563,17 @@ export default class FacetedTokenInput extends Component {
       }
 
       nextSelectedSectionIndex = Math.max(
-        -1, Math.min(dropdownSections.length - 1, nextSelectedSectionIndex)
+        -1,
+        Math.min(dropdownSections.length - 1, nextSelectedSectionIndex)
       );
 
       const nextSection: SectionType =
         dropdownSections[nextSelectedSectionIndex];
 
       nextSelectedIndex = Math.max(
-        -1, Math.min(
-          nextSection ? (nextSection.suggestions.length - 1) : 0,
+        -1,
+        Math.min(
+          nextSection ? nextSection.suggestions.length - 1 : 0,
           nextSelectedIndex
         )
       );
@@ -564,8 +582,7 @@ export default class FacetedTokenInput extends Component {
         selectedSectionIndex: nextSelectedSectionIndex,
         selectedIndex: nextSelectedIndex
       });
-    }
-    else if (this.isInTokenSelection(tokens.length)) {
+    } else if (this.isInTokenSelection(tokens.length)) {
       this.setState({
         tokenSelectionDirection: DIRECTION_NONE,
         tokenSelectionStart: tokens.length,
@@ -579,13 +596,13 @@ export default class FacetedTokenInput extends Component {
       selectionEnd: number,
       selectionStart: number,
       selectionDirection: string
-    }
+    };
 
     const {
       selectionEnd,
       selectionStart,
       selectionDirection
-    }: InputRefsType = this.refs.input;
+    }: InputRefsType = this.inputRef;
 
     const { dir }: PropTypesConfig = this.props;
 
@@ -599,8 +616,9 @@ export default class FacetedTokenInput extends Component {
 
     const keyDirection: string = isForward(event, dir || textDirection)
       ? DIRECTION_FORWARD
-      : isBackward(event, dir || textDirection) ? DIRECTION_BACKWARD
-      : DIRECTION_NONE;
+      : isBackward(event, dir || textDirection)
+        ? DIRECTION_BACKWARD
+        : DIRECTION_NONE;
 
     const home: boolean = isHome(event);
     const end: boolean = isEnd(event);
@@ -623,7 +641,7 @@ export default class FacetedTokenInput extends Component {
       shiftKey,
       IS_MAC,
       keyDirection,
-      this.refs.input.value
+      this.inputRef.value
     );
 
     if (result) {
@@ -631,7 +649,7 @@ export default class FacetedTokenInput extends Component {
         event.preventDefault();
       }
 
-      this.refs.input.setSelectionRange(
+      this.inputRef.setSelectionRange(
         result.selectionStart,
         result.selectionEnd,
         result.selectionDirection
@@ -675,9 +693,9 @@ export default class FacetedTokenInput extends Component {
       tokens: nextTokens
     });
 
-    const { selectionStart, selectionEnd } = this.refs.input;
+    const { selectionStart, selectionEnd } = this.inputRef;
 
-    const caretIsAtStart = (selectionStart === 0) && (selectionEnd === 0);
+    const caretIsAtStart = selectionStart === 0 && selectionEnd === 0;
 
     if (this.isInTokenSelection(tokens.length) && caretIsAtStart) {
       this.setState({
@@ -685,8 +703,7 @@ export default class FacetedTokenInput extends Component {
         tokenSelectionStart: tokenSelectionStart - 1,
         tokenSelectionEnd: tokenSelectionStart
       });
-    }
-    else {
+    } else {
       this.setState({
         tokenSelectionDirection: DIRECTION_NONE,
         tokenSelectionStart: tokenSelectionStart,
@@ -694,9 +711,10 @@ export default class FacetedTokenInput extends Component {
       });
     }
 
-    if (event.target !== this.refs.input ||
-      (event.target === this.refs.input && !searchText)) {
-
+    if (
+      event.target !== this.inputRef ||
+      (event.target === this.inputRef && !searchText)
+    ) {
       event.preventDefault();
     }
   }
@@ -738,7 +756,7 @@ export default class FacetedTokenInput extends Component {
   addToken(token: any): void {
     const { tokens }: FacetedTokenInputStateType = this.state;
 
-    const nextTokens = tokens.concat([ token ]);
+    const nextTokens = tokens.concat([token]);
 
     this.setState({
       searchText: '',
@@ -779,10 +797,12 @@ export default class FacetedTokenInput extends Component {
   updateInputFlexBasis() {
     // Very brutal and performant way of handling autogrow
 
-    this.refs.input.style.flexBasis =
-      (this.refs.inputSpy.offsetWidth + 1) + 'px';
+    this.inputRef.style.flexBasis = this.inputSpyRef.offsetWidth + 1 + 'px';
   }
 
+  storeReference(element, name) {
+    this[name] = element;
+  }
 }
 
 FacetedTokenInput.propTypes = PROP_TYPES;

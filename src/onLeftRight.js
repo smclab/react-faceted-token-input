@@ -42,12 +42,16 @@ function onLeftRight(
   mac: boolean,
   keyDirection: string,
   inputValue: string
-) : ?LeftRightReturn {
-
+): ?LeftRightReturn {
   let prevent: boolean = false;
 
-  if (!home && !end && !selectToHome &&
-    !selectToEnd && tokenSelectionStart >= tokensLength) {
+  if (
+    !home &&
+    !end &&
+    !selectToHome &&
+    !selectToEnd &&
+    tokenSelectionStart >= tokensLength
+  ) {
     // The text field is focused
 
     if (selectionStart > 0) {
@@ -55,8 +59,10 @@ function onLeftRight(
       return;
     }
 
-    if (selectionDirection === DIRECTION_FORWARD &&
-      selectionStart !== selectionEnd) {
+    if (
+      selectionDirection === DIRECTION_FORWARD &&
+      selectionStart !== selectionEnd
+    ) {
       // The 'caret' is on the opposite side
       return;
     }
@@ -77,8 +83,7 @@ function onLeftRight(
       prevent = true;
       selectionStart = 0;
       tokenSelectionStart = 0;
-    }
-    else {
+    } else {
       prevent = true;
 
       if (selectionEnd > 0) {
@@ -100,13 +105,12 @@ function onLeftRight(
       tokenSelectionDirection = DIRECTION_BACKWARD;
     }
 
-    if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
+    if (tokenSelectionEnd - tokenSelectionStart > 1) {
       if (tokenSelectionDirection === DIRECTION_NONE) {
         tokenSelectionDirection = DIRECTION_BACKWARD;
       }
     }
-  }
-  else if (selectToEnd) {
+  } else if (selectToEnd) {
     if (mac) {
       tokenSelectionEnd = tokensLength + 1;
 
@@ -117,18 +121,17 @@ function onLeftRight(
         selectionStart = 0;
         selectionEnd = inputValue.length;
       }
-    }
-    else {
+    } else {
       prevent = true;
 
       if (selectionDirection === DIRECTION_BACKWARD) {
         // caret inside the text field
-        if (tokenSelectionStart < tokensLength &&
-          selectionStart === selectionEnd) {
-
+        if (
+          tokenSelectionStart < tokensLength &&
+          selectionStart === selectionEnd
+        ) {
           selectionStart = 0;
-        }
-        else {
+        } else {
           selectionStart = selectionEnd;
         }
       }
@@ -144,13 +147,12 @@ function onLeftRight(
       tokenSelectionDirection = DIRECTION_FORWARD;
     }
 
-    if ((tokenSelectionEnd - tokenSelectionStart) > 1) {
+    if (tokenSelectionEnd - tokenSelectionStart > 1) {
       if (tokenSelectionDirection === DIRECTION_NONE) {
         tokenSelectionDirection = DIRECTION_FORWARD;
       }
     }
-  }
-  else if (home) {
+  } else if (home) {
     if (tokensLength > 0) {
       prevent = true;
 
@@ -160,8 +162,7 @@ function onLeftRight(
       tokenSelectionStart = 0;
       tokenSelectionEnd = 1;
     }
-  }
-  else if (end) {
+  } else if (end) {
     prevent = true;
 
     selectionStart = inputValue.length;
@@ -169,8 +170,7 @@ function onLeftRight(
 
     tokenSelectionStart = tokensLength;
     tokenSelectionEnd = tokensLength + 1;
-  }
-  else if (!shiftKey) {
+  } else if (!shiftKey) {
     if (tokenSelectionEnd <= tokensLength) {
       prevent = true;
     }
@@ -179,16 +179,13 @@ function onLeftRight(
       if (keyDirection === DIRECTION_FORWARD) {
         tokenSelectionStart += 1;
         tokenSelectionEnd += 1;
-      }
-      else if (keyDirection === DIRECTION_BACKWARD) {
+      } else if (keyDirection === DIRECTION_BACKWARD) {
         tokenSelectionStart -= 1;
         tokenSelectionEnd -= 1;
       }
-    }
-    else if (keyDirection === DIRECTION_FORWARD) {
+    } else if (keyDirection === DIRECTION_FORWARD) {
       tokenSelectionStart = tokenSelectionEnd - 1;
-    }
-    else if (keyDirection === DIRECTION_BACKWARD) {
+    } else if (keyDirection === DIRECTION_BACKWARD) {
       tokenSelectionEnd = tokenSelectionStart + 1;
     }
 
@@ -198,65 +195,62 @@ function onLeftRight(
       selectionStart = 0;
       selectionEnd = 0;
     }
-  }
-  else {
+  } else {
     if (tokenSelectionEnd <= tokensLength) {
       prevent = true;
     }
 
-    const initialIsInputInSelection: boolean = (
-      tokenSelectionEnd > tokensLength
-    );
+    const initialIsInputInSelection: boolean = tokenSelectionEnd > tokensLength;
 
     if (tokenSelectionDirection === DIRECTION_NONE) {
       tokenSelectionDirection = keyDirection;
     }
 
-    const increment: number = (tokenSelectionDirection === keyDirection)
-      ? 1 : -1;
+    const increment: number = tokenSelectionDirection === keyDirection ? 1 : -1;
 
     if (tokenSelectionDirection === DIRECTION_FORWARD) {
       tokenSelectionEnd += increment;
-    }
-    else if (tokenSelectionDirection === DIRECTION_BACKWARD) {
+    } else if (tokenSelectionDirection === DIRECTION_BACKWARD) {
       tokenSelectionStart -= increment;
     }
 
-    if ((tokenSelectionEnd - tokenSelectionStart) <= 1) {
+    if (tokenSelectionEnd - tokenSelectionStart <= 1) {
       tokenSelectionDirection = DIRECTION_NONE;
     }
 
     if (tokenSelectionEnd > tokensLength) {
       if (keyDirection !== tokenSelectionDirection) {
-
         prevent = true;
       }
 
-      if (!initialIsInputInSelection && (keyDirection === DIRECTION_FORWARD)) {
+      if (!initialIsInputInSelection && keyDirection === DIRECTION_FORWARD) {
         selectionStart = 0;
         selectionEnd = 1;
-      }
-      else if (selectionEnd !== inputValue.length &&
-        tokenSelectionDirection === DIRECTION_FORWARD) {
-
+      } else if (
+        selectionEnd !== inputValue.length &&
+        tokenSelectionDirection === DIRECTION_FORWARD
+      ) {
         prevent = true;
         selectionEnd += increment;
       }
     }
 
-    if (selectionStart === 0 && keyDirection === DIRECTION_BACKWARD &&
+    if (
+      selectionStart === 0 &&
+      keyDirection === DIRECTION_BACKWARD &&
       tokenSelectionStart < tokensLength &&
       tokenSelectionDirection !== DIRECTION_BACKWARD &&
-      selectionEnd !== 0) {
-
+      selectionEnd !== 0
+    ) {
       // leave this selection to the browser
       return;
     }
   }
 
-  if (tokenSelectionEnd <= tokensLength &&
-    tokenSelectionDirection === DIRECTION_BACKWARD) {
-
+  if (
+    tokenSelectionEnd <= tokensLength &&
+    tokenSelectionDirection === DIRECTION_BACKWARD
+  ) {
     selectionStart = 0;
     selectionEnd = 0;
   }

@@ -6,12 +6,11 @@ import classNames from 'classnames';
 import { DropdownMenuItem } from './DropdownMenuItem';
 
 import type {
+  DropdownMenuSectionConfig,
   DropdownMenuConfig
 } from './types';
 
 import uniqueId from './unique-id';
-
-export type DropdownMenuSectionConfig = DropdownMenuConfig;
 
 export const DropdownMenuSection = ({
   section,
