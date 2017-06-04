@@ -8,6 +8,7 @@
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "clean": "rimraf lib",
     "flow": "flow",
+    "format": "prettier --tab-width 2 --single-quote --write \"*.js\" \"{src,stories}/**/*.js\"",
     "lint": "eslint src test",
     "test": "cross-env NODE_ENV=test jest",
     "start": "cross-env NODE_ENV=development node ./server",

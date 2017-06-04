@@ -5,10 +5,7 @@ import classNames from 'classnames';
 
 import { DropdownMenuItem } from './DropdownMenuItem';
 
-import type {
-  DropdownMenuSectionConfig,
-  DropdownMenuConfig
-} from './types';
+import type { DropdownMenuSectionConfig, DropdownMenuConfig } from './types';
 
 import uniqueId from './unique-id';
 
@@ -18,40 +15,37 @@ export const DropdownMenuSection = ({
   componentClasses,
   id,
   ...props
-} : DropdownMenuSectionConfig) => (
+}: DropdownMenuSectionConfig) =>
   <ul
-    className={ classNames(componentClasses.suggestionsUl) }
+    className={classNames(componentClasses.suggestionsUl)}
     role="listbox"
-    id={ uniqueId({ id, sectionIndex }) }
+    id={uniqueId({ id, sectionIndex })}
   >
-    {
-      section.title &&
+    {section.title &&
       <li
         key="header"
-        className={ classNames('header', componentClasses.sectionTitle) }
-        aria-label={ section.title }
-        id={ uniqueId({ id, sectionTitle: section.title }) }
+        className={classNames('header', componentClasses.sectionTitle)}
+        aria-label={section.title}
+        id={uniqueId({ id, sectionTitle: section.title })}
       >
-        { section.title }
-      </li>
-    }
+        {section.title}
+      </li>}
 
-    { section.suggestions.map((suggestion, index) => (
+    {section.suggestions.map((suggestion, index) =>
       <DropdownMenuItem
-        { ...props }
-        key={ 'item' + suggestion.id }
+        {...props}
+        key={'item' + suggestion.id}
         selected={
-          (props.selectedId === suggestion.id) ||
-          (props.selectedSectionIndex === sectionIndex) &&
-          (props.selectedIndex === index)
+          props.selectedId === suggestion.id ||
+          (props.selectedSectionIndex === sectionIndex &&
+            props.selectedIndex === index)
         }
-        suggestion={ suggestion }
-        sectionIndex={ sectionIndex }
-        index={ index }
-        componentClasses={ componentClasses }
-        sectionTitle={ section.title }
-        id = { id }
+        suggestion={suggestion}
+        sectionIndex={sectionIndex}
+        index={index}
+        componentClasses={componentClasses}
+        sectionTitle={section.title}
+        id={id}
       />
-    ))}
-  </ul>
-);
+    )}
+  </ul>;
