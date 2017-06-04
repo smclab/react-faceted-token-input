@@ -2,14 +2,6 @@
 
 import { LEFT, RIGHT, HOME, END, A, E } from './key-codes';
 
-type KeyboardEvent = {
-  altKey: boolean,
-  ctrlKey: boolean,
-  metaKey: boolean,
-  shiftKey: boolean,
-  which: number
-};
-
 const UA = typeof navigator !== 'undefined'
   ? navigator.userAgent.toLowerCase()
   : '';
@@ -31,8 +23,7 @@ const RANGE_RTL =
 
 const DIRECTION_CHECK_RE = new RegExp(`^[^${RANGE_LTR}]*[${RANGE_RTL}]`);
 
-export const isRTL: (str: string) => boolean = str =>
-  DIRECTION_CHECK_RE.test(str);
+export const isRTL = (str: string) => DIRECTION_CHECK_RE.test(str);
 
 export const isOnlyCtrlKey: (event: KeyboardEvent) => boolean = IS_MAC
   ? event => event.metaKey && !event.ctrlKey

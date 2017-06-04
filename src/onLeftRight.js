@@ -1,46 +1,28 @@
 /* @flow */
 
-/*
-int         selectionStart,
-int         selectionEnd,
-string      selectionDirection,                 ['none' 'backward' 'forward']
-int         tokensLength,
-int         tokenSelectionStart,
-int         tokenSelectionEnd,
-string      tokenSelectionDirection,            ['none' 'backward' 'forward']
-boolean     home,
-boolean     end,
-boolean     selectToHome,
-boolean     selectToEnd,
-boolean     shiftKey,
-boolean     mac,
-string      keyDirection,                       ['none' 'backward' 'forward']
-string      inputValue,
-*/
-
 import {
   DIRECTION_NONE,
   DIRECTION_BACKWARD,
   DIRECTION_FORWARD
 } from './FacetedTokenInput';
 
-import type { LeftRightReturn } from './types';
+import type { LeftRightReturn, SelectionDirection } from './types';
 
 function onLeftRight(
   selectionStart: number,
   selectionEnd: number,
-  selectionDirection: string,
+  selectionDirection: SelectionDirection,
   tokensLength: number,
   tokenSelectionStart: number,
   tokenSelectionEnd: number,
-  tokenSelectionDirection: string,
+  tokenSelectionDirection: SelectionDirection,
   home: boolean,
   end: boolean,
   selectToHome: boolean,
   selectToEnd: boolean,
   shiftKey: boolean,
   mac: boolean,
-  keyDirection: string,
+  keyDirection: SelectionDirection,
   inputValue: string
 ): ?LeftRightReturn {
   let prevent: boolean = false;

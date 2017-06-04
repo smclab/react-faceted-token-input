@@ -1,8 +1,30 @@
 /* @flow */
 
+export type SelectionDirection = $PropertyType<
+  HTMLInputElement,
+  'selectionDirection'
+>;
+
+// Some typo in flow is causing this type definition to not accept 'rtl'.
+// See https://github.com/facebook/flow/issues/2864
+/*export type TextDirection = $PropertyType<HTMLElement, 'dir'>;*/
+export type TextDirection = 'rtl' | 'ltr' | 'auto';
+
+export type LeftRightReturn = {
+  selectionStart: number,
+  selectionEnd: number,
+  selectionDirection: SelectionDirection,
+  tokenSelectionStart: number,
+  tokenSelectionEnd: number,
+  tokenSelectionDirection: SelectionDirection,
+  mac: boolean,
+  prevent: boolean
+};
+
 export type CustomElementsType = {
   dropdownArrow?: mixed,
-  check?: mixed
+  check?: mixed,
+  delToken?: mixed
 };
 
 export type ComponentClassesType = {
@@ -30,16 +52,16 @@ export type ComponentClassesType = {
 export type FacetedTokenInputStateType = {
   focused: boolean,
   searchText: string,
-  tokens: [any],
+  tokens: Array<any>,
   requiresDirCheck: ?boolean,
   showDropDown: boolean,
   selectedSectionIndex: number,
   selectedIndex: number,
   selectedId: ?number,
-  tokenSelectionDirection: string,
+  tokenSelectionDirection: SelectionDirection,
   tokenSelectionStart: number,
   tokenSelectionEnd: number,
-  textDirection: string
+  textDirection: TextDirection
 };
 
 export type ResultType = {
@@ -58,17 +80,6 @@ export type SuggestionType = {
 export type SectionType = {
   title: string,
   suggestions: [SuggestionType]
-};
-
-export type LeftRightReturn = {
-  selectionStart: number,
-  selectionEnd: number,
-  selectionDirection: string,
-  tokenSelectionStart: number,
-  tokenSelectionEnd: number,
-  tokenSelectionDirection: string,
-  mac: boolean,
-  prevent: boolean
 };
 
 export type TokenPropType = {

@@ -12,10 +12,11 @@ import uniqueId from './unique-id';
 
 import type {
   ComponentClassesType,
+  CustomElementsType,
   FacetedTokenInputStateType,
-  SuggestionType,
   LeftRightReturn,
-  SectionType
+  SectionType,
+  SuggestionType
 } from './types';
 
 import {
@@ -50,19 +51,13 @@ import {
 
 type renderTokenTypes = {
   description: string,
-  dropdownMenu: React$Element<any>,
+  dropdownMenu: Array<any>,
   facet: string
 };
 
 type defaultPropTypesConfig = {
   componentClasses: ComponentClassesType,
-  defaultTokens: [any]
-};
-
-type customElementsType = {
-  check: React$Element<any>,
-  dropdownArrow: string,
-  delToken: React$Element<any>
+  defaultTokens: Array<any>
 };
 
 type PropTypesConfig = {
@@ -70,8 +65,8 @@ type PropTypesConfig = {
   renderToken: (token: any) => renderTokenTypes,
   children: React$Element<any>,
   componentClasses: ComponentClassesType,
-  customElements: customElementsType,
-  defaultTokens: [any],
+  customElements: CustomElementsType,
+  defaultTokens: Array<any>,
   dir: string,
   dropdownSections: [SectionType],
   placeholder: string
@@ -167,8 +162,10 @@ export default class FacetedTokenInput extends Component {
   state: FacetedTokenInputStateType;
   id: number;
 
-  inputRef: HTMLElement;
   facetedTokenInputRef: HTMLDivElement;
+  inputRef: HTMLInputElement;
+  inputSpyRef: HTMLDivElement;
+  tokenRefs: Array<{ focus: Function }>;
 
   static defaultProps: defaultPropTypesConfig;
 
@@ -176,6 +173,8 @@ export default class FacetedTokenInput extends Component {
     super(props);
 
     this.id = counter++;
+
+    this.tokenRefs = [];
 
     this.state = {
       focused: false,
@@ -223,7 +222,7 @@ export default class FacetedTokenInput extends Component {
     return (
       <div
         dir={dir || textDirection}
-        ref={el => this.storeReference(el, 'facetedTokenInputRef')}
+        ref={el => (this.facetedTokenInputRef = el)}
         tabIndex="0"
         className={facetedTokenInputClass}
         onKeyDown={event => this.onKeyDown(event)}
@@ -235,7 +234,7 @@ export default class FacetedTokenInput extends Component {
 
         <input
           key="input"
-          ref={el => this.storeReference(el, 'inputRef')}
+          ref={el => (this.inputRef = el)}
           role="combobox"
           aria-expanded={showDropDown}
           aria-autocomplete="list"
@@ -259,7 +258,7 @@ export default class FacetedTokenInput extends Component {
         <span style={INPUT_SPY_WRAPPER_STYLE}>
           <span
             key="input-spy"
-            ref={el => this.storeReference(el, 'inputSpyRef')}
+            ref={el => (this.inputSpyRef = el)}
             style={INPUT_SPY_STYLE}
             dir={dir || textDirection}
           >
@@ -322,7 +321,7 @@ export default class FacetedTokenInput extends Component {
         <Token
           id={this.id.toString()}
           key={'token' + (token.id || index)}
-          ref={el => this.storeReference(el, 'token' + index)}
+          ref={el => (this.tokenRefs[index] = el)}
           index={index}
           customElements={customElements}
           componentClasses={componentClasses}
@@ -349,7 +348,7 @@ export default class FacetedTokenInput extends Component {
   tokenDelButton(
     index: number,
     componentClasses: ComponentClassesType,
-    customElements: customElementsType
+    customElements: CustomElementsType
   ): ?React$Element<any> {
     if (this.isInTokenSelection(index)) {
       return (
@@ -381,8 +380,8 @@ export default class FacetedTokenInput extends Component {
       if (noSelection || this.isInTokenSelection(tokens.length)) {
         this.inputRef.focus();
       } else if (tokenSelectionDirection === DIRECTION_NONE) {
-        if (this['token' + tokenSelectionStart + 'Ref']) {
-          this['token' + tokenSelectionStart + 'Ref'].focus();
+        if (tokenSelectionStart in this.tokenRefs) {
+          this.tokenRefs[tokenSelectionStart].focus();
         }
       } else {
         this.facetedTokenInputRef.focus();
@@ -591,42 +590,32 @@ export default class FacetedTokenInput extends Component {
     }
   }
 
-  onLeftRightPress(event: any): boolean {
-    type InputRefsType = {
-      selectionEnd: number,
-      selectionStart: number,
-      selectionDirection: string
-    };
+  onLeftRightPress(event: KeyboardEvent): boolean {
+    const { selectionEnd, selectionStart, selectionDirection } = this.inputRef;
 
-    const {
-      selectionEnd,
-      selectionStart,
-      selectionDirection
-    }: InputRefsType = this.inputRef;
+    const { dir } = this.props;
 
-    const { dir }: PropTypesConfig = this.props;
-
-    const { textDirection, tokens }: FacetedTokenInputStateType = this.state;
+    const { textDirection, tokens } = this.state;
 
     let {
       tokenSelectionDirection,
       tokenSelectionEnd,
       tokenSelectionStart
-    }: FacetedTokenInputStateType = this.state;
+    } = this.state;
 
-    const keyDirection: string = isForward(event, dir || textDirection)
+    const keyDirection = isForward(event, dir || textDirection)
       ? DIRECTION_FORWARD
       : isBackward(event, dir || textDirection)
         ? DIRECTION_BACKWARD
         : DIRECTION_NONE;
 
-    const home: boolean = isHome(event);
-    const end: boolean = isEnd(event);
-    const selectToHome: boolean = isSelectToHome(event);
-    const selectToEnd: boolean = isSelectToEnd(event);
-    const shiftKey: boolean = event.shiftKey;
+    const home = isHome(event);
+    const end = isEnd(event);
+    const selectToHome = isSelectToHome(event);
+    const selectToEnd = isSelectToEnd(event);
+    const shiftKey = event.shiftKey;
 
-    const result: LeftRightReturn = onLeftRight(
+    const result: ?LeftRightReturn = onLeftRight(
       selectionStart,
       selectionEnd,
       selectionDirection,
@@ -669,13 +658,13 @@ export default class FacetedTokenInput extends Component {
     return false;
   }
 
-  onBackspace(event: any): void {
+  onBackspace(event: KeyboardEvent): void {
     const {
       searchText,
       tokens,
       tokenSelectionStart,
       tokenSelectionEnd
-    }: FacetedTokenInputStateType = this.state;
+    } = this.state;
 
     const nextTokens = [
       ...tokens.slice(0, tokenSelectionStart),
@@ -719,7 +708,7 @@ export default class FacetedTokenInput extends Component {
     }
   }
 
-  onEnter(event: any): void {
+  onEnter(event: KeyboardEvent): void {
     const {
       showDropDown,
       selectedSectionIndex,
@@ -798,10 +787,6 @@ export default class FacetedTokenInput extends Component {
     // Very brutal and performant way of handling autogrow
 
     this.inputRef.style.flexBasis = this.inputSpyRef.offsetWidth + 1 + 'px';
-  }
-
-  storeReference(element, name) {
-    this[name] = element;
   }
 }
 

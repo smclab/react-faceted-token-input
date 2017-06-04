@@ -26,7 +26,7 @@ type renderContentInput = {
   componentClasses: ComponentClassesType,
   customElements: CustomElementsType,
   description: string,
-  dropdownMenu: any,
+  dropdownMenu: Array<any>,
   facet: any,
   index: number,
   selectedIndex: number
