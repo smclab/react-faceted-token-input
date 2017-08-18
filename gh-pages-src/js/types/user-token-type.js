@@ -7,7 +7,7 @@ const FIELDS = {
 };
 
 const USERS = [
-  [ 'Alan', '', 'Touring' ],
+  [ 'Alan', '', 'Turing' ],
   [ 'Bill', '', 'Gates' ],
   [ 'Dennis', '', 'Ritchie' ],
   [ 'James', '', 'Gosling' ],
