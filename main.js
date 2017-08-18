@@ -233,7 +233,7 @@ var FIELDS = {
   'modifier': 'Modified by…'
 };
 
-var USERS = [['Alan', '', 'Touring'], ['Bill', '', 'Gates'], ['Dennis', '', 'Ritchie'], ['James', '', 'Gosling'], ['Ken', '', 'Thompson'], ['Steve', '', 'Jobs']].map(function (_ref, id) {
+var USERS = [['Alan', '', 'Turing'], ['Bill', '', 'Gates'], ['Dennis', '', 'Ritchie'], ['James', '', 'Gosling'], ['Ken', '', 'Thompson'], ['Steve', '', 'Jobs']].map(function (_ref, id) {
   var _ref2 = _slicedToArray(_ref, 3);
 
   var firstName = _ref2[0];
