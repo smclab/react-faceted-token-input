@@ -21,13 +21,13 @@
   "author": "Pier Paolo Ramon <pierpaolo.ramon@smc.it> (https://github.com/yuchi)",
   "license": "LGPL-2.1",
   "dependencies": {
-    "@kadira/storybook": "^2.35.3",
     "classnames": "^2.2.2"
   },
   "peerDependencies": {
     "react": "^0.14.5 || ^15.5.4"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.35.3",
     "babel-cli": "^6.4.0",
     "babel-core": "^6.3.26",
     "babel-eslint": "^7.2.3",
