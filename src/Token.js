@@ -134,10 +134,9 @@ export default class Token extends Component {
     description,
     dropdownMenu,
     facet,
-    index,
-    selectedIndex
+    index
   }: renderContentInput): React$Element<any> {
-    const onClick = event => this.setState({ showDropDown: true });
+    const onClick = () => this.setState({ showDropDown: true });
 
     const showFacet = !!(facet || dropdownMenu);
 
@@ -241,8 +240,8 @@ export default class Token extends Component {
       >
 
         <a
-          onMouseEnter={event => this.setState({ selectedIndex: index })}
-          onClick={event => this.select(index)}
+          onMouseEnter={() => this.setState({ selectedIndex: index })}
+          onClick={() => this.select(index)}
           className={dropdownAClass}
         >
           <span aria-hidden="true">
@@ -296,7 +295,7 @@ export default class Token extends Component {
     }
   }
 
-  onEnter(event: any): void {
+  onEnter(): void {
     const { selectedIndex }: TokenStateType = this.state;
 
     if (selectedIndex >= 0) {
@@ -308,7 +307,7 @@ export default class Token extends Component {
     this.props.onFocus(event);
   }
 
-  onBlur(event: any): void {
+  onBlur(): void {
     this.setState({
       selectedIndex: -1,
       showDropDown: false
