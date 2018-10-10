@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "jsnext:main": "./src/index.js",
   "scripts": {
+    "start": "npm run storybook",
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "clean": "rimraf lib",
     "flow": "flow",
@@ -62,7 +63,7 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "directories": {
-    "example": "examples",
+		"stories": "stories",
     "test": "test"
   },
   "repository": {
