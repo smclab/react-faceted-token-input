@@ -2,7 +2,7 @@
 
 * [Usage](usage.md)
   * [Bidirectional css support](bidi-css-support.md)
-  * [Example](example.md)
+  * [Storybook](storybook.md)
 * [Development](development.md)
   * [Formatting Guidelines](formatting.md)
 * [Test](/docs/test/README.md)
