@@ -334,7 +334,7 @@ export default class FacetedTokenInput extends Component {
             event.stopPropagation();
           }}
           onFocus={event => this.onTokenFocus(event, index)}
-          onShowDropdown={event => this.setState({ showDropDown: false })}
+          onShowDropdown={() => this.setState({ showDropDown: false })}
         />
 
         {this.tokenDelButton(index, componentClasses, customElements)}
@@ -457,11 +457,11 @@ export default class FacetedTokenInput extends Component {
     });
   }
 
-  onFocus(event: any): void {
+  onFocus(): void {
     this.setState({ focused: true });
   }
 
-  onBlur(event: any): void {
+  onBlur(): void {
     this.setState({ focused: false });
 
     setTimeout(() => {
@@ -706,7 +706,7 @@ export default class FacetedTokenInput extends Component {
     }
   }
 
-  onEnter(event: KeyboardEvent): void {
+  onEnter(): void {
     const {
       showDropDown,
       selectedSectionIndex,
